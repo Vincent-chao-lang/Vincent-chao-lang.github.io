@@ -1,0 +1,27 @@
+[
+  {
+    "course name": "Excel数据分析与模拟决策",
+    "course url": "https://blog.csdn.net/practicer2015/category_12812928.html",
+    "course 简介": "主要面向使用Excel的用户，讲解Excel的数据分析，模拟分决策内容，内容涵盖基于Excel的统计分析，数据生成，采样，假设检验，线性回归，线性规划等内容，覆盖了Excel数据分析决策的主要内通"
+  },
+  {
+    "course name": "DeepSeek大模型私有化落地指南",
+    "course url": "https://blog.csdn.net/practicer2015/category_12771434.html",
+    "course 简介": "原《神经网络》专栏升级，原有内容继续保留。升级后的专栏为DeepSeek大模型私有化落地指南，围绕Deepseek实际落地的需求展开"
+  },
+  {
+    "course name": "回归分析",
+    "course url": "https://blog.csdn.net/practicer2015/category_12759120.html",
+    "course 简介": "回归分析是一种用于理解和量化变量之间关系的统计方法。无论是在社会科学、自然科学、经济学，还是在工程学、医学等领域，回归分析都被广泛应用。通过构建模型，我们可以探索和解释变量之间的关联，并利用这些模型进行预测和推断。"
+  },
+  {
+    "course name": "Excel数据分析与模拟决策-高级",
+    "course url": "https://blog.csdn.net/practicer2015/category_12814730.html",
+    "course 简介": "基于Excel，覆盖线性规划，预测，项目管理，排队，计算机仿真等深度分析和模型应用。"
+  },
+  {
+    "course name": "大模型应用实战",
+    "course url": "https://blog.csdn.net/practicer2015/category_12989357.html",
+    "course 简介": "大模型应用实战含微调、提示工程，API集成、部署优化等，结合行业案例解析技术落地场景。另收录包含RAG专题，Agent专题，LLM重构数据科学流程专题，端侧AI专题。"
+  }
+]

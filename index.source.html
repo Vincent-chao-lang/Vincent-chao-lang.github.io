@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent-chao-lang 资源总览 - 仓库列表 & 工具手册 & 专栏课程</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 页面主体样式 */
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            position: relative; /* 为右上角信息区域提供定位参考 */
+        }
+
+        /* 右上角个人信息区域 */
+        .personal-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            z-index: 100; /* 确保显示在最上层 */
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #24292e;
+            font-size: 0.9rem;
+        }
+
+        .info-item a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+
+        .info-icon {
+            font-size: 1.1rem;
+            color: #0366d6;
+        }
+
+        .qrcode-container {
+            position: relative;
+        }
+
+        .qrcode-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            border: 1px solid #e1e4e8;
+            object-fit: cover;
+            display: none; /* 默认隐藏二维码，hover时显示 */
+            position: absolute;
+            top: 30px;
+            right: 0;
+            z-index: 101;
+        }
+
+        .qrcode-container:hover .qrcode-img {
+            display: block;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e1e4e8;
+            padding-top: 80px; /* 为右上角信息区域留出空间 */
+        }
+
+        h1 {
+            color: #24292e;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            color: #6a737d;
+            font-size: 1.1rem;
+        }
+
+        /* 模块切换导航 */
+        .module-nav {
+            max-width: 1400px;
+            margin: 0 auto 20px;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .module-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #e8f4f8;
+            color: #0366d6;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .module-btn.active {
+            background: #0366d6;
+            color: white;
+        }
+
+        .module-btn:hover:not(.active) {
+            background: #d1e7f0;
+        }
+
+        /* 分类导航 */
+        .category-nav {
+            max-width: 1400px;
+            margin: 0 auto 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .category-btn {
+            background: #e8f4f8;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #24292e;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .category-btn:hover {
+            background: #0366d6;
+            color: white;
+        }
+
+        .category-btn.active {
+            background: #0366d6;
+            color: white;
+        }
+
+        /* 仓库/工具/课程卡片容器 */
+        .repo-container, .tool-container, .course-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 仓库卡片样式 (保留原有样式) */
+        .repo-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #0366d6;
+        }
+
+        .repo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .repo-name {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .repo-name a {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .repo-name a:hover {
+            text-decoration: underline;
+        }
+
+        .repo-desc {
+            color: #586069;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            min-height: 40px;
+        }
+
+        .repo-url {
+            font-size: 0.85rem;
+            color: #005cc5;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        /* 工具卡片样式 (适配原有设计风格) */
+        .tool-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #2ea44f;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-name {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .tool-name a {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .tool-name a:hover {
+            text-decoration: underline;
+        }
+
+        .tool-category {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0366d6;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .tool-info {
+            margin-bottom: 10px;
+        }
+
+        .tool-info-title {
+            font-weight: 600;
+            color: #24292e;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .tool-info-content {
+            color: #586069;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .tool-url {
+            font-size: 0.85rem;
+            color: #005cc5;
+            margin-top: 10px;
+            word-break: break-all;
+            padding-top: 10px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        /* 课程卡片样式 (适配原有设计风格) */
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #e36209; /* 橙色区分课程模块 */
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-name {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .course-name a {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .course-name a:hover {
+            text-decoration: underline;
+        }
+
+        .course-desc {
+            color: #586069;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            min-height: 40px;
+        }
+
+        .course-url {
+            font-size: 0.85rem;
+            color: #005cc5;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        /* 统计信息 (增强版) */
+        .stats {
+            max-width: 1400px;
+            margin: 20px auto 30px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 6px;
+            color: #24292e;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stats-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stats strong {
+            color: #0366d6;
+        }
+
+        /* 模块容器 */
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        /* 空状态样式 */
+        .empty-state {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6a737d;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            /* 移动端调整右上角信息 */
+            .personal-info {
+                position: static;
+                margin: 0 auto 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            header {
+                padding-top: 20px;
+            }
+
+            .repo-container, .tool-container, .course-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .repo-card, .tool-card, .course-card {
+                padding: 15px;
+            }
+
+            .module-nav {
+                flex-direction: column;
+            }
+
+            .category-btn {
+                padding: 6px 12px;
+                margin: 0 3px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 右上角个人信息区域 -->
+    <div class="personal-info">
+        <div class="info-item">
+            <span class="info-icon">✉️</span>
+            <a href="mailto:2819699195@qq.com">2819699195@qq.com</a>
+        </div>
+        <div class="info-item qrcode-container">
+            <span class="info-icon">📱</span>
+            <span>公众号</span>
+            <img src="qrcode_for_gh_aaf42e03e210_258.jpg" alt="公众号二维码" class="qrcode-img">
+        </div>
+        <div class="info-item">
+            <span class="info-icon">💻</span>
+            <a href="https://github.com/Vincent-chao-lang" target="_blank">Vincent-chao-lang</a>
+        </div>
+    </div>
+
+    <header>
+        <h1>Chao's AI 实验室 </h1>
+        <p class="subtitle">GitHub仓库列表 & 实用工具 & 专栏课程 (至2026年1月1日)</p>
+    </header>
+
+    <!-- 模块切换导航 - 新增课程按钮 -->
+    <div class="module-nav">
+        <button class="module-btn active" data-module="repo">GitHub仓库列表</button>
+        <button class="module-btn" data-module="tool">实用工具</button>
+        <button class="module-btn" data-module="course">专栏课程</button>
+    </div>
+
+    <!-- 统计信息 - 新增课程统计 -->
+    <div class="stats">
+        <div class="stats-item">
+            <strong>仓库统计：</strong> 共收录 <span id="repo-count">30</span> 个GitHub仓库
+        </div>
+        <div class="stats-item">
+            <strong>工具统计：</strong> 共收录 <span id="tool-count">0</span> 个工具，分为 <span id="category-count">8</span> 个大类
+        </div>
+        <div class="stats-item">
+            <strong>课程统计：</strong> 共收录 <span id="course-count">5</span> 个专栏课程
+        </div>
+        <div class="stats-item" id="current-tool-stats" style="display: none;">
+            当前显示：<span id="current-category">全部工具</span> (<span id="current-count">0</span> 个)
+        </div>
+    </div>
+
+    <!-- 仓库列表模块 (保留原有内容) -->
+    <div class="module active" id="repo-module">
+        <div class="repo-container" id="repo-list">
+            <!-- 仓库卡片会通过JavaScript动态生成 -->
+        </div>
+    </div>
+
+    <!-- 工具手册模块 (保留原有内容) -->
+    <div class="module" id="tool-module">
+        <!-- 工具分类导航 -->
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">全部工具</button>
+            <button class="category-btn" data-category="AI & ML">AI & ML</button>
+            <button class="category-btn" data-category="Data Processing">Data Processing</button>
+            <button class="category-btn" data-category="Databases & Search">Databases & Search</button>
+            <button class="category-btn" data-category="Developer Tools">Developer Tools</button>
+            <button class="category-btn" data-category="Python Built-ins">Python Built-ins</button>
+            <button class="category-btn" data-category="Text Processing">Text Processing</button>
+            <button class="category-btn" data-category="Utilities">Utilities</button>
+            <button class="category-btn" data-category="Visualization">Visualization</button>
+        </div>
+
+        <div class="tool-container" id="tool-list">
+            <!-- 工具卡片会通过JavaScript动态生成 -->
+        </div>
+
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <h3>暂无匹配的工具</h3>
+            <p>请选择其他分类查看</p>
+        </div>
+    </div>
+
+    <!-- 专栏课程模块 (新增) -->
+    <div class="module" id="course-module">
+        <div class="course-container" id="course-list">
+            <!-- 课程卡片会通过JavaScript动态生成 -->
+        </div>
+    </div>
+
+    <script>
+        // ======================== 原有仓库数据 (完整保留) ========================
+        const repoData = [
+            {
+                "repository name": "lite_rag",
+                "repository url": "https://github.com/Vincent-chao-lang/lite_rag",
+                "repository 简介": "轻量型检索增强生成（RAG）相关的Python项目"
+            },
+            {
+                "repository name": "markdown_illustrator",
+                "repository url": "https://github.com/Vincent-chao-lang/markdown_illustrator",
+                "repository 简介": "Markdown文档自动配图"
+            },
+            {
+                "repository name": "shuqianApp",
+                "repository url": "https://github.com/Vincent-chao-lang/shuqianApp",
+                "repository 简介": "基于Swift开发的书签类应用项目"
+            },
+            {
+                "repository name": "mini_shop",
+                "repository url": "https://github.com/Vincent-chao-lang/mini_shop",
+                "repository 简介": "用于线下支付的小型商城相关项目"
+            },
+            {
+                "repository name": "quant_llm_pub",
+                "repository url": "https://github.com/Vincent-chao-lang/quant_llm_pub",
+                "repository 简介": "股票量化与大语言模型结合的公开项目"
+            },
+            {
+                "repository name": "btc_etf_monitor_pub",
+                "repository url": "https://github.com/Vincent-chao-lang/btc_etf_monitor_pub",
+                "repository 简介": "比特币ETF监控相关的公开项目"
+            },
+            {
+                "repository name": "learnQuant",
+                "repository url": "https://github.com/Vincent-chao-lang/learnQuant",
+                "repository 简介": "量化学习相关的Python项目"
+            },
+            {
+                "repository name": "agent-dev-dashboard-route3-githubpr",
+                "repository url": "https://github.com/Vincent-chao-lang/agent-dev-dashboard-route3-githubpr",
+                "repository 简介": "AI Coding协作开发工作台，基于Python开发"
+            },
+            {
+                "repository name": "Vincent-chao-lang.github.io",
+                "repository url": "https://github.com/Vincent-chao-lang/Vincent-chao-lang.github.io",
+                "repository 简介": "个人GitHub Pages静态网页项目，基于HTML开发"
+            },
+            {
+                "repository name": "mymini",
+                "repository url": "https://github.com/Vincent-chao-lang/mymini",
+                "repository 简介": "基于云开发的小程序项目"
+            },
+            {
+                "repository name": "labs",
+                "repository url": "https://github.com/Vincent-chao-lang/labs",
+                "repository 简介": "AI的实验性项目合集"
+            },
+            {
+                "repository name": "ppe_core",
+                "repository url": "https://github.com/Vincent-chao-lang/ppe_core",
+                "repository 简介": "PPE提示词增强工程框架，基于Python开发"
+            },
+            {
+                "repository name": "huiben-generator",
+                "repository url": "https://github.com/Vincent-chao-lang/huiben-generator",
+                "repository 简介": "绘本生成相关的Python项目"
+            },
+            {
+                "repository name": "Concise-decision-analysis",
+                "repository url": "https://github.com/Vincent-chao-lang/Concise-decision-analysis",
+                "repository 简介": "简洁的决策分析相关项目"
+            },
+            {
+                "repository name": "langchain-action",
+                "repository url": "https://github.com/Vincent-chao-lang/langchain-action",
+                "repository 简介": "与LangChain相关的操作项目，基于Jupyter Notebook开发"
+            },
+            {
+                "repository name": "ailearning",
+                "repository url": "https://github.com/Vincent-chao-lang/ailearning",
+                "repository 简介": "人工智能学习相关项目，基于Jupyter Notebook开发"
+            },
+            {
+                "repository name": "xiaochengxu",
+                "repository url": "https://github.com/Vincent-chao-lang/xiaochengxu",
+                "repository 简介": "基于JavaScript开发的小程序相关项目"
+            },
+            {
+                "repository name": "myblog",
+                "repository url": "https://github.com/Vincent-chao-lang/myblog",
+                "repository 简介": "个人博客项目，基于HTML开发，MIT协议"
+            }
+        ];
+
+        // ======================== 新增工具数据 (保留原有内容) ========================
+        const toolData = [
+    // AI & ML 分类
+    {
+        "category": "AI & ML",
+        "name": "GLiNER",
+        "githubUrl": "https://github.com/urchade/GLiNER",
+        "corePosition": "零样本命名实体识别（NER）模型",
+        "coreFunction": "无需标注数据，识别文本中任意类型实体（如人名、地名、自定义专业实体）；支持少样本微调",
+        "applicableScene": "信息抽取、文档解析、智能问答的实体提取、非标准化文本的实体识别",
+        "technicalAdvantage": "轻量级模型，推理速度快；支持多语言，适配低标注成本的NER场景"
+    },
+    {
+        "category": "AI & ML",
+        "name": "DeepSeek",
+        "githubUrl": "https://github.com/deepseek-ai/DeepSeek-LLM",
+        "corePosition": "开源大语言模型（LLM）",
+        "coreFunction": "提供全尺寸开源LLM（从7B到67B参数），支持文本生成、对话、推理、代码生成；提供API与本地部署版本",
+        "applicableScene": "通用NLP任务、代码开发辅助、智能体构建、企业私有化大模型部署",
+        "technicalAdvantage": "中文理解与生成能力优异；开源可商用，轻量化版本适配本地部署"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Diffbot",
+        "githubUrl": "无开源仓库（商业API服务）",
+        "corePosition": "网页爬取API",
+        "coreFunction": "自动化爬取网页结构化数据（如文章、产品信息、表格），无需编写爬虫规则；支持反爬处理、数据清洗",
+        "applicableScene": "电商数据采集、行业资讯聚合、竞品分析、网页数据结构化提取",
+        "technicalAdvantage": "云端API服务，无需维护爬虫；自动识别网页结构，返回JSON/CSV结构化数据"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Docling",
+        "githubUrl": "https://github.com/DS4SD/docling",
+        "corePosition": "文档解析库",
+        "coreFunction": "解析多格式文档（PDF、Word、Excel、PPT、图片型PDF），提取文本、表格、图片、排版结构；支持复杂版式文档",
+        "applicableScene": "文档数字化、知识库构建、AI文档问答、批量文档信息抽取",
+        "technicalAdvantage": "支持中英文混合文档；对扫描版PDF的OCR解析效果优异，保留原文档层级结构"
+    },
+    {
+        "category": "AI & ML",
+        "name": "FastMCP",
+        "githubUrl": "https://github.com/zhejz/fastmcp",
+        "corePosition": "MCP服务器框架",
+        "coreFunction": "构建和部署MCP（Model Control Plane）服务，实现大模型的统一调度、负载均衡、版本管理",
+        "applicableScene": "企业级大模型集群部署、多模型统一调用、大模型服务运维",
+        "technicalAdvantage": "轻量级高性能，基于异步架构；支持多框架适配（TensorFlow/PyTorch）"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Granite Vision",
+        "githubUrl": "https://github.com/ibm-granite/granite-vision",
+        "corePosition": "图表转CSV提取工具",
+        "coreFunction": "识别图片/文档中的图表（折线图、柱状图、饼图、表格），精准提取数值并转换为CSV格式",
+        "applicableScene": "数据分析、科研数据整理、报表自动化、图表数据结构化",
+        "technicalAdvantage": "基于计算机视觉+OCR，支持模糊/低分辨率图表；提取精度高，自动对齐行列数据"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Graphiti",
+        "githubUrl": "https://github.com/neo4j/graphiti",
+        "corePosition": "AI智能体专用知识图谱",
+        "coreFunction": "快速构建、存储、查询知识图谱；支持从文本自动抽取三元组生成图谱，与LLM联动实现知识推理",
+        "applicableScene": "智能问答、推荐系统、决策支持、行业知识图谱构建",
+        "technicalAdvantage": "专为AI智能体设计，轻量化部署；支持图谱可视化与实时更新"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Guidance",
+        "githubUrl": "https://github.com/guidance-ai/guidance",
+        "corePosition": "LLM控制流工具",
+        "coreFunction": "通过模板化语法控制LLM的生成逻辑（如指定格式、分支判断、循环生成）；约束输出结果，避免幻觉",
+        "applicableScene": "结构化数据生成、智能体流程控制、固定格式报告生成、多步骤LLM任务",
+        "technicalAdvantage": "无需微调模型，通过Prompt层实现控制；支持主流LLM（GPT/LLaMA/文心一言）"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Instructor",
+        "githubUrl": "https://github.com/jxnl/instructor",
+        "corePosition": "结构化LLM输出工具",
+        "coreFunction": "基于Pydantic模型定义输出结构，让LLM严格按照指定格式返回结果（如JSON/类对象）；支持结果验证",
+        "applicableScene": "数据抽取、表单生成、API参数生成、LLM输出结构化落地",
+        "technicalAdvantage": "与Python生态深度融合，Pydantic原生验证；轻量级，仅需简单装饰器调用"
+    },
+    {
+        "category": "AI & ML",
+        "name": "LangChain",
+        "githubUrl": "https://github.com/langchain-ai/langchain",
+        "corePosition": "LLM应用框架",
+        "coreFunction": "提供LLM应用开发的模块化组件（提示词、链、智能体、记忆、检索）；支持组件组合快速构建复杂应用",
+        "applicableScene": "智能问答机器人、RAG（检索增强生成）、AI智能体、多模态应用",
+        "technicalAdvantage": "生态丰富，集成主流LLM/向量库/工具；低代码开发，快速原型验证"
+    },
+    {
+        "category": "AI & ML",
+        "name": "LangExtract",
+        "githubUrl": "https://github.com/liaopeiyuan/langextract",
+        "corePosition": "LLM驱动的实体提取工具",
+        "coreFunction": "结合LLM的理解能力，提取文本中复杂/自定义实体；支持实体关系抽取，可与知识图谱联动",
+        "applicableScene": "非标准化文本信息抽取、专业领域实体识别、文档知识提取",
+        "technicalAdvantage": "无需大量标注，适配小众领域实体提取；支持多实体类型同时提取"
+    },
+    {
+        "category": "AI & ML",
+        "name": "LangGraph",
+        "githubUrl": "https://github.com/langchain-ai/langgraph",
+        "corePosition": "智能体编排工具",
+        "coreFunction": "基于有向图实现AI智能体的流程编排，支持多智能体协作、分支执行、循环任务、人机交互",
+        "applicableScene": "复杂AI工作流构建、多智能体系统、任务拆解与调度、工业级AI应用",
+        "technicalAdvantage": "可视化流程编排，逻辑清晰；支持断点续跑、任务回溯，适配生产环境"
+    },
+    {
+        "category": "AI & ML",
+        "name": "LlamaIndex",
+        "githubUrl": "https://github.com/run-llama/llama_index",
+        "corePosition": "LLM数据框架",
+        "coreFunction": "实现LLM与私有数据的高效连接，支持多源数据接入（文档、数据库、API）、数据索引、检索增强生成",
+        "applicableScene": "企业私有知识库问答、本地数据驱动的LLM应用、RAG系统构建",
+        "technicalAdvantage": "专为RAG优化，索引策略丰富；支持轻量化部署，适配中小规模数据"
+    },
+    {
+        "category": "AI & ML",
+        "name": "MLflow",
+        "githubUrl": "https://github.com/mlflow/mlflow",
+        "corePosition": "机器学习实验跟踪工具",
+        "coreFunction": "全生命周期管理ML项目：实验参数/指标/模型跟踪、模型打包、部署、版本管理",
+        "applicableScene": "机器学习模型训练、实验复现、模型迭代、团队协作训练",
+        "technicalAdvantage": "跨框架兼容（Scikit-learn/TensorFlow/PyTorch）；支持本地/云端部署，开源免费"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Ollama",
+        "githubUrl": "https://github.com/ollama/ollama",
+        "corePosition": "本地LLM运行时",
+        "coreFunction": "一键部署和运行开源大模型（LLaMA、Mistral、Phi），支持模型拉取、微调、推理；提供简单的API调用",
+        "applicableScene": "本地LLM应用开发、私有化大模型部署、低算力设备的LLM推理",
+        "technicalAdvantage": "极简部署，一行命令启动模型；支持模型量化，适配CPU/轻量GPU；体积小，跨平台"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Outlines",
+        "githubUrl": "https://github.com/outlines-dev/outlines",
+        "corePosition": "约束性文本生成工具",
+        "coreFunction": "通过正则表达式、语法规则约束LLM的生成内容，精准控制输出格式；支持少样本约束生成",
+        "applicableScene": "代码生成、正则匹配文本生成、固定格式内容创作、数据格式化",
+        "technicalAdvantage": "轻量级，无额外训练成本；支持主流开源LLM，推理速度无明显损耗"
+    },
+    {
+        "category": "AI & ML",
+        "name": "PydanticAI",
+        "githubUrl": "https://github.com/pydantic/pydantic-ai",
+        "corePosition": "AI智能体框架",
+        "coreFunction": "基于Pydantic实现AI智能体的定义、验证、调度；支持智能体的参数校验、行为约束、结果验证",
+        "applicableScene": "Python生态的AI智能体开发、工业级智能体部署、多智能体协作",
+        "technicalAdvantage": "与Pydantic深度融合，数据验证原生支持；轻量级，易与LangChain/LangGraph集成"
+    },
+    {
+        "category": "AI & ML",
+        "name": "ScrapeGraphAI",
+        "githubUrl": "https://github.com/ScrapeGraphAI/ScrapeGraphAI",
+        "corePosition": "LLM驱动的网页爬取工具",
+        "coreFunction": "结合LLM的理解能力，自动分析网页结构、生成爬取规则，无需手动编写XPath/CSS选择器；支持动态网页爬取",
+        "applicableScene": "非标准化网页数据采集、小众网站爬取、无固定结构的网页解析",
+        "technicalAdvantage": "适配反爬较弱的网站；支持将爬取结果直接结构化（JSON/CSV）；低代码操作"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Sentence Transformers",
+        "githubUrl": "https://github.com/UKPLab/sentence-transformers",
+        "corePosition": "文本嵌入工具",
+        "coreFunction": "训练和生成文本的向量嵌入（Embedding），支持多语言、多任务；提供预训练模型，可微调",
+        "applicableScene": "文本相似度计算、检索系统、聚类分析、RAG的文本向量化",
+        "technicalAdvantage": "预训练模型丰富，轻量级；嵌入效果优异，适配下游NLP任务；支持GPU加速"
+    },
+    {
+        "category": "AI & ML",
+        "name": "SmolVLM",
+        "githubUrl": "https://github.com/facebookresearch/smol-vlm",
+        "corePosition": "视觉语言模型（VLM）",
+        "coreFunction": "轻量级视觉语言模型，支持图文交互、图像内容理解、视觉问答、图像描述生成",
+        "applicableScene": "视觉问答机器人、图文检索、图片内容分析、轻量化多模态应用",
+        "technicalAdvantage": "体积小，推理速度快；适配CPU/轻量GPU，本地部署友好；支持多语言图文交互"
+    },
+    {
+        "category": "AI & ML",
+        "name": "spaCy",
+        "githubUrl": "https://github.com/explosion/spaCy",
+        "corePosition": "NLP处理流水线",
+        "coreFunction": "提供端到端的NLP流水线（分词、词性标注、命名实体识别、句法分析、文本分类）；支持自定义组件开发",
+        "applicableScene": "通用NLP任务、文本预处理、NLP基础功能开发、批量文本分析",
+        "technicalAdvantage": "工业级性能，处理速度快；支持多语言，模型轻量化；Python生态无缝集成"
+    },
+    {
+        "category": "AI & ML",
+        "name": "Transformers",
+        "githubUrl": "https://github.com/huggingface/transformers",
+        "corePosition": "Hugging Face模型库",
+        "coreFunction": "提供海量预训练的NLP/计算机视觉/语音模型，支持模型加载、推理、微调；适配主流深度学习框架",
+        "applicableScene": "各类AI模型开发、预训练模型微调、多模态应用、模型快速验证",
+        "technicalAdvantage": "Hugging Face官方库，模型生态最丰富；跨框架兼容（PyTorch/TensorFlow/JAX）；文档完善，社区活跃"
+    },
+
+    // Data Processing 分类
+    {
+        "category": "Data Processing",
+        "name": "CloudQuery",
+        "githubUrl": "https://github.com/cloudquery/cloudquery",
+        "corePosition": "云ETL平台",
+        "coreFunction": "实现多云/多数据源的统一数据同步、清洗、转换；支持可视化配置，无需大量代码",
+        "applicableScene": "云原生数据仓库构建、多数据源聚合分析、企业数据中台ETL流程",
+        "technicalAdvantage": "无代码/低代码配置，开发效率高；支持主流云服务/数据库/API；增量同步，节省资源"
+    },
+    {
+        "category": "Data Processing",
+        "name": "Coiled",
+        "githubUrl": "https://github.com/coiled/coiled",
+        "corePosition": "Python云扩展工具",
+        "coreFunction": "将本地Python数据处理代码一键迁移到云端，实现分布式计算；适配Pandas/Dask/NumPy",
+        "applicableScene": "本地算力不足的大数据处理、Python代码云端分布式运行、临时大数据分析任务",
+        "technicalAdvantage": "无需修改本地代码，无缝迁移；按需分配云资源，按使用计费；支持主流云厂商"
+    },
+    {
+        "category": "Data Processing",
+        "name": "delta-rs",
+        "githubUrl": "https://github.com/delta-io/delta-rs",
+        "corePosition": "Rust语言实现的Delta Lake",
+        "coreFunction": "Delta Lake的跨语言实现，提供数据湖的ACID事务、版本管理、数据清洗；支持Python/Rust/Go调用",
+        "applicableScene": "大数据湖构建、多语言数据湖开发、高并发数据湖读写、数据版本回溯",
+        "technicalAdvantage": "基于Rust开发，性能远超Java版Delta Lake；跨语言兼容，适配异构开发环境；轻量级部署"
+    },
+    {
+        "category": "Data Processing",
+        "name": "DuckDB",
+        "githubUrl": "https://github.com/duckdb/duckdb",
+        "corePosition": "进程内SQL数据库",
+        "coreFunction": "嵌入式无服务SQL数据库，支持SQL查询、列式存储、内存计算；适配Pandas/Polars数据帧",
+        "applicableScene": "单机大数据分析、SQL查询本地文件（CSV/Parquet）、轻量级数据仓库、嵌入式数据处理",
+        "technicalAdvantage": "无服务部署，无需运维；查询速度快，媲美专业数仓；支持主流数据格式，与Python生态深度融合"
+    },
+    {
+        "category": "Data Processing",
+        "name": "ffn",
+        "githubUrl": "https://github.com/pmorissette/ffn",
+        "corePosition": "金融分析库",
+        "coreFunction": "提供金融数据的分析、建模、可视化工具；支持时间序列分析、因子分析、回测框架",
+        "applicableScene": "金融量化交易、金融数据建模、基金/股票分析、金融回测系统开发",
+        "technicalAdvantage": "专为金融场景设计，指标体系完善；与Pandas/Matplotlib无缝集成；轻量级，易上手"
+    },
+    {
+        "category": "Data Processing",
+        "name": "Fugue",
+        "githubUrl": "https://github.com/fugue-project/fugue",
+        "corePosition": "跨框架分布式计算工具",
+        "coreFunction": "让本地Python/Spark代码在不同分布式框架（Spark/Dask/Ray）上运行，无需修改代码；支持SQL与Python混合编程",
+        "applicableScene": "多框架分布式计算、代码跨平台迁移、大数据处理的框架解耦",
+        "technicalAdvantage": "框架无关，一次编写多端运行；支持低代码开发，SQL可直接嵌入Python；性能损耗低"
+    },
+    {
+        "category": "Data Processing",
+        "name": "Ibis",
+        "githubUrl": "https://github.com/ibis-project/ibis",
+        "corePosition": "可移植DataFrame API",
+        "coreFunction": "统一的DataFrame编程接口，适配多种SQL后端（DuckDB/PostgreSQL/BigQuery）和计算框架；无需适配不同平台的语法",
+        "applicableScene": "多数据源统一分析、代码跨数仓迁移、轻量级大数据分析",
+        "technicalAdvantage": "接口统一，学习成本低；支持懒执行，优化查询效率；与Python生态深度融合"
+    },
+    {
+        "category": "Data Processing",
+        "name": "Narwhals",
+        "githubUrl": "https://github.com/narwhals-dev/narwhals",
+        "corePosition": "统一DataFrame API",
+        "coreFunction": "封装Pandas/Polars/Dask的DataFrame接口，实现语法完全统一；支持无缝切换底层计算引擎",
+        "applicableScene": "Python数据处理代码的跨引擎迁移、同时适配多DataFrame库的项目开发",
+        "technicalAdvantage": "零学习成本，Pandas语法直接兼容Polars/Dask；自动适配底层引擎的优化策略；轻量级，无额外依赖"
+    },
+    {
+        "category": "Data Processing",
+        "name": "pandas",
+        "githubUrl": "https://github.com/pandas-dev/pandas",
+        "corePosition": "经典Python数据解析库",
+        "coreFunction": "提供高性能的表格型数据处理工具，支持数据清洗、转换、分析、可视化；核心为DataFrame数据结构",
+        "applicableScene": "小中规模数据处理、数据预处理、探索性数据分析、日常数据统计",
+        "technicalAdvantage": "Python数据科学生态核心，文档完善；社区活跃，第三方扩展丰富；易上手，开发效率高"
+    },
+    {
+        "category": "Data Processing",
+        "name": "Polars",
+        "githubUrl": "https://github.com/pola-rs/polars",
+        "corePosition": "高性能DataFrame库",
+        "coreFunction": "基于Rust开发的新一代DataFrame库，支持列式存储、并行计算、懒执行；兼容Pandas大部分语法",
+        "applicableScene": "大规模数据处理、高性能数据清洗、实时数据分析、Pandas性能瓶颈优化",
+        "technicalAdvantage": "速度远超Pandas（10-100倍）；内存占用低，支持超大规模数据集；兼容Pandas语法，迁移成本低"
+    },
+    {
+        "category": "Data Processing",
+        "name": "PySpark",
+        "githubUrl": "https://github.com/apache/spark（Python模块）",
+        "corePosition": "Python版Spark分布式计算框架",
+        "coreFunction": "实现大规模数据的分布式清洗、转换、分析、机器学习；支持Spark SQL、流处理、图计算",
+        "applicableScene": "大数据处理、分布式机器学习、实时流数据处理、企业级数据仓库计算",
+        "technicalAdvantage": "基于Spark核心，分布式性能优异；Python接口友好，适配数据科学生态；支持多数据源，可扩展强"
+    },
+
+    // Databases & Search 分类
+    {
+        "category": "Databases & Search",
+        "name": "Annoy",
+        "githubUrl": "https://github.com/spotify/annoy",
+        "corePosition": "近似最近邻（ANN）搜索工具",
+        "coreFunction": "实现高维向量的近似最近邻搜索，支持多种距离度量；轻量级，支持本地部署",
+        "applicableScene": "向量检索、相似性推荐、图像/文本检索、轻量级RAG系统",
+        "technicalAdvantage": "基于树结构实现，检索速度快；内存占用低，本地部署友好；开源免费，易集成"
+    },
+    {
+        "category": "Databases & Search",
+        "name": "ChromaDB",
+        "githubUrl": "https://github.com/chroma-core/chroma",
+        "corePosition": "轻量级嵌入向量数据库",
+        "coreFunction": "专为LLM的向量嵌入设计，支持向量存储、检索、增删改查；支持本地/云端部署，无依赖",
+        "applicableScene": "本地RAG系统、轻量级向量检索、中小规模知识库问答、嵌入式AI应用",
+        "technicalAdvantage": "极简部署，一行命令启动；无外部依赖，适配边缘设备；与Python/LLM生态深度融合，易上手"
+    },
+    {
+        "category": "Databases & Search",
+        "name": "Milvus",
+        "githubUrl": "https://github.com/milvus-io/milvus",
+        "corePosition": "开源分布式向量数据库",
+        "coreFunction": "专为高维向量设计的分布式数据库，支持海量向量的存储、检索、分片、负载均衡；支持多种索引算法",
+        "applicableScene": "企业级RAG系统、大规模相似性推荐、多模态检索、云端向量检索服务",
+        "technicalAdvantage": "分布式架构，支持水平扩展；检索性能优异，适配十亿级向量；支持多语言SDK，生态丰富"
+    },
+    {
+        "category": "Databases & Search",
+        "name": "pgvector",
+        "githubUrl": "https://github.com/pgvector/pgvector",
+        "corePosition": "PostgreSQL向量搜索扩展",
+        "coreFunction": "为PostgreSQL数据库增加向量存储和检索功能，支持多种距离度量；与SQL无缝融合",
+        "applicableScene": "关系型数据+向量数据的混合检索、基于PostgreSQL的RAG系统、企业级混合数据仓库",
+        "technicalAdvantage": "无需单独部署向量库，复用PostgreSQL运维体系；支持SQL与向量检索混合查询；稳定性高，适配生产环境"
+    },
+    {
+        "category": "Databases & Search",
+        "name": "Pinecone",
+        "githubUrl": "无开源仓库（商业云服务）",
+        "corePosition": "云端向量数据库服务",
+        "coreFunction": "全托管的云端向量数据库，支持向量存储、检索、自动扩缩容、索引优化；提供REST API调用",
+        "applicableScene": "云端RAG系统、大规模分布式向量检索、SaaS级AI应用的向量存储",
+        "technicalAdvantage": "全托管服务，无需运维；自动扩缩容，按需计费；检索速度快，适配海量向量；与主流LLM/框架集成"
+    },
+    {
+        "category": "Databases & Search",
+        "name": "SQLModel",
+        "githubUrl": "https://github.com/tiangolo/sqlmodel",
+        "corePosition": "Python SQL数据库库",
+        "coreFunction": "结合Pydantic和SQLAlchemy，实现数据模型与数据库表的统一定义；支持类型检查、数据验证、SQL查询",
+        "applicableScene": "Python生态的数据库开发、ORM框架开发、数据验证与数据库操作一体化",
+        "technicalAdvantage": "类型安全，原生支持Python类型注解；数据验证与数据库操作无缝融合；学习成本低，适配FastAPI等框架"
+    },
+
+    // Developer Tools 分类
+    {
+        "category": "Developer Tools",
+        "name": "behave",
+        "githubUrl": "https://github.com/behave/behave",
+        "corePosition": "行为驱动开发（BDD）测试框架",
+        "coreFunction": "基于Gherkin语法（自然语言）定义测试用例，实现自动化测试；支持Python步骤定义",
+        "applicableScene": "团队协作的自动化测试、业务人员可参与的测试用例设计、端到端测试",
+        "technicalAdvantage": "自然语言用例，非技术人员可理解；与Python生态深度融合，步骤定义灵活；支持多平台/多框架"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Cookiecutter",
+        "githubUrl": "https://github.com/cookiecutter/cookiecutter",
+        "corePosition": "项目模板生成工具",
+        "coreFunction": "通过模板快速生成项目骨架，支持自定义模板变量、跨语言项目；提供海量官方/社区模板",
+        "applicableScene": "新项目快速初始化、团队统一项目规范、跨语言项目开发",
+        "technicalAdvantage": "无代码，通过命令行生成；模板生态丰富，支持自定义；跨平台，适配Windows/Mac/Linux"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "DrawDB",
+        "githubUrl": "https://github.com/drawdb-io/drawdb",
+        "corePosition": "可视化数据库schema设计工具",
+        "coreFunction": "可视化设计数据库表结构、关联关系、索引；支持一键导出SQL脚本、多种数据库适配",
+        "applicableScene": "数据库架构设计、团队协作的schema评审、快速生成数据库建表语句",
+        "technicalAdvantage": "拖拽式操作，可视化效果直观；支持主流数据库（MySQL/PostgreSQL/SQLite）；一键导出，开发效率高"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "DVC",
+        "githubUrl": "https://github.com/iterative/dvc",
+        "corePosition": "数据版本控制工具",
+        "coreFunction": "为机器学习项目的数据集/模型实现版本控制，支持增量同步、远程存储、分支管理；兼容Git",
+        "applicableScene": "机器学习项目版本管理、数据集/模型追溯、团队协作的ML开发、大文件版本控制",
+        "technicalAdvantage": "与Git无缝集成，操作方式一致；支持海量数据增量同步，节省存储；适配主流云存储，跨平台"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Faker",
+        "githubUrl": "https://github.com/joke2k/faker",
+        "corePosition": "假数据生成器",
+        "coreFunction": "生成各类模拟假数据（姓名、地址、手机号、邮箱、时间、数字）；支持多语言、自定义数据",
+        "applicableScene": "项目测试、演示环境数据构建、隐私数据脱敏、测试用例数据生成",
+        "technicalAdvantage": "支持多语言/多地区数据；API丰富，可生成近百种数据类型；轻量级，易集成，支持自定义扩展"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Git",
+        "githubUrl": "https://github.com/git/git",
+        "corePosition": "分布式版本控制工具",
+        "coreFunction": "实现代码的版本管理、分支开发、合并、回溯；支持本地仓库和远程仓库协作",
+        "applicableScene": "软件开发团队协作、代码版本追溯、多分支并行开发、代码备份",
+        "technicalAdvantage": "分布式架构，无需中心服务器；开源免费，行业标准；生态丰富，支持各类开发工具集成"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Git Submodules",
+        "githubUrl": "无独立仓库（Git内置功能）",
+        "corePosition": "Git嵌套仓库管理工具",
+        "coreFunction": "将一个Git仓库作为子模块嵌入主仓库，实现仓库的嵌套管理、独立版本控制",
+        "applicableScene": "大型项目的模块解耦、第三方开源库的本地集成、多仓库协同开发",
+        "technicalAdvantage": "子仓库独立版本管理，不影响主仓库；按需拉取子仓库代码，节省资源；与Git原生集成，操作简单"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Gradio",
+        "githubUrl": "https://github.com/gradio-app/gradio",
+        "corePosition": "ML模型可视化界面工具",
+        "coreFunction": "快速为机器学习模型生成网页交互界面，支持输入输出自定义、一键分享；适配主流ML框架",
+        "applicableScene": "模型演示、快速原型验证、非技术人员使用模型、模型在线测试",
+        "technicalAdvantage": "低代码/无代码，几行代码生成界面；支持一键分享公网链接；与Python/ML生态深度融合，跨框架兼容"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Hydra",
+        "githubUrl": "https://github.com/facebookresearch/hydra",
+        "corePosition": "Python配置管理工具",
+        "coreFunction": "实现分层、可组合的配置管理，支持配置覆盖、多环境配置、命令行参数传递；基于YAML/JSON",
+        "applicableScene": "Python项目的多环境配置、复杂项目的配置解耦、机器学习实验的参数管理",
+        "technicalAdvantage": "分层配置，逻辑清晰；支持命令行动态覆盖配置；轻量级，易集成，支持自定义插件"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Loguru",
+        "githubUrl": "https://github.com/Delgan/loguru",
+        "corePosition": "Python日志库",
+        "coreFunction": "简化Python日志配置，支持彩色输出、文件滚动、异常捕获、结构化日志；无需复杂配置",
+        "applicableScene": "Python项目的日志开发、异常跟踪、生产环境日志管理、轻量化日志需求",
+        "technicalAdvantage": "开箱即用，零配置启动；API简洁，开发效率高；支持结构化日志（JSON），便于日志分析；异常捕获完整，便于问题排查"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "marimo",
+        "githubUrl": "https://github.com/marimo-team/marimo",
+        "corePosition": "Python响应式笔记本",
+        "coreFunction": "新一代Python笔记本，支持响应式编程、实时运行、模块化、可部署为网页/应用；兼容Jupyter代码",
+        "applicableScene": "交互式数据分析、Python原型开发、数据可视化演示、笔记本应用部署",
+        "technicalAdvantage": "响应式运行，修改代码实时更新结果；模块化设计，代码复用性高；可直接部署为网页，无需额外开发"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "mypy",
+        "githubUrl": "https://github.com/python/mypy",
+        "corePosition": "Python静态类型检查器",
+        "coreFunction": "实现Python代码的静态类型检查，检测类型错误、隐式类型转换；支持类型注解",
+        "applicableScene": "大型Python项目开发、团队协作的代码规范、类型安全的项目开发",
+        "technicalAdvantage": "静态检查，提前发现错误；支持渐进式类型检查，适配老项目；与主流IDE/开发工具集成"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Pandera",
+        "githubUrl": "https://github.com/unionai-oss/pandera",
+        "corePosition": "DataFrame验证工具",
+        "coreFunction": "为Pandas/Polars DataFrame实现数据验证，支持类型检查、范围校验、自定义规则、数据抽样验证",
+        "applicableScene": "数据处理项目的质量管控、机器学习数据预处理验证、批量数据校验",
+        "technicalAdvantage": "专为DataFrame设计，验证规则丰富；与Pandas/Polars无缝集成；支持装饰器/链式调用，开发效率高"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "pdoc",
+        "githubUrl": "https://github.com/mitmproxy/pdoc",
+        "corePosition": "Python API文档生成工具",
+        "coreFunction": "从Python代码的注释和类型注解自动生成API文档，支持HTML/Markdown/PDF格式；实时预览",
+        "applicableScene": "Python项目的API文档自动生成、开源项目文档维护、团队协作的文档管理",
+        "technicalAdvantage": "零配置，一键生成；支持类型注解，文档更精准；实时预览，便于调试；生成的文档美观，易阅读"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Poetry",
+        "githubUrl": "https://github.com/python-poetry/poetry",
+        "corePosition": "Python依赖管理工具",
+        "coreFunction": "实现Python项目的依赖管理、虚拟环境创建、包打包、发布；支持pyproject.toml配置",
+        "applicableScene": "Python项目的依赖管控、包开发与发布、团队协作的环境统一",
+        "technicalAdvantage": "虚拟环境自动管理，无需手动创建；依赖锁定，保证环境一致性；支持包打包和发布到PyPI；配置简洁，替代pip/setup.py"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "pre-commit",
+        "githubUrl": "https://github.com/pre-commit/pre-commit",
+        "corePosition": "Git钩子框架",
+        "coreFunction": "在Git提交/推送前执行自定义钩子脚本（如代码检查、格式化、语法检测）；支持社区现成钩子",
+        "applicableScene": "团队代码规范统一、提交前的自动化检查、代码质量管控、避免低级错误",
+        "technicalAdvantage": "钩子可自定义，支持社区海量现成钩子；轻量级，与Git原生集成；按需启用，不影响开发效率"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "prek",
+        "githubUrl": "https://github.com/ekzhang/prek",
+        "corePosition": "Rust-powered pre-commit",
+        "coreFunction": "Rust实现的pre-commit增强版，提升钩子执行速度；兼容pre-commit的所有钩子和配置",
+        "applicableScene": "对pre-commit执行速度有要求的项目、大规模Python项目的提交检查",
+        "technicalAdvantage": "基于Rust开发，执行速度比原版快数倍；完全兼容pre-commit，无需修改配置；轻量级，低资源占用"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Pydantic",
+        "githubUrl": "https://github.com/pydantic/pydantic",
+        "corePosition": "Python数据验证库",
+        "coreFunction": "基于类型注解实现数据验证、解析、序列化；支持自定义验证规则、数据模型定义",
+        "applicableScene": "Python API开发、数据解析、配置验证、机器学习参数校验",
+        "technicalAdvantage": "类型安全，原生支持Python类型注解；验证规则丰富，可自定义；解析速度快，适配生产环境；与FastAPI等框架深度融合"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "pytest",
+        "githubUrl": "https://github.com/pytest-dev/pytest",
+        "corePosition": "Python测试框架",
+        "coreFunction": "实现Python代码的自动化测试，支持测试用例发现、参数化、夹具、插件扩展；兼容unittest",
+        "applicableScene": "Python项目的单元测试、集成测试、端到端测试、团队协作测试",
+        "technicalAdvantage": "测试用例编写简洁，开发效率高；插件生态丰富，功能可扩展；支持参数化测试，覆盖更多场景；与主流IDE/开发工具集成"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Ruff",
+        "githubUrl": "https://github.com/astral-sh/ruff",
+        "corePosition": "Python linter和formatter",
+        "coreFunction": "基于Rust开发的Python代码检查和格式化工具，兼容Flake8/Black/isort等工具的规则；速度极快",
+        "applicableScene": "Python代码规范检查、自动格式化、大规模项目的代码质量管控",
+        "technicalAdvantage": "速度远超传统工具（100-1000倍）；兼容主流检查规则，迁移成本低；单工具替代多工具，配置简洁；支持按需开启规则"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "Slim",
+        "githubUrl": "https://github.com/slimtoolkit/slim",
+        "corePosition": "Docker镜像轻量化工具",
+        "coreFunction": "优化Docker镜像，移除无用文件、压缩层、减少体积；支持自动分析和优化，无需修改Dockerfile",
+        "applicableScene": "Docker镜像构建、容器化应用部署、边缘设备的容器运行、镜像仓库存储优化",
+        "technicalAdvantage": "自动优化，无需修改Dockerfile；镜像体积可减少70%以上；不影响镜像功能，兼容性高；支持主流基础镜像"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "ty",
+        "githubUrl": "https://github.com/astral-sh/ty",
+        "corePosition": "Rust-based type checker",
+        "coreFunction": "Rust实现的Python静态类型检查器，比mypy更快；支持Python最新类型注解特性",
+        "applicableScene": "对类型检查速度有要求的项目、大规模Python项目、快速类型检查需求",
+        "technicalAdvantage": "基于Rust开发，检查速度远超mypy；支持Python 3.10+最新类型特性；轻量级，配置简洁；与主流IDE集成"
+    },
+    {
+        "category": "Developer Tools",
+        "name": "uv",
+        "githubUrl": "https://github.com/astral-sh/uv",
+        "corePosition": "Python包管理器",
+        "coreFunction": "新一代Python包管理器，替代pip/Poetry，实现快速包安装、依赖解析、虚拟环境管理；基于Rust开发",
+        "applicableScene": "Python包安装、项目依赖管理、虚拟环境创建、快速包开发",
+        "technicalAdvantage": "安装速度比pip快10-100倍；依赖解析高效，避免版本冲突；支持虚拟环境自动管理；兼容pip的所有命令，迁移成本低"
+    },
+
+    // Python Built-ins 分类
+    {
+        "category": "Python Built-ins",
+        "name": "dataclass",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python数据类装饰器",
+        "coreFunction": "快速定义数据类，自动生成__init__/__repr__/__eq__等魔术方法；支持类型注解、默认值",
+        "applicableScene": "Python简单数据模型定义、轻量级数据存储、无需复杂逻辑的类开发",
+        "technicalAdvantage": "开箱即用，一行装饰器实现；自动生成魔术方法，减少样板代码；支持类型注解，提升代码可读性；Python3.7+原生支持"
+    },
+    {
+        "category": "Python Built-ins",
+        "name": "difflib",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python序列匹配库",
+        "coreFunction": "实现字符串/序列的相似度匹配、差异对比、补丁生成；支持多种匹配算法",
+        "applicableScene": "文本差异对比、代码对比、序列相似度计算、数据去重",
+        "technicalAdvantage": "Python标准库，无需额外安装；算法丰富，适配不同匹配场景；轻量级，易上手"
+    },
+    {
+        "category": "Python Built-ins",
+        "name": "itertools",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python迭代工具集",
+        "coreFunction": "提供各类高效的迭代器工具（无限迭代、组合、排列、分组）；基于生成器，内存友好",
+        "applicableScene": "循环遍历优化、组合排列计算、大数据迭代处理、内存高效的迭代任务",
+        "technicalAdvantage": "Python标准库，无需额外安装；生成器实现，内存占用极低；迭代效率高，比手动编写快；工具丰富，覆盖大部分迭代场景"
+    },
+    {
+        "category": "Python Built-ins",
+        "name": "namedtuple",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python不可变数据容器",
+        "coreFunction": "创建不可变的元组子类，支持按属性名访问元素；兼具元组的性能和类的可读性",
+        "applicableScene": "轻量级不可变数据存储、数据传输、无需修改的固定结构数据",
+        "technicalAdvantage": "不可变，线程安全；性能与元组一致，比字典快；支持属性名访问，可读性高；Python标准库，无需额外安装"
+    },
+    {
+        "category": "Python Built-ins",
+        "name": "regex",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python模式匹配模块",
+        "coreFunction": "实现正则表达式的匹配、搜索、替换、分割；支持高级正则特性（如正向预查、分组）",
+        "applicableScene": "文本匹配、数据提取、字符串清洗、格式校验",
+        "technicalAdvantage": "Python标准库，无需额外安装；支持大部分正则语法，功能强大；API简洁，开发效率高；适配各种文本处理场景"
+    },
+    {
+        "category": "Python Built-ins",
+        "name": "tempfile",
+        "githubUrl": "无独立仓库（Python标准库，源码见CPython）",
+        "corePosition": "Python临时文件处理工具",
+        "coreFunction": "创建临时文件/目录，支持自动清理、临时路径生成；适配不同操作系统",
+        "applicableScene": "临时数据存储、批量文件处理的临时缓存、无需持久化的文件操作",
+        "technicalAdvantage": "自动清理，避免文件残留；跨平台兼容，适配Windows/Mac/Linux；支持多种临时文件模式；Python标准库，无需额外安装"
+    },
+
+    // Text Processing 分类
+    {
+        "category": "Text Processing",
+        "name": "MarkItDown",
+        "githubUrl": "https://github.com/markitdown/markitdown",
+        "corePosition": "文件转Markdown工具",
+        "coreFunction": "将多格式文件（Word、Excel、PPT、PDF、HTML）转换为Markdown格式；保留原文档的排版结构",
+        "applicableScene": "文档格式统一、知识库构建、Markdown博客创作、批量文档转换",
+        "technicalAdvantage": "支持多格式输入，转换效果好；保留标题、列表、表格等结构；轻量级，可批量处理；部分版本支持在线转换"
+    },
+    {
+        "category": "Text Processing",
+        "name": "PRegEx",
+        "githubUrl": "https://github.com/pregex/pregex",
+        "corePosition": "可编程正则表达式工具",
+        "coreFunction": "通过编程方式构建、修改、执行正则表达式；支持正则规则的可视化、调试",
+        "applicableScene": "复杂正则表达式开发、正则规则动态生成、正则调试与优化",
+        "technicalAdvantage": "可视化正则规则，便于调试；可编程构建，适配动态正则需求；支持正则语法检查，避免错误；轻量级，易集成"
+    },
+    {
+        "category": "Text Processing",
+        "name": "pyparsing",
+        "githubUrl": "https://github.com/pyparsing/pyparsing",
+        "corePosition": "Python文本解析库",
+        "coreFunction": "通过自定义语法规则实现复杂文本的解析；支持无正则的文本提取、语法分析",
+        "applicableScene": "非标准化文本解析、自定义格式文本处理、简单编程语言解析、配置文件解析",
+        "technicalAdvantage": "无需编写复杂正则，开发效率高；语法规则可自定义，灵活性强；报错信息友好，便于调试；与Python生态深度融合"
+    },
+    {
+        "category": "Text Processing",
+        "name": "RapidFuzz",
+        "githubUrl": "https://github.com/maxbachmann/RapidFuzz",
+        "corePosition": "Python模糊字符串匹配库",
+        "coreFunction": "实现字符串的模糊匹配、相似度计算、去重、匹配排序；支持多种匹配算法",
+        "applicableScene": "文本去重、相似性检索、错别字检测、模糊查询",
+        "technicalAdvantage": "匹配速度快，精度高；支持多语言，适配中英文；轻量级，无需额外依赖；API简洁，易上手"
+    },
+
+    // Utilities 分类
+    {
+        "category": "Utilities",
+        "name": "Codon",
+        "githubUrl": "https://github.com/exaloop/codon",
+        "corePosition": "Python JIT编译器",
+        "coreFunction": "将Python代码即时编译为机器码，提升执行速度；支持大部分Python语法和NumPy/Pandas",
+        "applicableScene": "Python代码性能优化、计算密集型Python任务、无需重写的性能提升",
+        "technicalAdvantage": "无需修改Python代码，直接编译；执行速度比原生Python快10-100倍；支持NumPy/Pandas，适配数据科学场景；跨平台兼容"
+    },
+    {
+        "category": "Utilities",
+        "name": "handcalcs",
+        "githubUrl": "https://github.com/connorferster/handcalcs",
+        "corePosition": "LaTeX工程计算工具",
+        "coreFunction": "将Python的数学计算代码转换为LaTeX格式的计算公式和结果；支持分步计算、格式化",
+        "applicableScene": "科研论文写作、工程报告编写、数学计算文档生成、LaTeX公式快速构建",
+        "technicalAdvantage": "无需手动编写LaTeX公式，自动转换；支持分步计算，保留计算过程；与Jupyter无缝集成，交互式计算；公式格式美观，符合出版标准"
+    },
+    {
+        "category": "Utilities",
+        "name": "latexify",
+        "githubUrl": "https://github.com/odashi/latexify_py",
+        "corePosition": "LaTeX表达式生成工具",
+        "coreFunction": "将Python的数学表达式（如函数、公式）转换为LaTeX代码；支持NumPy/SciPy表达式",
+        "applicableScene": "科研论文、数学文档、课件的LaTeX公式生成、快速公式编写",
+        "technicalAdvantage": "支持主流数学库表达式，转换精度高；API简洁，一行代码生成；轻量级，无需额外依赖；支持自定义公式格式"
+    },
+    {
+        "category": "Utilities",
+        "name": "Quarkdown",
+        "githubUrl": "https://github.com/quarkdown/quarkdown",
+        "corePosition": "Markdown转LaTeX工具",
+        "coreFunction": "从Markdown文档生成LaTeX级别的专业文档；支持Markdown扩展语法、自定义模板",
+        "applicableScene": "专业文档写作、科研论文初稿、出版级文档生成、Markdown文档升级",
+        "technicalAdvantage": "Markdown语法编写，学习成本低；生成的LaTeX文档符合出版标准；支持自定义模板，适配不同场景；轻量级，可批量处理"
+    },
+    {
+        "category": "Utilities",
+        "name": "rembg",
+        "githubUrl": "https://github.com/danielgatis/rembg",
+        "corePosition": "图片背景移除工具",
+        "coreFunction": "自动识别图片主体，移除背景；支持批量处理、透明背景、自定义蒙版",
+        "applicableScene": "图片编辑、产品图处理、海报制作、批量图片背景优化",
+        "technicalAdvantage": "无需手动抠图，自动化处理；抠图精度高，支持复杂主体；支持批量处理，开发效率高；轻量级，可集成到Python项目"
+    },
+    {
+        "category": "Utilities",
+        "name": "SymPy",
+        "githubUrl": "https://github.com/sympy/sympy",
+        "corePosition": "Python符号数学库",
+        "coreFunction": "实现符号计算（代数、微积分、线性代数、数论、几何）；支持符号表达式化简、求解、可视化",
+        "applicableScene": "数学建模、科研计算、工程数学、符号推导、数学教学",
+        "technicalAdvantage": "纯Python实现，无需额外依赖；符号计算功能完善，媲美Mathematica/Matlab；支持可视化，便于结果展示；文档完善，社区活跃"
+    },
+    {
+        "category": "Utilities",
+        "name": "whenever",
+        "githubUrl": "https://github.com/leapfrogtechnology/whenever",
+        "corePosition": "Python日期时间库",
+        "coreFunction": "简化Python的日期时间处理，支持自然语言解析、时间计算、时区转换；兼容datetime模块",
+        "applicableScene": "日期时间解析、时间差计算、时区转换、自然语言时间处理",
+        "technicalAdvantage": "API简洁，比datetime更易上手；支持自然语言解析（如\"3天前\"）；时区转换功能完善；轻量级，易集成"
+    },
+
+    // Visualization 分类
+    {
+        "category": "Visualization",
+        "name": "adjustText",
+        "githubUrl": "https://github.com/Phlya/adjustText",
+        "corePosition": "Matplotlib标签定位工具",
+        "coreFunction": "自动调整Matplotlib图表中的文本标签位置，避免重叠；支持自定义调整规则",
+        "applicableScene": "数据可视化图表制作、标签密集的图表绘制、专业报表可视化",
+        "technicalAdvantage": "专为Matplotlib设计，无缝集成；自动避障，无需手动调整标签；支持自定义调整策略；轻量级，无额外依赖"
+    },
+    {
+        "category": "Visualization",
+        "name": "Altair",
+        "githubUrl": "https://github.com/altair-viz/altair",
+        "corePosition": "Python声明式可视化库",
+        "coreFunction": "基于Vega/Vega-Lite的声明式可视化，通过定义数据和映射关系生成图表；支持交互式可视化",
+        "applicableScene": "探索性数据分析、交互式图表制作、轻量级数据可视化、快速报表生成",
+        "technicalAdvantage": "声明式语法，代码简洁；交互式效果丰富，无需额外开发；支持多种图表类型，适配不同场景；与Pandas无缝集成"
+    },
+    {
+        "category": "Visualization",
+        "name": "Great Tables",
+        "githubUrl": "https://github.com/posit-dev/great-tables",
+        "corePosition": "Python出版级表格工具",
+        "coreFunction": "生成可用于出版的专业表格，支持自定义样式、格式、分页；支持导出为HTML/PDF/LaTeX",
+        "applicableScene": "科研论文表格、专业报告制作、出版级文档表格、高质量数据展示",
+        "technicalAdvantage": "表格样式丰富，符合出版标准；支持多种导出格式；与Pandas/Polars无缝集成；API简洁，易上手"
+    },
+    {
+        "category": "Visualization",
+        "name": "Manim",
+        "githubUrl": "https://github.com/3b1b/manim",
+        "corePosition": "Python数学动画引擎",
+        "coreFunction": "生成专业的数学动画（如公式推导、几何图形、数据可视化动画）；支持自定义动画效果",
+        "applicableScene": "数学教学课件、科研成果演示、数学动画视频制作、几何原理讲解",
+        "technicalAdvantage": "专为数学动画设计，效果专业；支持复杂公式和几何图形；可导出为视频/图片；开源免费，社区活跃"
+    },
+    {
+        "category": "Visualization",
+        "name": "Matplotlib",
+        "githubUrl": "https://github.com/matplotlib/matplotlib",
+        "corePosition": "Python经典绘图库",
+        "coreFunction": "实现各类静态/动态/交互式图表绘制（折线图、柱状图、散点图、热力图等）；支持自定义样式、布局",
+        "applicableScene": "数据可视化、科研绘图、报表制作、日常数据分析图表生成",
+        "technicalAdvantage": "Python可视化生态核心，图表类型最丰富；高度可定制，支持精细调整；文档完善，社区活跃；与Python数据科学库深度融合"
+    },
+    {
+        "category": "Visualization",
+        "name": "Plotly",
+        "githubUrl": "https://github.com/plotly/plotly.py",
+        "corePosition": "Python交互式可视化库",
+        "coreFunction": "生成高质量的交互式图表（折线图、柱状图、3D图、地图等）；支持网页展示、动态交互",
+        "applicableScene": "交互式数据分析、网页可视化、大屏展示、复杂数据可视化",
+        "technicalAdvantage": "交互式效果优异，支持缩放/悬浮/筛选；可直接导出为网页，无需额外开发；支持3D/地图等复杂图表；与Pandas无缝集成"
+    },
+    {
+        "category": "Visualization",
+        "name": "Yellowbrick",
+        "githubUrl": "https://github.com/DistrictDataLabs/yellowbrick",
+        "corePosition": "Python机器学习可视化库",
+        "coreFunction": "专为机器学习设计的可视化工具，支持特征分析、模型评估、超参数调优的可视化；适配Scikit-learn",
+        "applicableScene": "机器学习特征工程、模型性能分析、超参数调优、ML实验可视化",
+        "technicalAdvantage": "专为ML场景设计，可视化指标贴合ML需求；与Scikit-learn深度融合，无缝集成；支持多种模型评估图表；轻量级，易上手"
+    }
+];
+
+        // ======================== 新增专栏课程数据 ========================
+        const courseData = [
+            {
+                "course name": "Excel数据分析与模拟决策",
+                "course url": "https://blog.csdn.net/practicer2015/category_12812928.html",
+                "course 简介": "主要面向使用Excel的用户，讲解Excel的数据分析，模拟分决策内容，内容涵盖基于Excel的统计分析，数据生成，采样，假设检验，线性回归，线性规划等内容，覆盖了Excel数据分析决策的主要内通"
+            },
+            {
+                "course name": "DeepSeek大模型私有化落地指南",
+                "course url": "https://blog.csdn.net/practicer2015/category_12771434.html",
+                "course 简介": "原《神经网络》专栏升级，原有内容继续保留。升级后的专栏为DeepSeek大模型私有化落地指南，围绕Deepseek实际落地的需求展开"
+            },
+            {
+                "course name": "回归分析",
+                "course url": "https://blog.csdn.net/practicer2015/category_12759120.html",
+                "course 简介": "回归分析是一种用于理解和量化变量之间关系的统计方法。无论是在社会科学、自然科学、经济学，还是在工程学、医学等领域，回归分析都被广泛应用。通过构建模型，我们可以探索和解释变量之间的关联，并利用这些模型进行预测和推断。"
+            },
+            {
+                "course name": "Excel数据分析与模拟决策-高级",
+                "course url": "https://blog.csdn.net/practicer2015/category_12814730.html",
+                "course 简介": "基于Excel，覆盖线性规划，预测，项目管理，排队，计算机仿真等深度分析和模型应用。"
+            },
+            {
+                "course name": "大模型应用实战",
+                "course url": "https://blog.csdn.net/practicer2015/category_12989357.html",
+                "course 简介": "大模型应用实战含微调、提示工程，API集成、部署优化等，结合行业案例解析技术落地场景。另收录包含RAG专题，Agent专题，LLM重构数据科学流程专题，端侧AI专题。"
+            }
+        ];
+
+        // ======================== 页面初始化与渲染逻辑 ========================
+        // 初始化仓库列表
+        function renderRepoList() {
+            const repoList = document.getElementById('repo-list');
+            repoList.innerHTML = '';
+
+            repoData.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'repo-card';
+
+                card.innerHTML = `
+                    <div class="repo-name">
+                        <a href="${repo['repository url']}" target="_blank">${repo['repository name']}</a>
+                    </div>
+                    <div class="repo-desc">${repo['repository 简介']}</div>
+                    <div class="repo-url">${repo['repository url']}</div>
+                `;
+
+                repoList.appendChild(card);
+            });
+
+            // 更新仓库统计数
+            document.getElementById('repo-count').textContent = repoData.length;
+        }
+
+        // 初始化工具列表
+        function renderToolList(category = 'all') {
+            const toolList = document.getElementById('tool-list');
+            const emptyState = document.getElementById('empty-state');
+            toolList.innerHTML = '';
+
+            // 筛选工具数据
+            let filteredTools = toolData;
+            if (category !== 'all') {
+                filteredTools = toolData.filter(tool => tool.category === category);
+            }
+
+            // 渲染工具卡片
+            if (filteredTools.length > 0) {
+                emptyState.style.display = 'none';
+                filteredTools.forEach(tool => {
+                    const card = document.createElement('div');
+                    card.className = 'tool-card';
+
+                    card.innerHTML = `
+                        <div class="tool-category">${tool.category}</div>
+                        <div class="tool-name">
+                            <a href="${tool.githubUrl !== '无开源仓库（商业API服务）' ? tool.githubUrl : '#'}" target="_blank">${tool.name}</a>
+                        </div>
+                        <div class="tool-info">
+                            <div class="tool-info-title">核心定位</div>
+                            <div class="tool-info-content">${tool.corePosition}</div>
+                        </div>
+                        <div class="tool-info">
+                            <div class="tool-info-title">核心功能</div>
+                            <div class="tool-info-content">${tool.coreFunction}</div>
+                        </div>
+                        <div class="tool-info">
+                            <div class="tool-info-title">适用场景</div>
+                            <div class="tool-info-content">${tool.applicableScene}</div>
+                        </div>
+                        <div class="tool-info">
+                            <div class="tool-info-title">技术优势</div>
+                            <div class="tool-info-content">${tool.technicalAdvantage}</div>
+                        </div>
+                        <div class="tool-url">${tool.githubUrl}</div>
+                    `;
+
+                    toolList.appendChild(card);
+                });
+            } else {
+                emptyState.style.display = 'block';
+            }
+
+            // 更新工具统计数
+            document.getElementById('tool-count').textContent = toolData.length;
+            document.getElementById('category-count').textContent = [...new Set(toolData.map(tool => tool.category))].length;
+            document.getElementById('current-category').textContent = category === 'all' ? '全部工具' : category;
+            document.getElementById('current-count').textContent = filteredTools.length;
+        }
+
+        // 初始化课程列表
+        function renderCourseList() {
+            const courseList = document.getElementById('course-list');
+            courseList.innerHTML = '';
+
+            courseData.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+
+                card.innerHTML = `
+                    <div class="course-name">
+                        <a href="${course['course url']}" target="_blank">${course['course name']}</a>
+                    </div>
+                    <div class="course-desc">${course['course 简介']}</div>
+                    <div class="course-url">${course['course url']}</div>
+                `;
+
+                courseList.appendChild(card);
+            });
+
+            // 更新课程统计数
+            document.getElementById('course-count').textContent = courseData.length;
+        }
+
+        // 模块切换逻辑
+        function initModuleSwitch() {
+            const moduleBtns = document.querySelectorAll('.module-btn');
+            const modules = document.querySelectorAll('.module');
+
+            moduleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 移除所有active类
+                    moduleBtns.forEach(b => b.classList.remove('active'));
+                    modules.forEach(m => m.classList.remove('active'));
+
+                    // 添加当前active类
+                    btn.classList.add('active');
+                    const moduleId = `${btn.dataset.module}-module`;
+                    document.getElementById(moduleId).classList.add('active');
+
+                    // 显示/隐藏工具分类统计
+                    if (btn.dataset.module === 'tool') {
+                        document.getElementById('current-tool-stats').style.display = 'block';
+                    } else {
+                        document.getElementById('current-tool-stats').style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // 工具分类切换逻辑
+        function initCategorySwitch() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 移除所有active类
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // 添加当前active类
+                    btn.classList.add('active');
+                    // 重新渲染工具列表
+                    renderToolList(btn.dataset.category);
+                });
+            });
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            renderRepoList();
+            renderToolList();
+            renderCourseList();
+            initModuleSwitch();
+            initCategorySwitch();
+        });
+    </script>
+</body>
+</html>

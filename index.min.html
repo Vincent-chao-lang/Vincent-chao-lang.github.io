@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent-chao-lang 资源总览 - 仓库列表 & 工具手册 & 专栏课程</title>
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <div class="personal-info">
+        <div class="info-item"><span class="info-icon">✉️</span><a href="mailto:2819699195@qq.com">2819699195@qq.com</a></div>
+        <div class="info-item qrcode-container"><span class="info-icon">📱</span><span>公众号</span><img src="qrcode_for_gh_aaf42e03e210_258.jpg" alt="公众号二维码" class="qrcode-img"></div>
+        <div class="info-item"><span class="info-icon">💻</span><a href="https://github.com/Vincent-chao-lang" target="_blank">Vincent-chao-lang</a></div>
+    </div>
+    <header>
+        <h1>Chao's AI 实验室</h1>
+        <p class="subtitle">GitHub仓库列表 & 实用工具 & 专栏课程 (至2026年1月1日)</p>
+    </header>
+    <div class="module-nav">
+        <button class="module-btn active" data-module="repo">GitHub仓库列表</button>
+        <button class="module-btn" data-module="tool">实用工具</button>
+        <button class="module-btn" data-module="course">专栏课程</button>
+    </div>
+    <div class="stats">
+        <div class="stats-item"><strong>仓库统计：</strong> 共收录 <span id="repo-count">-</span> 个GitHub仓库</div>
+        <div class="stats-item"><strong>工具统计：</strong> 共收录 <span id="tool-count">-</span> 个工具，分为 <span id="category-count">-</span> 个大类</div>
+        <div class="stats-item"><strong>课程统计：</strong> 共收录 <span id="course-count">-</span> 个专栏课程</div>
+        <div class="stats-item" id="current-tool-stats" style="display:none">当前显示：<span id="current-category">全部工具</span> (<span id="current-count">0</span> 个)</div>
+    </div>
+    <div class="module active" id="repo-module">
+        <div class="repo-container" id="repo-list"></div>
+    </div>
+    <div class="module" id="tool-module">
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">全部工具</button>
+            <button class="category-btn" data-category="AI & ML">AI & ML</button>
+            <button class="category-btn" data-category="Data Processing">Data Processing</button>
+            <button class="category-btn" data-category="Databases & Search">Databases & Search</button>
+            <button class="category-btn" data-category="Developer Tools">Developer Tools</button>
+            <button class="category-btn" data-category="Python Built-ins">Python Built-ins</button>
+            <button class="category-btn" data-category="Text Processing">Text Processing</button>
+            <button class="category-btn" data-category="Utilities">Utilities</button>
+            <button class="category-btn" data-category="Visualization">Visualization</button>
+        </div>
+        <div class="tool-container" id="tool-list"></div>
+        <div class="empty-state" id="empty-state" style="display:none">
+            <h3>暂无匹配的工具</h3>
+            <p>请选择其他分类查看</p>
+        </div>
+    </div>
+    <div class="module" id="course-module">
+        <div class="course-container" id="course-list"></div>
+    </div>
+    <script src="js/app.min.js"></script>
+</body>
+</html>
