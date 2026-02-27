@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent-chao-lang 最新仓库列表</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 页面主体样式 */
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e1e4e8;
+        }
+
+        h1 {
+            color: #24292e;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            color: #6a737d;
+            font-size: 1.1rem;
+        }
+
+        /* 仓库卡片容器 */
+        .repo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 仓库卡片样式 */
+        .repo-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid #0366d6;
+        }
+
+        .repo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 仓库标题样式 */
+        .repo-name {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .repo-name a {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .repo-name a:hover {
+            text-decoration: underline;
+        }
+
+        /* 仓库简介样式 */
+        .repo-desc {
+            color: #586069;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            min-height: 40px;
+        }
+
+        /* 链接样式 */
+        .repo-url {
+            font-size: 0.85rem;
+            color: #005cc5;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .repo-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .repo-card {
+                padding: 15px;
+            }
+        }
+
+        /* 统计信息 */
+        .stats {
+            max-width: 1400px;
+            margin: 20px auto 30px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 6px;
+            color: #24292e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Vincent-chao-lang 2026年仓库列表</h1>
+        <p class="subtitle">2026年1月1日创建的所有GitHub仓库</p>
+    </header>
+
+    <div class="stats">
+        <strong>统计信息：</strong> 共收录 <span id="repo-count">30</span> 个仓库
+    </div>
+
+    <div class="repo-container" id="repo-list">
+        <!-- 仓库卡片会通过JavaScript动态生成 -->
+    </div>
+
+    <script>
+        // 仓库数据
+        const repoData = [
+            {
+                "repository name": "lite_rag",
+                "repository url": "https://github.com/Vincent-chao-lang/lite_rag",
+                "repository 简介": "轻量型检索增强生成（RAG）相关的Python项目"
+            },
+            {
+                "repository name": "markdown_illustrator",
+                "repository url": "https://github.com/Vincent-chao-lang/markdown_illustrator",
+                "repository 简介": "Markdown文档自动配图"
+            },
+            {
+                "repository name": "shuqianApp",
+                "repository url": "https://github.com/Vincent-chao-lang/shuqianApp",
+                "repository 简介": "基于Swift开发的书签类应用项目"
+            },
+            {
+                "repository name": "mini_shop",
+                "repository url": "https://github.com/Vincent-chao-lang/mini_shop",
+                "repository 简介": "用于线下支付的小型商城相关项目"
+            },
+            {
+                "repository name": "quant_llm_pub",
+                "repository url": "https://github.com/Vincent-chao-lang/quant_llm_pub",
+                "repository 简介": "股票量化与大语言模型结合的公开项目"
+            },
+            {
+                "repository name": "btc_etf_monitor_pub",
+                "repository url": "https://github.com/Vincent-chao-lang/btc_etf_monitor_pub",
+                "repository 简介": "比特币ETF监控相关的公开项目"
+            },
+            {
+                "repository name": "learnQuant",
+                "repository url": "https://github.com/Vincent-chao-lang/learnQuant",
+                "repository 简介": "量化学习相关的Python项目"
+            },
+            {
+                "repository name": "agent-dev-dashboard-route3-githubpr",
+                "repository url": "https://github.com/Vincent-chao-lang/agent-dev-dashboard-route3-githubpr",
+                "repository 简介": "AI Coding协作开发工作台，基于Python开发"
+            },
+            {
+                "repository name": "Vincent-chao-lang.github.io",
+                "repository url": "https://github.com/Vincent-chao-lang/Vincent-chao-lang.github.io",
+                "repository 简介": "个人GitHub Pages静态网页项目，基于HTML开发"
+            },
+            {
+                "repository name": "mymini",
+                "repository url": "https://github.com/Vincent-chao-lang/mymini",
+                "repository 简介": "基于云开发的小程序项目"
+            },
+            {
+                "repository name": "labs",
+                "repository url": "https://github.com/Vincent-chao-lang/labs",
+                "repository 简介": "AI的实验性项目合集"
+            },
+            {
+                "repository name": "ppe_core",
+                "repository url": "https://github.com/Vincent-chao-lang/ppe_core",
+                "repository 简介": "PPE提示词增强工程框架，基于Python开发"
+            },
+            {
+                "repository name": "huiben-generator",
+                "repository url": "https://github.com/Vincent-chao-lang/huiben-generator",
+                "repository 简介": "绘本生成相关的Python项目"
+            },
+            {
+                "repository name": "Concise-decision-analysis",
+                "repository url": "https://github.com/Vincent-chao-lang/Concise-decision-analysis",
+                "repository 简介": "简洁的决策分析相关项目"
+            },
+            {
+                "repository name": "langchain-action",
+                "repository url": "https://github.com/Vincent-chao-lang/langchain-action",
+                "repository 简介": "与LangChain相关的操作项目，基于Jupyter Notebook开发"
+            },
+            {
+                "repository name": "ailearning",
+                "repository url": "https://github.com/Vincent-chao-lang/ailearning",
+                "repository 简介": "人工智能学习相关项目，基于Jupyter Notebook开发"
+            },
+            {
+                "repository name": "xiaochengxu",
+                "repository url": "https://github.com/Vincent-chao-lang/xiaochengxu",
+                "repository 简介": "基于JavaScript开发的小程序相关项目"
+            },
+            {
+                "repository name": "myblog",
+                "repository url": "https://github.com/Vincent-chao-lang/myblog",
+                "repository 简介": "个人博客项目，基于HTML开发，MIT协议"
+            }
+        ];
+
+        // 更新仓库数量统计
+        document.getElementById('repo-count').textContent = repoData.length;
+
+        // 获取仓库列表容器
+        const repoList = document.getElementById('repo-list');
+
+        // 生成仓库卡片
+        repoData.forEach(repo => {
+            // 创建卡片元素
+            const card = document.createElement('div');
+            card.className = 'repo-card';
+
+            // 构建卡片内容
+            card.innerHTML = `
+                <div class="repo-name">
+                    <a href="${repo['repository url']}" target="_blank">${repo['repository name']}</a>
+                </div>
+                <div class="repo-desc">${repo['repository 简介'] || '无简介'}</div>
+                <div class="repo-url">${repo['repository url']}</div>
+            `;
+
+            // 添加到容器中
+            repoList.appendChild(card);
+        });
+    </script>
+</body>
+</html>
