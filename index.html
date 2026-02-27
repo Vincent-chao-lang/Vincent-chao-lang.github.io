@@ -31,7 +31,8 @@
 
     <!-- 模块切换导航 -->
     <div class="module-nav">
-        <button class="module-btn active" data-module="repo">GitHub仓库列表</button>
+        <button class="module-btn active" data-module="digital">数字化转型&AI</button>
+        <button class="module-btn" data-module="repo">GitHub仓库列表</button>
         <button class="module-btn" data-module="tool">实用工具</button>
         <button class="module-btn" data-module="course">专栏课程</button>
         <button class="module-btn" data-module="quant">量化投资</button>
@@ -39,6 +40,9 @@
 
     <!-- 统计信息 -->
     <div class="stats">
+        <div class="stats-item">
+            <strong>数字化转型&AI：</strong> 共收录 <span id="digital-count">-</span> 篇文章
+        </div>
         <div class="stats-item">
             <strong>仓库统计：</strong> 共收录 <span id="repo-count">-</span> 个GitHub仓库
         </div>
@@ -56,8 +60,15 @@
         </div>
     </div>
 
+    <!-- 数字化转型&AI模块 -->
+    <div class="module active" id="digital-module">
+        <div class="digital-container" id="digital-list">
+            <!-- 文章卡片会通过JavaScript动态加载 -->
+        </div>
+    </div>
+
     <!-- 仓库列表模块 -->
-    <div class="module active" id="repo-module">
+    <div class="module" id="repo-module">
         <div class="repo-container" id="repo-list">
             <!-- 仓库卡片会通过JavaScript动态加载 -->
         </div>

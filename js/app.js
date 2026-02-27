@@ -1,9 +1,17 @@
 // ======================== 数据缓存 ========================
 const DataCache = {
+    digital: null,
     repos: null,
     tools: null,
     courses: null,
     quants: null,
+
+    async loadDigital() {
+        if (this.digital) return this.digital;
+        const response = await fetch('data/digital.json');
+        this.digital = await response.json();
+        return this.digital;
+    },
 
     async loadRepos() {
         if (this.repos) return this.repos;
@@ -49,6 +57,39 @@ function showLoading(containerId) {
 function hideLoading(containerId) {
     const loading = document.querySelector(`#${containerId} .loading-state`);
     if (loading) loading.remove();
+}
+
+async function renderDigitalList() {
+    const digitalList = document.getElementById('digital-list');
+    showLoading('digital-list');
+
+    try {
+        const articles = await DataCache.loadDigital();
+        hideLoading('digital-list');
+        digitalList.innerHTML = '';
+
+        articles.forEach(article => {
+            const card = document.createElement('div');
+            card.className = 'digital-card';
+            card.innerHTML = `
+                <div class="digital-title">
+                    <a href="${article.url}" target="_blank">${article.title}</a>
+                </div>
+                ${article.subtitle ? `<div class="digital-subtitle">${article.subtitle}</div>` : ''}
+                <div class="digital-url">${article.url}</div>
+            `;
+            digitalList.appendChild(card);
+        });
+
+        document.getElementById('digital-count').textContent = articles.length;
+    } catch (error) {
+        digitalList.innerHTML = `
+            <div class="empty-state">
+                <h3>数据加载失败</h3>
+                <p>请检查网络连接或刷新页面重试</p>
+            </div>
+        `;
+    }
 }
 
 async function renderRepoList() {
@@ -247,7 +288,9 @@ function initModuleSwitch() {
             }
 
             // 按需加载各模块数据
-            if (btn.dataset.module === 'repo' && document.getElementById('repo-list').children.length === 0) {
+            if (btn.dataset.module === 'digital' && document.getElementById('digital-list').children.length === 0) {
+                await renderDigitalList();
+            } else if (btn.dataset.module === 'repo' && document.getElementById('repo-list').children.length === 0) {
                 await renderRepoList();
             } else if (btn.dataset.module === 'course' && document.getElementById('course-list').children.length === 0) {
                 await renderCourseList();
@@ -276,6 +319,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     initModuleSwitch();
     initCategorySwitch();
 
-    // 默认加载仓库列表（首屏）
-    await renderRepoList();
+    // 默认加载数字化转型模块（首屏）
+    await renderDigitalList();
 });

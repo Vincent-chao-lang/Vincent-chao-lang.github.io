@@ -212,6 +212,58 @@ h1 {
     word-break: break-all;
 }
 
+/* 数字化转型&AI文章卡片样式 */
+.digital-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.digital-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid #8b5cf6;
+}
+
+.digital-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.digital-title {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.digital-title a {
+    color: #0366d6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.digital-title a:hover {
+    text-decoration: underline;
+}
+
+.digital-subtitle {
+    color: #8b5cf6;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.digital-url {
+    font-size: 0.75rem;
+    color: #6a737d;
+    margin-top: 10px;
+    word-break: break-all;
+}
+
 /* 工具卡片样式 */
 .tool-card {
     background: white;
@@ -456,18 +508,11 @@ h1 {
         flex-wrap: wrap;
     }
 
-    /* 移动设备上二维码默认显示 */
-    .qrcode-img {
-        display: block;
-        position: static;
-        margin-top: 5px;
-    }
-
     header {
         padding-top: 20px;
     }
 
-    .repo-container, .tool-container, .course-container, .quant-container {
+    .repo-container, .tool-container, .course-container, .quant-container, .digital-container {
         grid-template-columns: 1fr;
     }
 
@@ -475,7 +520,7 @@ h1 {
         font-size: 1.8rem;
     }
 
-    .repo-card, .tool-card, .course-card, .quant-card {
+    .repo-card, .tool-card, .course-card, .quant-card, .digital-card {
         padding: 15px;
     }
 
