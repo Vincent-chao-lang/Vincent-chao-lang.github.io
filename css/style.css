@@ -456,6 +456,13 @@ h1 {
         flex-wrap: wrap;
     }
 
+    /* 移动设备上二维码默认显示 */
+    .qrcode-img {
+        display: block;
+        position: static;
+        margin-top: 5px;
+    }
+
     header {
         padding-top: 20px;
     }
