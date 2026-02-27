@@ -34,6 +34,7 @@
         <button class="module-btn active" data-module="repo">GitHub仓库列表</button>
         <button class="module-btn" data-module="tool">实用工具</button>
         <button class="module-btn" data-module="course">专栏课程</button>
+        <button class="module-btn" data-module="quant">量化投资</button>
     </div>
 
     <!-- 统计信息 -->
@@ -46,6 +47,9 @@
         </div>
         <div class="stats-item">
             <strong>课程统计：</strong> 共收录 <span id="course-count">-</span> 个专栏课程
+        </div>
+        <div class="stats-item">
+            <strong>量化投资：</strong> 共收录 <span id="quant-count">-</span> 个项目
         </div>
         <div class="stats-item" id="current-tool-stats" style="display: none;">
             当前显示：<span id="current-category">全部工具</span> (<span id="current-count">0</span> 个)
@@ -88,6 +92,13 @@
     <div class="module" id="course-module">
         <div class="course-container" id="course-list">
             <!-- 课程卡片会通过JavaScript动态加载 -->
+        </div>
+    </div>
+
+    <!-- 量化投资模块 -->
+    <div class="module" id="quant-module">
+        <div class="quant-container" id="quant-list">
+            <!-- 量化投资卡片会通过JavaScript动态加载 -->
         </div>
     </div>
 

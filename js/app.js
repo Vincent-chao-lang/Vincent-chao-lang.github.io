@@ -3,6 +3,7 @@ const DataCache = {
     repos: null,
     tools: null,
     courses: null,
+    quants: null,
 
     async loadRepos() {
         if (this.repos) return this.repos;
@@ -24,6 +25,13 @@ const DataCache = {
         const response = await fetch('data/courses.json');
         this.courses = await response.json();
         return this.courses;
+    },
+
+    async loadQuants() {
+        if (this.quants) return this.quants;
+        const response = await fetch('data/quant.json');
+        this.quants = await response.json();
+        return this.quants;
     }
 };
 
@@ -179,6 +187,40 @@ async function renderCourseList() {
     }
 }
 
+async function renderQuantList() {
+    const quantList = document.getElementById('quant-list');
+    showLoading('quant-list');
+
+    try {
+        const quants = await DataCache.loadQuants();
+        hideLoading('quant-list');
+        quantList.innerHTML = '';
+
+        quants.forEach(quant => {
+            const card = document.createElement('div');
+            card.className = 'quant-card';
+            card.innerHTML = `
+                <div class="quant-name">
+                    <a href="${quant.url}" target="_blank">${quant.name}</a>
+                </div>
+                <div class="quant-desc">${quant.description}</div>
+                <div class="quant-url">${quant.url}</div>
+                <div class="quant-tip">提示：由于是 HTTP 地址，建议在浏览器无痕模式下打开</div>
+            `;
+            quantList.appendChild(card);
+        });
+
+        document.getElementById('quant-count').textContent = quants.length;
+    } catch (error) {
+        quantList.innerHTML = `
+            <div class="empty-state">
+                <h3>数据加载失败</h3>
+                <p>请检查网络连接或刷新页面重试</p>
+            </div>
+        `;
+    }
+}
+
 // ======================== 模块切换 ========================
 function initModuleSwitch() {
     const moduleBtns = document.querySelectorAll('.module-btn');
@@ -209,6 +251,8 @@ function initModuleSwitch() {
                 await renderRepoList();
             } else if (btn.dataset.module === 'course' && document.getElementById('course-list').children.length === 0) {
                 await renderCourseList();
+            } else if (btn.dataset.module === 'quant' && document.getElementById('quant-list').children.length === 0) {
+                await renderQuantList();
             }
         });
     });
