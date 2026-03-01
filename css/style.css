@@ -447,6 +447,23 @@ h1 {
     min-width: 200px;
 }
 
+.stats-highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.stats-highlight strong {
+    color: white;
+}
+
+.stats-highlight span {
+    color: #ffd700;
+    font-weight: bold;
+}
+
 .stats strong {
     color: #0366d6;
 }

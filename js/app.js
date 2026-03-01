@@ -1,3 +1,104 @@
+// ======================== UV/PV 统计模块 ========================
+const StatsTracker = {
+    STORAGE_KEY: 'site_stats_data',
+    VISITOR_ID_KEY: 'site_visitor_id',
+
+    // 生成或获取访客ID
+    getVisitorId() {
+        let visitorId = localStorage.getItem(this.VISITOR_ID_KEY);
+        if (!visitorId) {
+            visitorId = this.generateUUID();
+            localStorage.setItem(this.VISITOR_ID_KEY, visitorId);
+        }
+        return visitorId;
+    },
+
+    // 生成UUID
+    generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    },
+
+    // 获取统计数据
+    getStats() {
+        const stats = localStorage.getItem(this.STORAGE_KEY);
+        if (!stats) {
+            return {
+                totalVisitors: 0,
+                totalViews: 0,
+                dailyVisitors: {},
+                dailyViews: {},
+                lastVisit: null
+            };
+        }
+        return JSON.parse(stats);
+    },
+
+    // 保存统计数据
+    saveStats(stats) {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(stats));
+    },
+
+    // 获取今天的日期字符串
+    getTodayDate() {
+        return new Date().toISOString().split('T')[0];
+    },
+
+    // 记录访问
+    trackVisit() {
+        const visitorId = this.getVisitorId();
+        const today = this.getTodayDate();
+        const stats = this.getStats();
+
+        // 检查是否是新访客（基于最后访问时间）
+        const lastVisit = stats.lastVisit;
+        const isNewVisitor = !lastVisit || lastVisit !== today;
+
+        // 更新总PV
+        stats.totalViews++;
+
+        // 更新今日PV
+        if (!stats.dailyViews[today]) {
+            stats.dailyViews[today] = 0;
+        }
+        stats.dailyViews[today]++;
+
+        // 如果是新访客（今天第一次访问）
+        if (isNewVisitor) {
+            // 更新总UV
+            stats.totalVisitors++;
+
+            // 更新今日UV
+            if (!stats.dailyVisitors[today]) {
+                stats.dailyVisitors[today] = 0;
+            }
+            stats.dailyVisitors[today]++;
+        }
+
+        // 更新最后访问时间
+        stats.lastVisit = today;
+
+        this.saveStats(stats);
+        return stats;
+    },
+
+    // 获取显示的统计信息
+    getDisplayStats() {
+        const stats = this.getStats();
+        const today = this.getTodayDate();
+
+        return {
+            totalUV: stats.totalVisitors,
+            totalPV: stats.totalViews,
+            todayUV: stats.dailyVisitors[today] || 0,
+            todayPV: stats.dailyViews[today] || 0
+        };
+    }
+};
+
 // ======================== 数据缓存 ========================
 const DataCache = {
     digital: null,
@@ -319,6 +420,20 @@ window.addEventListener('DOMContentLoaded', async () => {
     initModuleSwitch();
     initCategorySwitch();
 
+    // 统计UV/PV
+    StatsTracker.trackVisit();
+    updateStatsDisplay();
+
     // 默认加载数字化转型模块（首屏）
     await renderDigitalList();
 });
+
+// ======================== 更新统计显示 ========================
+function updateStatsDisplay() {
+    const displayStats = StatsTracker.getDisplayStats();
+
+    document.getElementById('total-uv').textContent = displayStats.totalUV;
+    document.getElementById('total-pv').textContent = displayStats.totalPV;
+    document.getElementById('today-uv').textContent = displayStats.todayUV;
+    document.getElementById('today-pv').textContent = displayStats.todayPV;
+}
