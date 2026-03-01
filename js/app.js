@@ -420,20 +420,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     initModuleSwitch();
     initCategorySwitch();
 
-    // 统计UV/PV
+    // 统计UV/PV（仅在后台记录，不显示在页面上）
     StatsTracker.trackVisit();
-    updateStatsDisplay();
 
     // 默认加载数字化转型模块（首屏）
     await renderDigitalList();
 });
-
-// ======================== 更新统计显示 ========================
-function updateStatsDisplay() {
-    const displayStats = StatsTracker.getDisplayStats();
-
-    document.getElementById('total-uv').textContent = displayStats.totalUV;
-    document.getElementById('total-pv').textContent = displayStats.totalPV;
-    document.getElementById('today-uv').textContent = displayStats.todayUV;
-    document.getElementById('today-pv').textContent = displayStats.todayPV;
-}
