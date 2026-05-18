@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>context-engineering-guide</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">context-engineering-guide</h1>
+</header>
+<h1 id="context-engineering-开发指南">Context Engineering 开发指南</h1>
+<blockquote>
+<p>真正高级的 AI 编程，不是”怎么提问”，而是”怎么管理上下文”。</p>
+</blockquote>
+<h2 id="一核心理念">一、核心理念</h2>
+<h3 id="问题ai-会失忆">1.1 问题：AI 会失忆</h3>
+<p>大语言模型没有持久记忆。每次新会话，AI 对项目一无所知。这意味着：</p>
+<ul>
+<li>上次讨论的架构决策，这次忘了</li>
+<li>昨天修的 bug，今天可能重犯</li>
+<li>上周否决的方案，这周又提出来</li>
+<li>上下文窗口有限，聊多了前面的内容会被压缩</li>
+</ul>
+<h3 id="解法状态外置化">1.2 解法：状态外置化</h3>
+<p>核心思想来自软件工程：</p>
+<pre><code>配置外置  →  项目状态写入文件，不依赖 AI 记忆
+状态持久化  →  每次会话通过文件恢复上下文
+版本控制  →  Git 记录演化历史，AI 可读可回溯</code></pre>
+<p>把 AI
+当成一个<strong>很聪明但没有记忆的同事</strong>。你不会期望新同事记住所有事情——你会给他写文档。</p>
+<h3 id="context-engineering-的三个层次">1.3 Context Engineering
+的三个层次</h3>
+<pre><code>Level 1 — Prompt Engineering：怎么写好一条指令
+Level 2 — Context Engineering：怎么管理整个项目的上下文
+Level 3 — Agent Engineering：  怎么让 AI 自主执行复杂任务</code></pre>
+<p>本指南聚焦 Level 2。</p>
+<hr />
+<h2 id="二目录结构">二、目录结构</h2>
+<p>每个 AI 协作项目推荐以下结构：</p>
+<pre><code>project/
+├── README.md              # 项目入口文档
+├── CLAUDE.md              # AI 项目说明书（每次会话必读）
+├── ARCHITECTURE.md        # 架构文档（系统设计、数据流）
+├── TASKS.md               # 任务追踪（进行中/待办/已完成）
+├── DECISIONS.md           # 决策日志（为什么做这个选择）
+├── memory/                # 实时状态（频繁更新）
+│   ├── current_state.md   # 当前状态快照
+│   ├── bugs.md            # Bug 记录
+│   ├── experiments.md     # 实验记录
+│   ├── lessons_learned.md # 踩坑记录
+│   └── daily_log.md       # 每日工作日志
+├── prompts/               # 编码规范（稳定，少更新）
+│   ├── coding_rules.md    # 编码规则
+│   ├── style_guide.md     # 代码风格指南
+│   └── review_checklist.md# 审查清单
+└── src/                   # 源代码</code></pre>
+<h3 id="文件分类">2.1 文件分类</h3>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 35%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr>
+<th>类型</th>
+<th>文件</th>
+<th>更新频率</th>
+<th>谁写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心文档</strong></td>
+<td>CLAUDE.md, ARCHITECTURE.md</td>
+<td>低（架构变更时）</td>
+<td>人 + AI</td>
+</tr>
+<tr>
+<td><strong>决策记录</strong></td>
+<td>DECISIONS.md</td>
+<td>中（做决策时）</td>
+<td>人 + AI</td>
+</tr>
+<tr>
+<td><strong>任务管理</strong></td>
+<td>TASKS.md</td>
+<td>高（每天）</td>
+<td>AI 维护</td>
+</tr>
+<tr>
+<td><strong>实时状态</strong></td>
+<td>memory/*</td>
+<td>高（每次会话）</td>
+<td>AI 维护</td>
+</tr>
+<tr>
+<td><strong>编码规范</strong></td>
+<td>prompts/*</td>
+<td>低（很少变）</td>
+<td>人定义</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设计原则">2.2 设计原则</h3>
+<ul>
+<li><strong>CLAUDE.md 是入口</strong>：AI 每次必读，是”入职培训”</li>
+<li><strong>DECISIONS.md 防推翻</strong>：记录”为什么”，避免 AI
+反复提已被否决的方案</li>
+<li><strong>memory/ 是短期记忆</strong>：频繁更新，反映当前状态</li>
+<li><strong>prompts/ 是长期规范</strong>：很少变，定义项目标准</li>
+<li><strong>Git 是演化历史</strong>：小步提交，AI 可以通过 git log
+理解系统演化</li>
+</ul>
+<hr />
+<h2 id="三文件详解">三、文件详解</h2>
+<h3 id="claude.md-ai-的入职培训">3.1 CLAUDE.md — AI 的入职培训</h3>
+<p>这是最重要的文件。每次会话开始，AI 首先读取它。</p>
+<p><strong>包含内容：</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 项目目标          → 一句话说清楚项目是什么</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># 当前阶段          → 现在在做什么（Phase 1/2/3）</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu"># 技术栈            → 语言、框架、关键依赖</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu"># 命令              → dev / build / test</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># 编码原则          → 3-5 条最重要的规则</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># 当前重点          → 最近在做什么（基于 git log 更新）</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># 关键文件          → 哪些文件最重要</span></span></code></pre></div>
+<p><strong>编写原则：</strong> - 控制在 100 行以内，过长 AI
+会忽略关键信息 - 只写 AI 必须知道的内容，不写人类文档 -
+随项目演进更新”当前重点”部分</p>
+<h3 id="architecture.md-系统全景图">3.2 ARCHITECTURE.md —
+系统全景图</h3>
+<p><strong>包含内容：</strong> - 技术栈表格 - 系统架构图（ASCII） -
+目录结构说明 - 核心模块职责 - 数据流描述 - 外部依赖</p>
+<p><strong>价值：</strong> - AI 理解”改这里会影响哪里” -
+新会话不需要从零探索代码结构 - 避免破坏性修改</p>
+<h3 id="decisions.md-防推翻机制">3.3 DECISIONS.md — 防推翻机制</h3>
+<p><strong>格式：</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## D001 — 选择 SQLite 而非 MongoDB</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>**日期:** 2026-04</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>**决策:** 使用 SQLite 作为本地数据库</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>**原因:**</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>无需额外服务，零运维</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>桌面应用天然适合嵌入式数据库</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>数据隐私，不经过网络</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>**放弃:**</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>MongoDB：需要安装服务，对桌面应用过重</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>localStorage：不支持复杂查询</span></code></pre></div>
+<p><strong>关键：写”放弃”部分</strong>。这是防止 AI
+反复提出被否方案的核心。当 AI 说”建议用 MongoDB”时，你只需要说”查看
+DECISIONS.md D001”。</p>
+<h3 id="tasks.md-任务追踪">3.4 TASKS.md — 任务追踪</h3>
+<p>简单的三段式：</p>
+<pre><code>## 进行中 → 正在做的
+## 待办   → 按优先级排列
+## 已完成 → 保留最近 10 条</code></pre>
+<p>不需要复杂的 issue tracker。保持简单。</p>
+<h3 id="memory-短期记忆">3.5 memory/ — 短期记忆</h3>
+<h4 id="current_state.md">current_state.md</h4>
+<p>最重要的 memory 文件。<strong>每次下班前必须更新。</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 当前状态</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## 已完成</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>发票上传和识别</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>邮箱 IMAP 采集</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>增值税计算</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 当前问题</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PDF 解析偶发乱码</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>免费模型 1 QPS 限速明显</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## 下次优先</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>增加批量识别进度条</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>支持更多发票类型</span></code></pre></div>
+<p>下次会话 AI 读这个文件，30 秒恢复上下文。</p>
+<h4 id="bugs.md">bugs.md</h4>
+<p>活跃 Bug 和已修复记录。防止 AI “忘记”已知问题。</p>
+<h4 id="experiments.md">experiments.md</h4>
+<p>记录实验。避免”上次试过方案 A 不行，这次又试一遍”。</p>
+<h4 id="lessons_learned.md">lessons_learned.md</h4>
+<p>踩坑记录。格式固定：现象 → 根因 → 解决 → 教训。</p>
+<h4 id="daily_log.md">daily_log.md</h4>
+<p>每日简要日志。回溯问题时非常有用。</p>
+<h3 id="prompts-编码规范">3.6 prompts/ — 编码规范</h3>
+<p>三个文件分别定义”怎么写代码”的规则：</p>
+<ul>
+<li><strong>coding_rules.md</strong>：编码硬规则（错误处理、安全、性能）</li>
+<li><strong>style_guide.md</strong>：代码风格（命名、格式、组织）</li>
+<li><strong>review_checklist.md</strong>：提交前检查清单</li>
+</ul>
+<p>这些文件很少变化，但 AI 每次都会参考。</p>
+<hr />
+<h2 id="四日常工作流">四、日常工作流</h2>
+<h3 id="每日循环">4.1 每日循环</h3>
+<pre><code>┌─────────────────────────────────────────────┐
+│                                             │
+│  ┌─────────┐     ┌──────────┐    ┌───────┐ │
+│  │ /start  │────▶│   编码   │───▶│ /wrap │ │
+│  │ 恢复上下文│     │  工作    │    │ 收尾  │ │
+│  └─────────┘     └──────────┘    └───────┘ │
+│       │                               │     │
+│       ▼                               ▼     │
+│  读取文档                        更新 memory │
+│  总结状态                        更新 TASKS  │
+│  列出待办                        写日志      │
+│                                             │
+└─────────────────────────────────────────────┘</code></pre>
+<h3 id="start-开始工作">4.2 /start — 开始工作</h3>
+<p>输入 <code>/start</code>，AI 自动： 1. 读取
+CLAUDE.md、ARCHITECTURE.md、DECISIONS.md 2. 运行
+<code>git log --oneline -10</code> 了解最近变更 3. 运行
+<code>git status</code> 查看未提交工作 4. 输出：一句话当前状态 +
+最近工作 + 待处理变更 + 下一步建议 5.
+<strong>不修改任何代码</strong>，等待你的指令</p>
+<h3 id="工作中-保持纪律">4.3 工作中 — 保持纪律</h3>
+<p><strong>Git 小步提交：</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: add email attachment download&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;fix: resolve PDF parsing encoding issue&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;refactor: extract invoice number validation&quot;</span></span></code></pre></div>
+<p>每次提交代表一个有意义的变更。AI 可以通过 <code>git log</code>
+理解系统演化。</p>
+<p><strong>技术决策及时记录：</strong>
+当讨论中做出重要技术选择时，立即追加到 DECISIONS.md。</p>
+<p><strong>踩坑及时记录：</strong> 遇到非显而易见的问题，追加到
+memory/lessons_learned.md。</p>
+<h3 id="wrap-下班收尾">4.4 /wrap — 下班收尾</h3>
+<p>输入 <code>/wrap</code>，AI 自动： 1. 查看今天的 git 提交和未提交变更
+2. 更新
+<code>memory/current_state.md</code>（已完成、当前问题、下次优先） 3.
+追加 <code>memory/daily_log.md</code> 今日日志 4. 更新
+<code>memory/bugs.md</code>（修复的标记、新发现的加入） 5. 更新
+<code>TASKS.md</code>（完成移走、新增补上） 6. 输出今日总结</p>
+<hr />
+<h2 id="五高级技巧">五、高级技巧</h2>
+<h3 id="自定义命令模板">5.1 自定义命令模板</h3>
+<p>在 <code>.claude/commands/</code> 下创建常用命令模板：</p>
+<pre><code>.claude/commands/
+├── start.md          # 恢复工作上下文
+├── wrap.md           # 下班自动总结
+├── init-context.md   # 新项目初始化骨架
+└── [项目专属命令]     # 如 recognize_invoice.md</code></pre>
+<p>命令模板的好处： -
+<strong>一致性</strong>：每次执行相同流程，不会遗漏步骤 -
+<strong>效率</strong>：一条命令代替长段 prompt -
+<strong>可迭代</strong>：发现流程有问题，改模板即可</p>
+<h3 id="读取决策而非讨论">5.2 读取决策而非讨论</h3>
+<p>当 AI 提出一个你之前已经否决的方案时：</p>
+<pre><code>❌ &quot;不要用 MongoDB&quot;  →  AI 可能下次又提
+✅ &quot;查看 DECISIONS.md D003&quot;  →  AI 读到原因后不会再提</code></pre>
+<h3 id="让-ai-读-git-历史">5.3 让 AI 读 Git 历史</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="st">&quot;阅读最近 10 个 commit，总结系统演化方向&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="st">&quot;查看 src/lib/zhipu-client.ts 的 git log，告诉我这个模块经历了哪些变更&quot;</span></span></code></pre></div>
+<p>Git 是最好的上下文来源之一。</p>
+<h3 id="分层更新策略">5.4 分层更新策略</h3>
+<pre><code>                更新频率
+    低 ◄──────────────────────► 高
+
+  CLAUDE.md    DECISIONS.md    memory/current_state.md
+  ARCHITECTURE  TASKS.md       memory/daily_log.md
+  prompts/*                    memory/bugs.md
+                               memory/lessons_learned.md</code></pre>
+<ul>
+<li><strong>低频</strong>（月/季度）：架构文档、编码规范</li>
+<li><strong>中频</strong>（周）：任务列表、决策记录</li>
+<li><strong>高频</strong>（每次会话）：memory 目录下的所有文件</li>
+</ul>
+<h3 id="context-window-管理">5.5 Context Window 管理</h3>
+<p>上下文窗口是有限的。策略：</p>
+<ol type="1">
+<li><strong>CLAUDE.md 始终加载</strong>：控制在 100 行以内</li>
+<li><strong>ARCHITECTURE.md
+按需加载</strong>：只有涉及架构变更时才读</li>
+<li><strong>memory/ 按需加载</strong>：<code>/start</code> 时读
+current_state，修 bug 时读 bugs</li>
+<li><strong>DECISIONS.md 按需加载</strong>：讨论方案时才读</li>
+<li><strong>prompts/ 审查时加载</strong>：代码审查前读
+review_checklist</li>
+</ol>
+<hr />
+<h2 id="六常见问题">六、常见问题</h2>
+<h3 id="q这些文档会过时吗">Q：这些文档会过时吗？</h3>
+<p>会。所以 <code>/wrap</code> 命令会更新 memory/，定期更新 CLAUDE.md
+的”当前重点”。如果发现文档与代码不一致，信任代码。</p>
+<h3 id="q需要所有文件都用吗">Q：需要所有文件都用吗？</h3>
+<p>不需要。最小可行集：<code>CLAUDE.md</code> +
+<code>memory/current_state.md</code> +
+<code>DECISIONS.md</code>。其他按需添加。</p>
+<h3 id="q和-github-issues-jira-什么关系">Q：和 GitHub Issues / Jira
+什么关系？</h3>
+<p>TASKS.md 是轻量替代。如果团队已有 issue tracker，TASKS.md 可以只记录
+AI 需要关注的任务，不重复。</p>
+<h3 id="qclaude-code-的-memory-和-memory-目录什么关系">Q：Claude Code 的
+memory 和 memory/ 目录什么关系？</h3>
+<ul>
+<li>Claude Code 内置
+memory（<code>.claude/memory/</code>）：跨会话持久化，AI 自动管理</li>
+<li>项目 <code>memory/</code> 目录：Context Engineering
+体系的一部分，有明确结构</li>
+</ul>
+<p>两者互补。内置 memory 存用户偏好和项目背景，项目 memory/
+存工作状态。</p>
+<h3 id="q这套方法只适用于-claude-code-吗">Q：这套方法只适用于 Claude
+Code 吗？</h3>
+<p>不。核心思想（状态外置化、文档驱动）适用于任何 AI
+编程工具。目录结构和命令模板是 Claude Code 特有的，但 CLAUDE.md
+的角色可以用其他工具的等价机制替代（如 Cursor Rules、Windsurf Rules
+等）。</p>
+<hr />
+<h2 id="七快速启动清单">七、快速启动清单</h2>
+<p>新项目开始时：</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />运行 <code>/init-context</code>
+创建完整目录结构</label></li>
+<li><label><input type="checkbox" />编辑
+<code>CLAUDE.md</code>，填入项目基本信息</label></li>
+<li><label><input type="checkbox" />编辑
+<code>prompts/coding_rules.md</code> 和
+<code>style_guide.md</code></label></li>
+<li><label><input type="checkbox" />首次 <code>git commit</code>
+建立基线</label></li>
+</ul>
+<p>每次工作：</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />运行 <code>/start</code>
+恢复上下文</label></li>
+<li><label><input type="checkbox" />小步 git commit</label></li>
+<li><label><input type="checkbox" />技术决策追加
+DECISIONS.md</label></li>
+<li><label><input type="checkbox" />下班前运行 <code>/wrap</code>
+收尾</label></li>
+</ul>
+</body>
+</html>

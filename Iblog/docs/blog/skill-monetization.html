@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>skill-monetization</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">skill-monetization</h1>
+</header>
+<h1 id="skill-能卖吗-一个尴尬的商业模式">Skill 能卖吗？——
+一个尴尬的商业模式</h1>
+<blockquote>
+<p>Skill 的价值在于经验迁移，而经验一旦显性化就很难定价和保护。</p>
+</blockquote>
+<hr />
+<h2 id="一卖-skill-是件奇怪的事">一、卖 Skill 是件奇怪的事</h2>
+<p>奇怪在两个地方。</p>
+<h3
+id="第一边际复制成本为零但定价依据是经验">第一，边际复制成本为零，但定价依据是经验</h3>
+<p>卖 npm
+包卖的是确定性逻辑——你买的是”这个函数跑对了”。价值可以按调用次数、按功能度量。</p>
+<p>卖 Skill 卖的是什么？“我踩过这个坑，所以 prompt
+里加了这句话”。一旦你看到了 prompt
+文件，经验就迁移完了，卖方再也收不回来。这跟卖秘密一样——卖完就不值钱了。</p>
+<h3 id="第二skill-的输出不可承诺">第二，Skill 的输出不可承诺</h3>
+<p>软件卖了可以承诺”输入 x 输出 y”。Skill 卖了，你没法承诺”这个 Skill
+一定识别对”。因为它本质是概率性的，受模型版本、上下文长度、输入质量影响。用户付了钱但结果不好，你说不清是
+Skill 的问题还是模型的问题。</p>
+<hr />
+<h2 id="二skill-落在商业模式的无人区">二、Skill
+落在商业模式的无人区</h2>
+<pre><code>卖软件    → 卖确定性逻辑，可以定价
+卖咨询    → 卖经验和判断力，按时间定价
+卖 Skill  → 卖……什么？经验的一次性拷贝？</code></pre>
+<p>它落在软件和咨询之间的一个尴尬位置：</p>
+<ul>
+<li><strong>比软件不值钱</strong>——因为不可承诺确定性输出</li>
+<li><strong>比咨询不值钱</strong>——因为交互是零，没有持续的判断力输出</li>
+<li><strong>比两者都脆弱</strong>——一旦 AI 模型能力提升，很多 Level 1-2
+的 Skill 会直接被模型原生能力覆盖，价值归零</li>
+</ul>
+<hr />
+<h2 id="三市场确实存在但卖的是什么">三、市场确实存在，但卖的是什么</h2>
+<h3 id="prompt-市场成熟">Prompt 市场（成熟）</h3>
+<p><a href="https://promptbase.com/">PromptBase</a> — 27 万+
+prompts，主要卖 Midjourney/ChatGPT 的 prompt，据称有人月入 $600。</p>
+<h3 id="claude-code-skills-市场刚起步">Claude Code Skills
+市场（刚起步）</h3>
+<ul>
+<li><a href="https://claudeskills.info/skills/">ClaudeSkills.info</a> —
+140+ skills 市场</li>
+<li><a href="https://claudemarketplaces.com/">ClaudeMarketplaces.com</a>
+— 插件和 skills 目录</li>
+<li><a
+href="https://www.facebook.com/groups/vibecodinglife/posts/1967543460500848/">AgentPowers.ai</a>
+— 付费 skills 市场（建设中）</li>
+<li>Anthropic 官方维护了 <a
+href="https://github.com/anthropics/skills">anthropics/skills</a>
+仓库</li>
+</ul>
+<h3 id="已经有人在教怎么卖">已经有人在教怎么卖</h3>
+<ul>
+<li><a href="https://ryandoser.com/sell-claude-skills/">How to Sell
+Claude Skills</a> — “打包卖几千美元”</li>
+<li><a
+href="https://www.agent37.com/blog/monetize-claude-code-skills">Agent37:
+How to Monetize</a> — 不给源码，托管访问</li>
+<li><a
+href="https://www.reddit.com/r/ClaudeCode/comments/1rs3ezl/anyone_monetizing_their_claude_skills/">Reddit:
+Monetizing Claude Skills</a> — 社区真实反馈</li>
+</ul>
+<h3 id="但这些市场里卖的大部分是什么">但这些市场里卖的大部分是什么</h3>
+<p><strong>Level 1 的模板 prompt。</strong></p>
+<p>“用这个 prompt 让 ChatGPT
+帮你写商业计划书”——这跟卖菜谱差不多。看一眼就会了，复制成本为零。</p>
+<p>真正有价值的 Level 3 Skill（编码了隐性经验的）很难卖，因为：</p>
+<ul>
+<li>经验深度买家一开始看不出来</li>
+<li>一旦看到内容就能复制，没有复购</li>
+<li>模型升级后可能直接贬值</li>
+</ul>
+<hr />
+<h2 id="四卖铲子给淘金者">四、卖铲子给淘金者</h2>
+<p>目前的市场形态更像是一场淘金热——真正赚钱的可能不是卖 Skill
+本身，而是<strong>教别人怎么卖 Skill 的那些教程和课程</strong>。</p>
+<p>这几乎成了 AI 领域的固定套路：</p>
+<pre><code>第一波人：用 AI 做出东西
+第二波人：教别人怎么用 AI 做东西
+第三波人：教别人怎么教别人用 AI 做东西</code></pre>
+<p>Skill 市场目前停在第二波。</p>
+<hr />
+<h2 id="五真正能卖的是什么">五、真正能卖的是什么</h2>
+<p>如果 Skill 本身很难单独卖，那什么能卖？</p>
+<table>
+<thead>
+<tr>
+<th>能卖的</th>
+<th>本质</th>
+<th>模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>持续更新的经验</td>
+<td>经验不是一次性的，是持续的</td>
+<td>订阅制</td>
+</tr>
+<tr>
+<td>领域专家的背书</td>
+<td>“十年税务专家调校的”</td>
+<td>品牌溢价</td>
+</tr>
+<tr>
+<td>配套的验证和维护</td>
+<td>不只是 prompt，还有测试用例和迭代</td>
+<td>服务制</td>
+</tr>
+<tr>
+<td>围绕 Skill 的解决方案</td>
+<td>Skill + 工具 + 流程 + 支持</td>
+<td>项目制</td>
+</tr>
+</tbody>
+</table>
+<p>但这就不再是卖 Skill 了，是<strong>卖服务</strong>。Skill
+只是个交付载体。</p>
+<hr />
+<h2 id="六结论">六、结论</h2>
+<pre><code>Skill 的价值链：
+
+经验 → 显性化 → Skill 文件 → 交付给用户
+  ↑                              ↓
+  定价依据：经验深度              实际价值：一次性拷贝
+                                  ↓
+                              复制成本：零
+                              可承诺性：不可承诺
+                              贬值风险：模型升级即贬值</code></pre>
+<p>Skill 的价值在于经验迁移，而经验一旦显性化就很难定价和保护。</p>
+<p>能卖的是围绕 Skill 的服务，不是 Skill 本身。Skill
+是入口，不是产品。</p>
+<hr />
+<p><em>Sources:</em> - <a href="https://promptbase.com/">PromptBase</a>
+- <a href="https://github.com/anthropics/skills">Anthropic Skills
+Repo</a> - <a href="https://code.claude.com/docs/en/skills">Claude Code
+Skills Docs</a> - <a
+href="https://www.reddit.com/r/ClaudeCode/comments/1rs3ezl/anyone_monetizing_their_claude_skills/">Reddit:
+Monetizing Claude Skills</a> - <a
+href="https://ryandoser.com/sell-claude-skills/">How to Sell Claude
+Skills</a> - <a
+href="https://www.agent37.com/blog/monetize-claude-code-skills">Agent37:
+Monetize Guide</a></p>
+</body>
+</html>

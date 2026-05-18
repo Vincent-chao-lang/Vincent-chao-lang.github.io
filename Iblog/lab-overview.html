@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Lab </title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1f2933;
+      --muted: #64748b;
+      --line: #dbe3ea;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --warn: #b45309;
+      --warn-soft: #fff4df;
+      --code: #eef2f5;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    header {
+      margin-bottom: 24px;
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #115e59;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .stat {
+      min-height: 112px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    section {
+      margin-top: 24px;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: var(--code);
+      color: #334155;
+      font-size: 13px;
+    }
+
+    .file-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .file-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 150px;
+      gap: 12px;
+      align-items: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .file-name {
+      overflow-wrap: anywhere;
+      font-weight: 650;
+    }
+
+    .file-meta {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .warn {
+      border-color: #f5c16c;
+      background: var(--warn-soft);
+    }
+
+    .warn h3 {
+      color: var(--warn);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding: 18px 12px 36px;
+      }
+
+      header,
+      section {
+        padding: 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .file-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .file-meta {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>AI Coding实战</h1>
+      <p class="subtitle">
+        当前页面面向上级多项目工作区，包含 AI Agent、AI 网关治理、量化交易、文件转换、移动端、桌面工具、课程生成和财务工具等项目。
+      </p>
+      <div class="meta">
+        <span class="pill">扫描日期：2026-05-18</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>近期思考</h2>
+      <div class="meta">
+        <span class="pill">博客及实践</span>
+      </div>
+      <div class="cards" style="margin-top: 14px;">
+        <article class="card">
+          <h3><a href="docs/index.html">Blog</a></h3>
+          <p>Blog内容入口。</p>
+        </article>
+        <article class="card">
+          <h3><a href="docs/context-engineering-kit/index.html">Context Engineering Kit</a></h3>
+          <p>Context Engineering 相关资料与工具入口。</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="grid" aria-label="工作区指标">
+      <div class="stat">
+        <strong>50+</strong>
+        <span>顶层目录</span>
+      </div>
+      <div class="stat">
+        <strong>23</strong>
+        <span>Git 仓库</span>
+      </div>
+      <div class="stat">
+        <strong>4.0G</strong>
+        <span>最大目录 tinyMarkdown</span>
+      </div>
+      <div class="stat">
+        <strong>2.0G</strong>
+        <span>第二大目录 pdf-masking</span>
+      </div>
+    </div>
+
+    <section>
+      <h2>主要项目分类</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>AI / Agent</h3>
+          <p>自进化 Agent、多 Agent 研发平台、开发工作台和 CrewAI 旅游助手。</p>
+          <div class="tag-list">
+            <a class="tag" href="../myagent/">myagent</a>
+            <a class="tag" href="../ai-dev-team/">ai-dev-team</a>
+            <a class="tag" href="../agent-dev-dashboard/">agent-dev-dashboard</a>
+            <a class="tag" href="../agent-dev-dashboard-route3-githubpr/">agent-dev-dashboard-route3-githubpr</a>
+            <a class="tag" href="../travel_assistant/">travel_assistant</a>
+            <a class="tag" href="../qwenagent/">qwenagent</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>AI 网关 / 治理 / RAG</h3>
+          <p>企业 AI 服务网关、治理平台和轻量级 RAG 检索服务。</p>
+          <div class="tag-list">
+            <a class="tag" href="../ai-gateway-full-engineering/">ai-gateway-full-engineering</a>
+            <a class="tag" href="../ai-governance-platform-v2_1/">ai-governance-platform-v2_1</a>
+            <a class="tag" href="../lite_rag/">lite_rag</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>量化 / 金融</h3>
+          <p>BTC 分析、1 分钟信号实验、BTC ETF 监控和 A 股智能分析。</p>
+          <div class="tag-list">
+            <a class="tag" href="../btc/">btc</a>
+            <a class="tag" href="../daily/">daily</a>
+            <a class="tag" href="../dailyv2/">dailyv2</a>
+            <a class="tag" href="../quant_llm/">quant_llm</a>
+            <a class="tag" href="../quant_llm_pub/">quant_llm_pub</a>
+            <a class="tag" href="../btc_etf_monitor/">btc_etf_monitor</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>产品 / 应用</h3>
+          <p>税务助手、电子书转换、文件转换、电商、任务管理和论坛系统。</p>
+          <div class="tag-list">
+            <a class="tag" href="../opc-vat/">opc-vat</a>
+            <a class="tag" href="../ebookConvert/">ebookConvert</a>
+            <a class="tag" href="../convertAll/">convertAll</a>
+            <a class="tag" href="../mini_shop/">mini_shop</a>
+            <a class="tag" href="../todo/">todo</a>
+            <a class="tag" href="../didilog/">didilog</a>
+            <a class="tag" href="../smallE/">smallE</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>移动端 / 桌面 / 工具</h3>
+          <p>Android Launcher、Markdown 阅读器、VS Code 插件和本地模型工具。</p>
+          <div class="tag-list">
+            <a class="tag" href="../KidStudyLauncher/">KidStudyLauncher</a>
+            <a class="tag" href="../1000why/">1000why</a>
+            <a class="tag" href="../tinyMarkdown/">tinyMarkdown</a>
+            <a class="tag" href="../py2math-live/">py2math-live</a>
+            <a class="tag" href="../claude-ollama-proxy/">claude-ollama-proxy</a>
+            <a class="tag" href="../ollama-code-cli/">ollama-code-cli</a>
+            <a class="tag" href="../code-claude/">code-claude</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>网站 / 展示 / 其他</h3>
+          <p>个人站、静态站点、课程材料和若干实验项目。</p>
+          <div class="tag-list">
+            <a class="tag" href="../Vincent-chao-lang.github.io/">Vincent-chao-lang.github.io</a>
+            <a class="tag" href="../site/">site</a>
+            <a class="tag" href="../course/">course</a>
+            <a class="tag" href="../getdegree/">getdegree</a>
+            <a class="tag" href="../shuqianApp/">shuqianApp</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <section>
+      <h2>体量最大的目录</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>目录</th>
+              <th>大小</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="../tinyMarkdown/">tinyMarkdown</a></td>
+              <td>4.0G</td>
+              <td>React Native Markdown 阅读器，含 iOS、Android、release 包和嵌套项目。</td>
+            </tr>
+            <tr>
+              <td><a href="../pdf-masking/">pdf-masking</a></td>
+              <td>2.0G</td>
+              <td>PDF 敏感信息涂抹工具，Tauri/React 项目，包含 license-server。</td>
+            </tr>
+            <tr>
+              <td><a href="../ai-dev-team/">ai-dev-team</a></td>
+              <td>650M</td>
+              <td>React/TypeScript 多 Agent 协作研发平台。</td>
+            </tr>
+            <tr>
+              <td><a href="../course/">course</a></td>
+              <td>448M</td>
+              <td>Markdown 课程转音频、字幕和视频的生成系统。</td>
+            </tr>
+            <tr>
+              <td><a href="../meeting/">meeting</a></td>
+              <td>368M</td>
+              <td>NestJS 大型会议管理系统，含招商工作台、任务和附件管理。</td>
+            </tr>
+            <tr>
+              <td><a href="../SenceChildren/">SenceChildren</a></td>
+              <td>298M</td>
+              <td>亲子活动推荐 H5 应用，包含前端、后端和 Android 壳。</td>
+            </tr>
+            <tr>
+              <td><a href="../py2math-live/">py2math-live</a></td>
+              <td>181M</td>
+              <td>Python 转 LaTeX 实时预览 VS Code 插件、Web 和 API。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Git 状态</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>仓库</th>
+              <th>状态摘要</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="../ai-gateway-full-engineering/">ai-gateway-full-engineering</a></td>
+              <td>约 20 项变更，涉及 README、docker-compose、gateway 代码、requirements 和新增文档。</td>
+            </tr>
+            <tr>
+              <td><a href="../py2math-live/">py2math-live</a></td>
+              <td>约 42 项变更，仓库显示 <code>No commits yet on main</code>。</td>
+            </tr>
+            <tr>
+              <td><a href="../btc/">btc</a></td>
+              <td>约 18 项变更，包含日志、报告、<code>.env</code>、backup 等。</td>
+            </tr>
+            <tr>
+              <td><a href="../meeting/">meeting</a></td>
+              <td>有 <code>.env</code>、uploads、dist 和多个 <code>.DS_Store</code> 未跟踪文件。</td>
+            </tr>
+            <tr>
+              <td><a href="../pdf-masking/">pdf-masking</a></td>
+              <td>README 删除/新增路径异常，静态页有改动，另有新增营销文案。</td>
+            </tr>
+            <tr>
+              <td><a href="../tinyMarkdown/">tinyMarkdown</a></td>
+              <td><code>tsconfig.json</code> 有改动，<code>release/</code> 和嵌套 <code>tinyMarkdown/</code> 未跟踪。</td>
+            </tr>
+            <tr>
+              <td>其他仓库</td>
+              <td>多个仓库主要是 <code>.DS_Store</code> 变更或少量未跟踪文件。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <h2>整理建议</h2>
+      <div class="cards">
+        <article class="card warn">
+          <h3>先处理工作区卫生</h3>
+          <ul>
+            <li>清理或忽略 <code>.DS_Store</code>、缓存、日志、构建产物和临时文件。</li>
+            <li>检查 <code>.env</code>、数据库、release 包是否应该进入仓库。</li>
+          </ul>
+        </article>
+        <article class="card warn">
+          <h3>再按项目状态分层</h3>
+          <ul>
+            <li>把活跃项目、归档项目、生成资产和实验目录分开管理。</li>
+            <li>优先处理体量最大的目录，尤其是 <code>tinyMarkdown</code> 和 <code>pdf-masking</code>。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      本页面基于上级目录扫描摘要手工生成，未修改任何子项目文件。
+    </footer>
+  </main>
+</body>
+</html>

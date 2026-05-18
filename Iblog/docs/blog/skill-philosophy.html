@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>skill-philosophy</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">skill-philosophy</h1>
+</header>
+<h1 id="skill-的本质不是复用是迁移">Skill 的本质：不是复用，是迁移</h1>
+<blockquote>
+<p>不是代码的替代品，是工程经验的传导器。</p>
+</blockquote>
+<h2 id="一表层复用-prompt">一、表层：复用 prompt</h2>
+<p>大部分人理解 Skill 的价值是”复用 prompt，不用每次重写”。</p>
+<p>这是对的，但只停留在 Level 1。</p>
+<h2 id="二深层经验迁移">二、深层：经验迁移</h2>
+<p>Skill
+真正的价值是<strong>把专家的隐性知识显性化、结构化、可分发</strong>。</p>
+<p>一个 Skill 本质上是：</p>
+<pre><code>领域专家的经验 → 结构化 prompt → 任何人在任何会话中复现同等质量的工作</code></pre>
+<p>拿发票识别举例。第一次做需要经历：</p>
+<ul>
+<li>研究发票 JSON 结构怎么定义</li>
+<li>调试 prompt 让 AI 输出稳定格式</li>
+<li>处理各种边界情况（税率为 0、多行明细、折扣行）</li>
+<li>找到合适的错误恢复策略</li>
+</ul>
+<p>这个过程可能花 2 小时。封装成 Skill 后，下次是 2 秒。</p>
+<p><strong>省掉的不是打字时间，是思考和试错的时间。</strong></p>
+<h2 id="三三个层次">三、三个层次</h2>
+<pre><code>Level 1 — 模板
+  固定 prompt，填参数
+  价值：节省打字
+
+Level 2 — 流程
+  多步骤编排，带判断逻辑
+  价值：确保过程可靠（不会漏步骤）
+
+Level 3 — 专业知识
+  编码了隐性经验（踩过的坑、调过的参数、失败的方案）
+  价值：让非专家也能达到专家级输出</code></pre>
+<p>大部分人的 Skill 停在 Level 1。真正有价值的是 Level 3。</p>
+<h2 id="四复用-vs-迁移">四、复用 vs 迁移</h2>
+<p><code>calculate_vat(amount, rate)</code>
+是复用——同一个东西用两次。</p>
+<p>Skill 做的是迁移——同样一张发票，换了个项目、换了个人、换了个 AI
+会话，识别的判断力不丢失。</p>
+<p>关键区别：</p>
+<ul>
+<li><strong>复用</strong>关注的是<strong>效率</strong>——更快</li>
+<li><strong>迁移</strong>关注的是<strong>不退化</strong>——同样好</li>
+</ul>
+<p>一个新手拿到发票识别的 Skill，他不需要经历调 prompt、处理税率为
+0、对付折扣行的那 2 小时。他直接站在前人的经验上。</p>
+<p><strong>这不是快了 2 小时，是跳过了 2 小时的犯错空间。</strong></p>
+<p>教育和培训的本质——不是传递信息，是传递犯错的权利。Skill
+让后人不用再犯前人犯过的错。</p>
+<h2 id="五和传统组件的区别">五、和传统组件的区别</h2>
+<p>传统软件复用的是<strong>代码逻辑</strong>。Skill
+复用的是<strong>判断力</strong>。</p>
+<pre><code># 传统代码复用：逻辑确定，输入确定，输出确定
+def calculate_vat(amount, rate):
+    return amount * rate
+
+# Skill 复用：不确定的输入 → 专家级判断 → 高质量输出
+识别这张发票，提取结构化数据，
+注意折扣行不等于负数明细，
+注意税率可能为 0（出口免税），
+如果金额与税额不匹配，优先信任金额...</code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>传统组件 (npm/pip)</th>
+<th>Skill (.md)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复用什么</td>
+<td>确定性逻辑</td>
+<td>判断力和经验</td>
+</tr>
+<tr>
+<td>适应性</td>
+<td>接口固定，改了就崩</td>
+<td>自然语言，适应上下文</td>
+</tr>
+<tr>
+<td>维护成本</td>
+<td>版本兼容、依赖地狱</td>
+<td>改几句话就行</td>
+</tr>
+<tr>
+<td>创作门槛</td>
+<td>需要编程能力</td>
+<td>需要领域专业知识</td>
+</tr>
+</tbody>
+</table>
+<p>Skill
+让领域专家（不一定是程序员）也能创造可复用的软件组件。这是以前做不到的。</p>
+<h2 id="六硬边界概率性">六、硬边界：概率性</h2>
+<p>同一个 Skill 执行 10 次，可能 9 次输出质量 95 分，1 次输出 60
+分。而且你<strong>事先不知道哪次是 60 分</strong>。</p>
+<p>这意味着 Skill 不能承担需要可靠性的工作：</p>
+<ul>
+<li>增值税计算 → 必须是代码</li>
+<li>API 认证逻辑 → 必须是代码</li>
+<li>数据库写入 → 必须是代码</li>
+</ul>
+<p>Skill 能承担的是<strong>有容错空间</strong>的工作：</p>
+<ul>
+<li>发票识别输出错了 → 人工看一眼能发现</li>
+<li>架构建议不完美 → 人来判断取舍</li>
+<li>代码审查有遗漏 → 总比没有强</li>
+</ul>
+<pre><code>代码（确定性）          Skill（概率性）
+├─ 计算逻辑             ├─ 识别/分类
+├─ 数据持久化           ├─ 分析/建议
+├─ 网络请求             ├─ 审查/检查
+├─ 状态管理             └─ 规划/总结
+└─ 安全校验</code></pre>
+<p><strong>代码做必须对的，Skill 做对了更好的。</strong></p>
+<p>概率性不是 Skill 的缺陷，是它的本质。认清这个边界，才知道什么该交给
+Skill，什么必须写成代码。</p>
+<h2 id="七工程逻辑-vs-代码逻辑">七、工程逻辑 vs 代码逻辑</h2>
+<pre><code>代码逻辑：做什么、怎么做、每一步的输入输出是什么
+工程逻辑：先做什么、什么时候该停、出了问题往哪看</code></pre>
+<p>以三个实际 Skill 为例：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Skill</th>
+<th>工程逻辑</th>
+<th>不是</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/start</code></td>
+<td>先读文档 → 再看 git → 然后总结 → 不改代码</td>
+<td>不是一个解析 git log 的函数</td>
+</tr>
+<tr>
+<td><code>/wrap</code></td>
+<td>收集变更 → 读当前状态 → 更新文件 → 输出总结</td>
+<td>不是一个文件写入脚本</td>
+</tr>
+<tr>
+<td><code>/init-context</code></td>
+<td>先分析项目 → 再创建骨架 → 智能填充 → 跳过已有</td>
+<td>不是一个目录生成器</td>
+</tr>
+</tbody>
+</table>
+<p>每一步都是<strong>决策点</strong>，不是计算点。“读
+CLAUDE.md”不是因为需要解析它的内容，是因为有经验的工程师会先看项目文档再动手。Skill
+编码的是这个”会先看”的判断。</p>
+<p>这也解释了为什么 Skill
+写成自然语言比写成代码更好——工程逻辑本身就不精确，它依赖上下文和判断。强制把它变成
+if/else 反而丢失了灵活性。</p>
+<h2 id="八结论">八、结论</h2>
+<p>Skill 的准确定位：</p>
+<blockquote>
+<p><strong>把工程方法论从人脑迁移到 AI 的载体。</strong></p>
+</blockquote>
+<p>不是代码的替代品，是工程经验的传导器。</p>
+<p>它的价值不在于效率，在于<strong>不退化</strong>——让经验跨越项目、跨越人员、跨越
+AI 会话而保持质量。</p>
+</body>
+</html>

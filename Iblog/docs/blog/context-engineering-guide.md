@@ -1,0 +1,364 @@
+# Context Engineering 开发指南
+
+> 真正高级的 AI 编程，不是"怎么提问"，而是"怎么管理上下文"。
+
+## 一、核心理念
+
+### 1.1 问题：AI 会失忆
+
+大语言模型没有持久记忆。每次新会话，AI 对项目一无所知。这意味着：
+
+- 上次讨论的架构决策，这次忘了
+- 昨天修的 bug，今天可能重犯
+- 上周否决的方案，这周又提出来
+- 上下文窗口有限，聊多了前面的内容会被压缩
+
+### 1.2 解法：状态外置化
+
+核心思想来自软件工程：
+
+```
+配置外置  →  项目状态写入文件，不依赖 AI 记忆
+状态持久化  →  每次会话通过文件恢复上下文
+版本控制  →  Git 记录演化历史，AI 可读可回溯
+```
+
+把 AI 当成一个**很聪明但没有记忆的同事**。你不会期望新同事记住所有事情——你会给他写文档。
+
+### 1.3 Context Engineering 的三个层次
+
+```
+Level 1 — Prompt Engineering：怎么写好一条指令
+Level 2 — Context Engineering：怎么管理整个项目的上下文
+Level 3 — Agent Engineering：  怎么让 AI 自主执行复杂任务
+```
+
+本指南聚焦 Level 2。
+
+---
+
+## 二、目录结构
+
+每个 AI 协作项目推荐以下结构：
+
+```
+project/
+├── README.md              # 项目入口文档
+├── CLAUDE.md              # AI 项目说明书（每次会话必读）
+├── ARCHITECTURE.md        # 架构文档（系统设计、数据流）
+├── TASKS.md               # 任务追踪（进行中/待办/已完成）
+├── DECISIONS.md           # 决策日志（为什么做这个选择）
+├── memory/                # 实时状态（频繁更新）
+│   ├── current_state.md   # 当前状态快照
+│   ├── bugs.md            # Bug 记录
+│   ├── experiments.md     # 实验记录
+│   ├── lessons_learned.md # 踩坑记录
+│   └── daily_log.md       # 每日工作日志
+├── prompts/               # 编码规范（稳定，少更新）
+│   ├── coding_rules.md    # 编码规则
+│   ├── style_guide.md     # 代码风格指南
+│   └── review_checklist.md# 审查清单
+└── src/                   # 源代码
+```
+
+### 2.1 文件分类
+
+| 类型 | 文件 | 更新频率 | 谁写 |
+|------|------|----------|------|
+| **核心文档** | CLAUDE.md, ARCHITECTURE.md | 低（架构变更时） | 人 + AI |
+| **决策记录** | DECISIONS.md | 中（做决策时） | 人 + AI |
+| **任务管理** | TASKS.md | 高（每天） | AI 维护 |
+| **实时状态** | memory/* | 高（每次会话） | AI 维护 |
+| **编码规范** | prompts/* | 低（很少变） | 人定义 |
+
+### 2.2 设计原则
+
+- **CLAUDE.md 是入口**：AI 每次必读，是"入职培训"
+- **DECISIONS.md 防推翻**：记录"为什么"，避免 AI 反复提已被否决的方案
+- **memory/ 是短期记忆**：频繁更新，反映当前状态
+- **prompts/ 是长期规范**：很少变，定义项目标准
+- **Git 是演化历史**：小步提交，AI 可以通过 git log 理解系统演化
+
+---
+
+## 三、文件详解
+
+### 3.1 CLAUDE.md — AI 的入职培训
+
+这是最重要的文件。每次会话开始，AI 首先读取它。
+
+**包含内容：**
+```markdown
+# 项目目标          → 一句话说清楚项目是什么
+# 当前阶段          → 现在在做什么（Phase 1/2/3）
+# 技术栈            → 语言、框架、关键依赖
+# 命令              → dev / build / test
+# 编码原则          → 3-5 条最重要的规则
+# 当前重点          → 最近在做什么（基于 git log 更新）
+# 关键文件          → 哪些文件最重要
+```
+
+**编写原则：**
+- 控制在 100 行以内，过长 AI 会忽略关键信息
+- 只写 AI 必须知道的内容，不写人类文档
+- 随项目演进更新"当前重点"部分
+
+### 3.2 ARCHITECTURE.md — 系统全景图
+
+**包含内容：**
+- 技术栈表格
+- 系统架构图（ASCII）
+- 目录结构说明
+- 核心模块职责
+- 数据流描述
+- 外部依赖
+
+**价值：**
+- AI 理解"改这里会影响哪里"
+- 新会话不需要从零探索代码结构
+- 避免破坏性修改
+
+### 3.3 DECISIONS.md — 防推翻机制
+
+**格式：**
+```markdown
+## D001 — 选择 SQLite 而非 MongoDB
+
+**日期:** 2026-04
+**决策:** 使用 SQLite 作为本地数据库
+**原因:**
+- 无需额外服务，零运维
+- 桌面应用天然适合嵌入式数据库
+- 数据隐私，不经过网络
+
+**放弃:**
+- MongoDB：需要安装服务，对桌面应用过重
+- localStorage：不支持复杂查询
+```
+
+**关键：写"放弃"部分**。这是防止 AI 反复提出被否方案的核心。当 AI 说"建议用 MongoDB"时，你只需要说"查看 DECISIONS.md D001"。
+
+### 3.4 TASKS.md — 任务追踪
+
+简单的三段式：
+```
+## 进行中 → 正在做的
+## 待办   → 按优先级排列
+## 已完成 → 保留最近 10 条
+```
+
+不需要复杂的 issue tracker。保持简单。
+
+### 3.5 memory/ — 短期记忆
+
+#### current_state.md
+最重要的 memory 文件。**每次下班前必须更新。**
+
+```markdown
+# 当前状态
+
+## 已完成
+- 发票上传和识别
+- 邮箱 IMAP 采集
+- 增值税计算
+
+## 当前问题
+- PDF 解析偶发乱码
+- 免费模型 1 QPS 限速明显
+
+## 下次优先
+1. 增加批量识别进度条
+2. 支持更多发票类型
+```
+
+下次会话 AI 读这个文件，30 秒恢复上下文。
+
+#### bugs.md
+活跃 Bug 和已修复记录。防止 AI "忘记"已知问题。
+
+#### experiments.md
+记录实验。避免"上次试过方案 A 不行，这次又试一遍"。
+
+#### lessons_learned.md
+踩坑记录。格式固定：现象 → 根因 → 解决 → 教训。
+
+#### daily_log.md
+每日简要日志。回溯问题时非常有用。
+
+### 3.6 prompts/ — 编码规范
+
+三个文件分别定义"怎么写代码"的规则：
+
+- **coding_rules.md**：编码硬规则（错误处理、安全、性能）
+- **style_guide.md**：代码风格（命名、格式、组织）
+- **review_checklist.md**：提交前检查清单
+
+这些文件很少变化，但 AI 每次都会参考。
+
+---
+
+## 四、日常工作流
+
+### 4.1 每日循环
+
+```
+┌─────────────────────────────────────────────┐
+│                                             │
+│  ┌─────────┐     ┌──────────┐    ┌───────┐ │
+│  │ /start  │────▶│   编码   │───▶│ /wrap │ │
+│  │ 恢复上下文│     │  工作    │    │ 收尾  │ │
+│  └─────────┘     └──────────┘    └───────┘ │
+│       │                               │     │
+│       ▼                               ▼     │
+│  读取文档                        更新 memory │
+│  总结状态                        更新 TASKS  │
+│  列出待办                        写日志      │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+### 4.2 /start — 开始工作
+
+输入 `/start`，AI 自动：
+1. 读取 CLAUDE.md、ARCHITECTURE.md、DECISIONS.md
+2. 运行 `git log --oneline -10` 了解最近变更
+3. 运行 `git status` 查看未提交工作
+4. 输出：一句话当前状态 + 最近工作 + 待处理变更 + 下一步建议
+5. **不修改任何代码**，等待你的指令
+
+### 4.3 工作中 — 保持纪律
+
+**Git 小步提交：**
+```bash
+git commit -m "feat: add email attachment download"
+git commit -m "fix: resolve PDF parsing encoding issue"
+git commit -m "refactor: extract invoice number validation"
+```
+
+每次提交代表一个有意义的变更。AI 可以通过 `git log` 理解系统演化。
+
+**技术决策及时记录：**
+当讨论中做出重要技术选择时，立即追加到 DECISIONS.md。
+
+**踩坑及时记录：**
+遇到非显而易见的问题，追加到 memory/lessons_learned.md。
+
+### 4.4 /wrap — 下班收尾
+
+输入 `/wrap`，AI 自动：
+1. 查看今天的 git 提交和未提交变更
+2. 更新 `memory/current_state.md`（已完成、当前问题、下次优先）
+3. 追加 `memory/daily_log.md` 今日日志
+4. 更新 `memory/bugs.md`（修复的标记、新发现的加入）
+5. 更新 `TASKS.md`（完成移走、新增补上）
+6. 输出今日总结
+
+---
+
+## 五、高级技巧
+
+### 5.1 自定义命令模板
+
+在 `.claude/commands/` 下创建常用命令模板：
+
+```
+.claude/commands/
+├── start.md          # 恢复工作上下文
+├── wrap.md           # 下班自动总结
+├── init-context.md   # 新项目初始化骨架
+└── [项目专属命令]     # 如 recognize_invoice.md
+```
+
+命令模板的好处：
+- **一致性**：每次执行相同流程，不会遗漏步骤
+- **效率**：一条命令代替长段 prompt
+- **可迭代**：发现流程有问题，改模板即可
+
+### 5.2 读取决策而非讨论
+
+当 AI 提出一个你之前已经否决的方案时：
+
+```
+❌ "不要用 MongoDB"  →  AI 可能下次又提
+✅ "查看 DECISIONS.md D003"  →  AI 读到原因后不会再提
+```
+
+### 5.3 让 AI 读 Git 历史
+
+```bash
+claude "阅读最近 10 个 commit，总结系统演化方向"
+claude "查看 src/lib/zhipu-client.ts 的 git log，告诉我这个模块经历了哪些变更"
+```
+
+Git 是最好的上下文来源之一。
+
+### 5.4 分层更新策略
+
+```
+                更新频率
+    低 ◄──────────────────────► 高
+
+  CLAUDE.md    DECISIONS.md    memory/current_state.md
+  ARCHITECTURE  TASKS.md       memory/daily_log.md
+  prompts/*                    memory/bugs.md
+                               memory/lessons_learned.md
+```
+
+- **低频**（月/季度）：架构文档、编码规范
+- **中频**（周）：任务列表、决策记录
+- **高频**（每次会话）：memory 目录下的所有文件
+
+### 5.5 Context Window 管理
+
+上下文窗口是有限的。策略：
+
+1. **CLAUDE.md 始终加载**：控制在 100 行以内
+2. **ARCHITECTURE.md 按需加载**：只有涉及架构变更时才读
+3. **memory/ 按需加载**：`/start` 时读 current_state，修 bug 时读 bugs
+4. **DECISIONS.md 按需加载**：讨论方案时才读
+5. **prompts/ 审查时加载**：代码审查前读 review_checklist
+
+---
+
+## 六、常见问题
+
+### Q：这些文档会过时吗？
+
+会。所以 `/wrap` 命令会更新 memory/，定期更新 CLAUDE.md 的"当前重点"。如果发现文档与代码不一致，信任代码。
+
+### Q：需要所有文件都用吗？
+
+不需要。最小可行集：`CLAUDE.md` + `memory/current_state.md` + `DECISIONS.md`。其他按需添加。
+
+### Q：和 GitHub Issues / Jira 什么关系？
+
+TASKS.md 是轻量替代。如果团队已有 issue tracker，TASKS.md 可以只记录 AI 需要关注的任务，不重复。
+
+### Q：Claude Code 的 memory 和 memory/ 目录什么关系？
+
+- Claude Code 内置 memory（`.claude/memory/`）：跨会话持久化，AI 自动管理
+- 项目 `memory/` 目录：Context Engineering 体系的一部分，有明确结构
+
+两者互补。内置 memory 存用户偏好和项目背景，项目 memory/ 存工作状态。
+
+### Q：这套方法只适用于 Claude Code 吗？
+
+不。核心思想（状态外置化、文档驱动）适用于任何 AI 编程工具。目录结构和命令模板是 Claude Code 特有的，但 CLAUDE.md 的角色可以用其他工具的等价机制替代（如 Cursor Rules、Windsurf Rules 等）。
+
+---
+
+## 七、快速启动清单
+
+新项目开始时：
+
+- [ ] 运行 `/init-context` 创建完整目录结构
+- [ ] 编辑 `CLAUDE.md`，填入项目基本信息
+- [ ] 编辑 `prompts/coding_rules.md` 和 `style_guide.md`
+- [ ] 首次 `git commit` 建立基线
+
+每次工作：
+
+- [ ] 运行 `/start` 恢复上下文
+- [ ] 小步 git commit
+- [ ] 技术决策追加 DECISIONS.md
+- [ ] 下班前运行 `/wrap` 收尾
