@@ -1,0 +1,746 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; position: relative; }
+#write svg h1, #write svg h2, #write svg h3, #write svg h4, #write svg h5, #write svg h6, #write svg p { position: static; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
+.CodeMirror-linenumber { -webkit-user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: medium; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.mermaid-svg { margin: auto; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: medium !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>信息质量公共平台研究建议报告</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='大语言模型时代信息质量公共平台建设研究'><span>大语言模型时代信息质量公共平台建设研究</span></h1><h2 id='------基于自动化事实核查技术的政策建议'><span>——基于自动化事实核查技术的政策建议</span></h2><hr /><h2 id='摘要'><span>摘要</span></h2><p><span>大语言模型（LLM）的快速发展在带来生产力提升的同时，也急剧降低了虚假信息的生产成本与传播门槛。本研究通过分析英国独立事实核查机构 Full Fact 的技术架构与运作模式，结合中国信息生态的实际情况，提出建设</span><strong><span>政府主导、技术驱动、聚焦民生/科技领域</span></strong><span>的国家级信息质量公共平台的建议。本文论证了该平台的公共必要性、技术可行性及实施路径，并针对&quot;独立性与权威性&quot;&quot;LLM 幻觉&quot;&quot;商业模式的天然缺陷&quot;等核心矛盾提出了解决方案。</span></p><hr /><h2 id='一问题的性质从信息污染到公共危害'><span>一、问题的性质：从信息污染到公共危害</span></h2><h3 id='11-虚假信息是公共品供给的典型市场失灵'><span>1.1 虚假信息是公共品供给的典型市场失灵</span></h3><p><span>虚假信息的危害具有显著的负外部性特征：</span></p><figure class='table-figure'><table><thead><tr><th><span>层面</span></th><th><span>表现形式</span></th><th><span>后果</span></th></tr></thead><tbody><tr><td><span>个体</span></td><td><span>&quot;偏方治癌&quot;&quot;保健品替代药物&quot;等健康谣言</span></td><td><span>延误治疗、财产损失、生命健康受损</span></td></tr><tr><td><span>群体</span></td><td><span>灾害谣言、疫情不实信息</span></td><td><span>恐慌、资源挤兑、社会秩序混乱</span></td></tr><tr><td><span>社会</span></td><td><span>系统性虚假信息持续侵蚀公共讨论</span></td><td><span>信任崩塌、政策执行受阻、社会共识瓦解</span></td></tr></tbody></table></figure><p><span>类比食品安全、环境保护、传染病防治等领域——这些领域之所以需要公共力量介入，根本原因在于</span><strong><span>市场机制无法自发解决负外部性问题</span></strong><span>。虚假信息治理属于同一范畴：个体无法自保，平台存在利益冲突，市场无法自净。</span></p><h3 id='12-llm-使问题发生质变'><span>1.2 LLM 使问题发生质变</span></h3><p><span>LLM 技术的普及并非简单的&quot;谣言增多&quot;，而是从根本上改变了虚假信息的生产、传播和能力格局：</span></p><figure class='table-figure'><table><thead><tr><th><span>维度</span></th><th><span>LLM 之前的虚假信息</span></th><th><span>LLM 加持后的虚假信息</span></th></tr></thead><tbody><tr><td><strong><span>生产成本</span></strong></td><td><span>需要人力编撰，有时间和技能门槛</span></td><td><span>prompt 输入即可批量生成，边际成本趋近于零</span></td></tr><tr><td><strong><span>内容质量</span></strong></td><td><span>多数存在逻辑漏洞、语言质量参差</span></td><td><span>文本流畅、逻辑自洽，普通人难以分辨</span></td></tr><tr><td><strong><span>个性化</span></strong></td><td><span>面向大众的通用谣言</span></td><td><span>可针对特定人群（老年人、特定地域、特定兴趣）生成定制化虚假信息</span></td></tr><tr><td><strong><span>生产速度</span></strong></td><td><span>以天为单位</span></td><td><span>以秒为单位，可实时响应热点事件</span></td></tr><tr><td><strong><span>多模态</span></strong></td><td><span>以文字为主</span></td><td><span>可生成以假乱真的图片、音频、视频</span></td></tr></tbody></table></figure><p><span>上述变化意味着，传统的&quot;事后辟谣&quot;模式在速度和规模上已无法匹配当前的虚假信息生产能力。需要一个系统性的、技术驱动的公共基础设施来应对。</span></p><h3 id='13-现有辟谣体系的不足'><span>1.3 现有辟谣体系的不足</span></h3><p><span>国内现有辟谣力量存在结构性缺陷：</span></p><figure class='table-figure'><table><thead><tr><th><span>主体类型</span></th><th><span>代表</span></th><th><span>局限性</span></th></tr></thead><tbody><tr><td><span>商业平台</span></td><td><span>腾讯较真、头条辟谣</span></td><td><span>利益冲突：平台既是谣言传播者又是辟谣者；覆盖依赖平台自身意愿</span></td></tr><tr><td><span>媒体机构</span></td><td><span>澎湃明查</span></td><td><span>商业媒体自身面临生存压力；核查范围有限</span></td></tr><tr><td><span>政府平台</span></td><td><span>中国互联网联合辟谣平台</span></td><td><span>以信息发布为主，缺乏自动化核查能力；数据源单一</span></td></tr><tr><td><span>科普机构</span></td><td><span>果壳、丁香医生</span></td><td><span>规模有限，系统性不足；依赖商业变现</span></td></tr></tbody></table></figure><p><strong><span>核心缺失</span></strong><span>：缺乏一个集权威数据源接入、自动化核查引擎、开放 API、传播链追踪于一体的公共技术基础设施。</span></p><hr /><h2 id='二国际经验full-fact-的运作模式与技术架构'><span>二、国际经验：Full Fact 的运作模式与技术架构</span></h2><h3 id='21-组织模式'><span>2.1 组织模式</span></h3><p><span>Full Fact 是英国领先的独立事实核查慈善机构，成立于 2010 年，其运作模式具有以下特征：</span></p><figure class='table-figure'><table><thead><tr><th><span>维度</span></th><th><span>特征</span></th></tr></thead><tbody><tr><td><strong><span>法律地位</span></strong></td><td><span>注册慈善机构（Registered Charity）</span></td></tr><tr><td><strong><span>资金来源</span></strong></td><td><span>慈善基金会（盖茨基金会、Open Society 等）+ 个人捐赠 + 技术服务收费</span></td></tr><tr><td><strong><span>独立性</span></strong></td><td><span>无政党依附、无商业资本控制、无政府直接管理</span></td></tr><tr><td><strong><span>透明度</span></strong></td><td><span>所有核查过程、数据来源、利益冲突声明均公开发布</span></td></tr><tr><td><strong><span>国际认证</span></strong></td><td><span>国际事实核查网络（IFCN）认证成员</span></td></tr></tbody></table></figure><h3 id='22-自动化事实核查技术架构'><span>2.2 自动化事实核查技术架构</span></h3><p><span>Full Fact 是自动化事实核查技术的先驱。其技术体系遵循三阶段流水线架构：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">文本输入 → [第一阶段: 声明检测] → [第二阶段: 证据检索] → [第三阶段: 声明验证] → 判决输出</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 22px;"></div><div class="CodeMirror-gutters" style="display: none; height: 22px;"></div></div></div></pre><h4 id='第一阶段声明检测claim-detection'><span>第一阶段：声明检测（Claim Detection）</span></h4><p><span>从海量文本中自动识别&quot;可核查的事实性声明&quot;：</span></p><ul><li><p><strong><span>规则匹配</span></strong><span>：基于数值模式、时间模式等结构化特征识别定量声明</span></p></li><li><p><strong><span>分类模型</span></strong><span>：用 Transformer 架构（BERT/DeBERTa）对文本片段进行 claim/non-claim 二分类</span></p></li><li><p><strong><span>细粒度抽取</span></strong><span>：提取声明中的（主体, 属性, 数值, 时间）四元组</span></p></li><li><p><strong><span>重复检测</span></strong><span>：语义去重，关联已核查过的同类声明</span></p></li></ul><h4 id='第二阶段证据检索evidence-retrieval'><span>第二阶段：证据检索（Evidence Retrieval）</span></h4><p><span>为检测到的声明检索权威证据文档：</span></p><ul><li><p><strong><span>查询构造</span></strong><span>：从声明中提取关键实体和关系，生成搜索查询</span></p></li><li><p><strong><span>多级检索</span></strong><span>：BM25 稀疏检索 + Dense Retrieval 密集向量检索</span></p></li><li><p><strong><span>精细重排</span></strong><span>：Cross-Encoder 对声明-证据对进行相关性打分</span></p></li><li><p><strong><span>可信源管理</span></strong><span>：维护权威数据源白名单（ONS、政府部门统计、议会记录等）</span></p></li></ul><h4 id='第三阶段声明验证claim-verification'><span>第三阶段：声明验证（Claim Verification）</span></h4><p><span>基于检索到的证据判断声明的真实性：</span></p><ul><li><p><strong><span>文本蕴涵方法（NLI）</span></strong><span>：将验证转化为 Natural Language Inference 任务——证据是否支持、矛盾于或不足判断该声明</span></p></li><li><p><strong><span>数值推理方法</span></strong><span>：对涉及统计数据的声明，进行数值提取、口径校准与偏差计算</span></p></li><li><p><strong><span>知识图谱方法</span></strong><span>：将声明中的三元组与知识图谱进行实体链接和关系匹配</span></p></li></ul><h4 id='full-fact-的技术产品化'><span>Full Fact 的技术产品化</span></h4><ul><li><p><strong><span>Robocheck 系统</span></strong><span>：半自动化核查原型，机器做筛查匹配，最终判断由人工核查员做出</span></p></li><li><p><strong><span>结构化数据实时监控</span></strong><span>：持续监控政府统计机构的数据发布，自动与过往政治声明交叉比对</span></p></li><li><p><strong><span>重复声明自动关联</span></strong><span>：同类声明自动归并，避免重复核查</span></p></li></ul><h3 id='23-可借鉴与不可借鉴之处'><span>2.3 可借鉴与不可借鉴之处</span></h3><figure class='table-figure'><table><thead><tr><th><span>维度</span></th><th><span>可借鉴</span></th><th><span>不可直接照搬</span></th></tr></thead><tbody><tr><td><span>技术架构</span></td><td><span>三阶段流水线、证据检索方法论</span></td><td><span>—</span></td></tr><tr><td><span>透明度设计</span></td><td><span>来源可追溯、方法论公开</span></td><td><span>—</span></td></tr><tr><td><span>组织模式</span></td><td><span>—</span></td><td><span>独立慈善机构模式在国内不具备条件</span></td></tr><tr><td><span>核查领域</span></td><td><span>—</span></td><td><span>政治声明核查在国内不具备空间</span></td></tr></tbody></table></figure><hr /><h2 id='三国内落地的可行路径分析'><span>三、国内落地的可行路径分析</span></h2><h3 id='31-核查领域的选择'><span>3.1 核查领域的选择</span></h3><p><span>政治领域的事实核查在国内不具备可行性和必要性。但以下领域</span><strong><span>需求明确、可行性高、社会价值显著</span></strong><span>：</span></p><figure class='table-figure'><table><thead><tr><th><span>领域</span></th><th><span>典型核查场景</span></th><th><span>数据源可获得性</span></th></tr></thead><tbody><tr><td><strong><span>健康与医疗</span></strong></td><td><span>&quot;XX 致癌&quot;&quot;XX 相克&quot;&quot;XX 治百病&quot;</span></td><td><span>卫健委公开数据、药监局备案、临床指南、学术文献</span></td></tr><tr><td><strong><span>食品安全</span></strong></td><td><span>&quot;XX 含致癌添加剂&quot;&quot;XX 是转基因&quot;</span></td><td><span>食品安全国家标准（GB 2760 等）、市场监管数据</span></td></tr><tr><td><strong><span>金融防诈骗</span></strong></td><td><span>&quot;央行放水 XX 万亿&quot;&quot;XX 币一夜暴涨&quot;</span></td><td><span>央行公开数据、银保监会公告、上市公司披露</span></td></tr><tr><td><strong><span>灾害与应急</span></strong></td><td><span>灾害谣言、AI 生成假灾情图</span></td><td><span>应急管理部数据、气象局数据、地震局监测</span></td></tr><tr><td><strong><span>教育与就业</span></strong></td><td><span>&quot;XX 大学就业率&quot;&quot;XX 专业薪资排名&quot;</span></td><td><span>教育部统计数据、人社部就业报告</span></td></tr><tr><td><strong><span>科技与产业</span></strong></td><td><span>&quot;华为自研光刻机&quot;&quot;苹果退出中国&quot;</span></td><td><span>知识产权数据、工商登记信息、企业公告</span></td></tr></tbody></table></figure><h3 id='32-组织模式比较'><span>3.2 组织模式比较</span></h3><figure class='table-figure'><table><thead><tr><th><span>路径</span></th><th><span>优势</span></th><th><span>劣势</span></th><th><span>可行性</span></th></tr></thead><tbody><tr><td><strong><span>政府主导建设</span></strong></td><td><span>权威性最高；可打通跨部门数据；经费稳定；可持续</span></td><td><span>独立性存疑（但民生领域独立性要求较低）</span></td><td><strong><span>最高</span></strong></td></tr><tr><td><span>学术/研究机构挂靠</span></td><td><span>方法论严谨；相对独立</span></td><td><span>行政约束；经费持续性存疑；数据获取困难</span></td><td><span>中等</span></td></tr><tr><td><span>开源社区/公益</span></td><td><span>最独立；成本低</span></td><td><span>可持续性差；质量控制难；数据源无保障</span></td><td><span>低</span></td></tr><tr><td><span>商业路径</span></td><td><span>技术迭代快</span></td><td><span>与真相导向存在结构性矛盾（详见第 3.3 节）</span></td><td><span>不可行</span></td></tr></tbody></table></figure><h3 id='33-为什么商业路径走不通'><span>3.3 为什么商业路径走不通</span></h3><p><span>事实核查与商业逻辑存在</span><strong><span>四大结构性矛盾</span></strong><span>：</span></p><ol start='' ><li><p><strong><span>注意力悖论</span></strong><span>：真实信息传播力远弱于情绪化虚假信息。核查平台天然站在流量逻辑的对立面</span></p></li><li><p><strong><span>支付意愿缺失</span></strong><span>：真相具有非排他性和非竞争性，是典型的公共品。用户不会为&quot;知道自己被误导了&quot;付费</span></p></li><li><p><strong><span>利益冲突不可调和</span></strong><span>：作为广告主来源的行业（食品、保健品、金融产品）恰恰是最需要被核查的对象</span></p></li><li><p><strong><span>平台身份矛盾</span></strong><span>：商业平台若嵌入事实核查，会与&quot;最大化用户停留时长&quot;的核心产品目标发生冲突</span></p></li></ol><p><strong><span>结论</span></strong><span>：事实核查不适合商业路径，应当作为公共品由政府供给。</span></p><hr /><h2 id='四平台建设方案'><span>四、平台建设方案</span></h2><h3 id='41-定位'><span>4.1 定位</span></h3><blockquote><p><strong><span>国家信息质量公共平台</span></strong><span>：聚焦民生和科技领域，以自动化核查技术驱动，以政府权威数据为支撑，为公众、媒体和商业平台提供信息真实性的公共验证服务。</span></p></blockquote><p><span>核心差异：</span></p><ul><li><p><strong><span>不做裁判者，做权威数据的聚合者和翻译者</span></strong></p></li><li><p><strong><span>不生产结论，只展示证据与真实数据的比对</span></strong></p></li><li><p><strong><span>不替代公众判断，只提供做出理性判断所需的确定事实</span></strong></p></li></ul><h3 id='42-总体架构'><span>4.2 总体架构</span></h3><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┌──────────────────────────────────────────────────────────┐</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 公众 / 媒体 / 商业平台 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">└──────────────────────────┬───────────────────────────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┌──────────────────────────┼───────────────────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  对外服务层 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  · 公众查询界面（Web/小程序） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  · 开放核查 API（媒体、社交平台嵌入） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  · 订阅推送（按领域/关键词） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  · 传播预警（热点虚假信息实时标记） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">└──────────────────────────┬───────────────────────────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┌──────────────────────────┼───────────────────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  核查引擎层 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  ┌────────────────┐  ┌──────────────┐  ┌──────────────┐  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ &nbsp; 声明检测模块 &nbsp; │  │  证据检索模块  │  │ 声明验证模块  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ · 类型识别 &nbsp; &nbsp; │  │ · 查询构造 &nbsp;  │  │ · 数值判别 &nbsp;  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ · 实体抽取 &nbsp; &nbsp; │  │ · 多源检索 &nbsp;  │  │ · 实体匹配 &nbsp;  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ · 数值提取 &nbsp; &nbsp; │  │ · 证据重排 &nbsp;  │  │ · 文本匹配 &nbsp;  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ · 重复检测 &nbsp; &nbsp; │  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  │ · 口径校准 &nbsp;  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ [LLM辅助] &nbsp; &nbsp; │  │ [LLM辅助] &nbsp;  │  │ [非LLM核心]  │  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  └────────────────┘  └──────────────┘  └──────────────┘  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">└──────────────────────────┬───────────────────────────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┌──────────────────────────┼───────────────────────────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  可信数据层 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │卫生健康 │ │市场监管 │ │金融央行 │ │应急管理 │ │教育人社 │ │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │  数据 &nbsp; │ │  数据 &nbsp; │ │  数据 &nbsp; │ │  数据 &nbsp; │ │  数据 &nbsp; │ │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  ┌──────────────────────────────────────────────────┐ &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  │ &nbsp; &nbsp; 结构化数据仓库 + 文档向量索引 + 知识图谱 &nbsp; &nbsp; &nbsp;  │ &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│  └──────────────────────────────────────────────────┘ &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">└──────────────────────────────────────────────────────────┘</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 867px;"></div><div class="CodeMirror-gutters" style="display: none; height: 867px;"></div></div></div></pre><h3 id='43-核心技术决策'><span>4.3 核心技术决策</span></h3><h4 id='决策一llm-的角色边界'><span>决策一：LLM 的角色边界</span></h4><p><span>LLM 在自动核查中的角色必须严格限定。这不仅是成本考虑，更是信任基础：</span></p><figure class='table-figure'><table><thead><tr><th><span>环节</span></th><th><span>是否使用 LLM</span></th><th><span>理由</span></th></tr></thead><tbody><tr><td><span>声明检测（识别可核查声明）</span></td><td><span>✅ 使用</span></td><td><span>自然语言理解是 LLM 强项，且该环节不涉及最终判定</span></td></tr><tr><td><span>查询构造（生成搜索查询/数据库查询）</span></td><td><span>✅ 使用</span></td><td><span>不涉及判定，错误可自我纠正</span></td></tr><tr><td><span>证据摘要（为人工复核提供摘要）</span></td><td><span>✅ 使用</span></td><td><span>辅助性任务</span></td></tr><tr><td><span>裁定文案生成（撰写用户可读的核查报告）</span></td><td><span>✅ 使用</span></td><td><span>基于已有判定结果生成，非自主判断</span></td></tr><tr><td><strong><span>声明验证（判定真假）</span></strong></td><td><span>❌ </span><strong><span>不使用</span></strong></td><td><span>核心核查环节必须确定性、可审计、可复现</span></td></tr></tbody></table></figure><p><strong><span>核心原则</span></strong><span>：LLM 的幻觉问题决定了它不能承担&quot;判定&quot;角色。核查引擎的判定逻辑必须基于确定性规则（数值比对、实体匹配、文本匹配），确保</span><strong><span>同一输入始终得到同一输出</span></strong><span>。</span></p><h4 id='决策二按声明类型实施不同验证策略'><span>决策二：按声明类型实施不同验证策略</span></h4><p><span>不是所有声明都适合自动化核查，需要从架构层面区分处理：</span></p><figure class='table-figure'><table><thead><tr><th><span>声明类型</span></th><th><span>示例</span></th><th><span>验证方式</span></th><th><span>自动化程度</span></th></tr></thead><tbody><tr><td><strong><span>数值型</span></strong></td><td><span>&quot;PM2.5 降至 32 微克/立方米&quot;</span></td><td><span>数值比对 + 口径校准 + 偏差判定</span></td><td><span>全自动</span></td></tr><tr><td><strong><span>关系型</span></strong></td><td><span>&quot;A 公司持有 B 公司股份&quot;</span></td><td><span>知识图谱查询 + 实体匹配</span></td><td><span>全自动</span></td></tr><tr><td><strong><span>存在性</span></strong></td><td><span>&quot;卫健委发布了 XX 指南&quot;</span></td><td><span>文档检索 + 精确匹配</span></td><td><span>全自动</span></td></tr><tr><td><strong><span>比较型</span></strong></td><td><span>&quot;X 比 Y 更高&quot;</span></td><td><span>数值提取 + 比较</span></td><td><span>全自动</span></td></tr><tr><td><strong><span>因果型</span></strong></td><td><span>&quot;限购导致房价下跌&quot;</span></td><td><span>—</span></td><td><strong><span>放弃自动核查，标记为&quot;需人工&quot;</span></strong></td></tr></tbody></table></figure><p><span>对因果型声明坦诚标注&quot;目前无法自动核查&quot;，比给出不可靠的结论更有助于建立公信力。</span></p><h4 id='决策三用信息抽取替代中文-nli'><span>决策三：用信息抽取替代中文 NLI</span></h4><p><span>目前中文自然语言推理（NLI）模型的质量和成熟度远低于英文。建议采用替代策略：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">英文 Full Fact 做法:</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  声明 + 证据 → NLI 模型 → 支持/矛盾/中立</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">国内替代做法:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  声明中的关键信息（实体、数值、关系） ← NLP 信息抽取</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  证据文档中的关键信息（实体、数值、关系） ← NLP 信息抽取</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  精确匹配 → 匹配 → 支持 / 不匹配 → 不支持</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 156px;"></div><div class="CodeMirror-gutters" style="display: none; height: 156px;"></div></div></div></pre><p><span>这本质上将不确定性高的 NLI 任务降级为确定性高的信息抽取 + 匹配任务。对于中文场景，可行性更高，结论更可审计。</span></p><h4 id='决策四确定性分级拒绝真假二分'><span>决策四：确定性分级，拒绝真假二分</span></h4><p><span>核查结论不应是简单的&quot;真/假&quot;二分，而应是基于证据的确定性分级：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ✅ 与权威数据一致 &nbsp; &nbsp; ← 证据充分支持该声明</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ⚠️ 与权威数据存在偏差 &nbsp; ← 数据接近但不够精确</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ❌ 与权威数据明显不符 &nbsp; ← 证据明确否定该声明</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ❓ 证据不足，无法判断 &nbsp; ← 当前缺乏足够证据</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  ⛔ 不属于可核查声明 &nbsp; &nbsp; ← 观点、预测、因果判断</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 111px;"></div><div class="CodeMirror-gutters" style="display: none; height: 111px;"></div></div></div></pre><p><span>&quot;证据不足，无法判断&quot;与&quot;与权威数据一致&quot;是同等重要的结论。</span></p><h3 id='44-llm-幻觉的技术应对方案'><span>4.4 LLM 幻觉的技术应对方案</span></h3><p><span>本研究提出的架构从根本上规避了 LLM 幻觉问题：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">核查精度保障层次:</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">L1: 规则层（可解释、可审计）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 数值偏差计算公式（固定阈值，无随机性）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 实体精确匹配（字符串/ID 匹配）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 知识点图谱路径查询（确定性、有向图）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">L2: 检索层（可追溯、可复现）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · BM25 标准化检索（确定性算法）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 结构化数据库 SQL 查询（确定性）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 证据链接公开（用户可自行验证）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">L3: LLM 辅助层（仅用于理解与表达，不参与判定）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 声明检测（提取，非判断）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 查询构造（生成查询，非替代查询）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  · 文案生成（基于 L1/L2 输出，非自主推理）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">关键设计:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · L3 的输出永远不作为"判定依据"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 所有可视化结论必须链接到 L1/L2 的确定性输出</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 用户可以点击证据链接自行验证</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 467px;"></div><div class="CodeMirror-gutters" style="display: none; height: 467px;"></div></div></div></pre><hr /><h2 id='五实施路径建议'><span>五、实施路径建议</span></h2><h3 id='51-试点阶段6-12-个月'><span>5.1 试点阶段（6-12 个月）</span></h3><p><strong><span>目标</span></strong><span>：在一个领域跑通全流程</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">范围: 健康与医疗领域</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">数据源: 卫健委公开数据 + 药监局备案数据库 + 临床指南 + 学术文献摘要</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">功能:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 公众查询:"输入一个健康说法，查看权威数据怎么说"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 自动核查:数值型和存在性声明的自动化验证</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 人工复核:因果型和复杂声明的专家人工核查</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">指标:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 自动化核查覆盖率（可自动处理的声明占比）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 用户查询量</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 证据可追溯率</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 用户信任度调研</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 244px;"></div><div class="CodeMirror-gutters" style="display: none; height: 244px;"></div></div></div></pre><p><strong><span>试点期间关键产出</span></strong><span>：</span></p><ul><li><p><span>自动化核查引擎 v1.0（声明检测 + 证据检索 + 数值验证）</span></p></li><li><p><span>健康领域可信数据源及更新机制</span></p></li><li><p><span>用户界面（Web + 微信小程序）</span></p></li><li><p><span>试点期运营数据</span></p></li></ul><h3 id='52-扩面阶段12-24-个月'><span>5.2 扩面阶段（12-24 个月）</span></h3><p><strong><span>目标</span></strong><span>：多领域覆盖 + 开放 API</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">新增领域: 食品安全、金融防诈骗、灾害应急</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">功能升级:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 开放核查 API（媒体和社交平台嵌入）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 热点信息监控（实时发现新出现的可疑声明）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 声明重复检测（自动关联同类声明）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 订阅推送</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">关键里程碑:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 平台覆盖率（覆盖的主要公共数据源数量）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · API 调用量</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  · 接入平台数量</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 222px;"></div><div class="CodeMirror-gutters" style="display: none; height: 222px;"></div></div></div></pre><h3 id='53-常态化阶段24-个月以上'><span>5.3 常态化阶段（24 个月以上）</span></h3><p><strong><span>目标</span></strong><span>：成为信息质量公共基础设施</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.111112px; left: 7.326416px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">· 跨领域、跨部门数据全面对接</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">· 实时核查预警系统（AI 生成内容的前置核查）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">· 传播链追溯机制</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">· 核查方法论标准输出（推动行业标准）</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">· 国际事实核查网络对接</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 111px;"></div><div class="CodeMirror-gutters" style="display: none; height: 111px;"></div></div></div></pre><hr /><h2 id='六关键挑战与应对策略'><span>六、关键挑战与应对策略</span></h2><h3 id='61-公信力建设'><span>6.1 公信力建设</span></h3><p><strong><span>挑战</span></strong><span>：政府主导平台天然面临&quot;官方口径&quot;的质疑。</span></p><p><strong><span>应对策略</span></strong><span>：</span></p><ul><li><p><strong><span>方法论透明</span></strong><span>：每一条核查结论必须公示：引用了什么数据源？数据时间？如何比对？偏差多少？</span></p></li><li><p><strong><span>证据开放</span></strong><span>：所有数据源链接可点击访问原文。用户不需要信任平台，只需要信任源数据</span></p></li><li><p><strong><span>只呈现、不判断</span></strong><span>：平台定位为&quot;数据聚合者&quot;而非&quot;真相裁判者&quot;。结论是&quot;根据XX数据，YY地区ZZ指标为AA，与所声明不符&quot;，而非&quot;这个说法是假的&quot;</span></p></li><li><p><strong><span>不确定性坦诚</span></strong><span>：明确标注核查局限性——因果型声明无法核查、数据滞后的声明无法核查等</span></p></li></ul><h3 id='62-跨部门数据协调'><span>6.2 跨部门数据协调</span></h3><p><strong><span>挑战</span></strong><span>：政府部门间数据壁垒是公共平台建设的首要障碍。</span></p><p><strong><span>应对策略</span></strong><span>：</span></p><ul><li><p><strong><span>顶层推动</span></strong><span>：将其定位为国家信息基础设施，纳入数字中国或数据要素相关政策框架</span></p></li><li><p><strong><span>权责分离</span></strong><span>：平台不拥有数据，只索引和引用；各部门保留数据的完整管辖权</span></p></li><li><p><strong><span>先易后难</span></strong><span>：优先接入已公开的、无争议的统计数据</span></p></li><li><p><strong><span>增量收益</span></strong><span>：让各部门看到——被这个平台引用数据本身就是权威性的背书</span></p></li></ul><h3 id='63-核查速度与准确性的平衡'><span>6.3 核查速度与准确性的平衡</span></h3><p><strong><span>挑战</span></strong><span>：紧急事件（灾害、公共卫生事件）中，核查速度与准确性存在矛盾。</span></p><p><strong><span>应对策略</span></strong><span>：</span></p><ul><li><p><strong><span>分层响应机制</span></strong><span>：</span></p><ul><li><p><span>T1（紧急）：先标记&quot;正在核查中&quot;，阻断病毒式传播</span></p></li><li><p><span>T2（核查）：自动化核查 + 人工快速复核</span></p></li><li><p><span>T3（确认）：发布详细核查报告</span></p></li></ul></li><li><p><strong><span>自动化优先</span></strong><span>：可自动化核查的声明（数值型、存在型）机器优先处理</span></p></li><li><p><strong><span>不确定性显式标注</span></strong><span>：标注当前信息可信度（高/中/低/未知）</span></p></li></ul><h3 id='64-国际复杂环境'><span>6.4 国际复杂环境</span></h3><p><strong><span>挑战</span></strong><span>：部分涉及国际话题的声明的数据源不可获得。</span></p><p><strong><span>应对策略</span></strong><span>：</span></p><ul><li><p><strong><span>数据源依赖标注</span></strong><span>：明确标注数据来源的可获得性和可信度级别</span></p></li><li><p><strong><span>管辖边界清晰</span></strong><span>：以国内民生问题为主，涉及国际议题时以公开国际组织数据为准</span></p></li></ul><hr /><h2 id='七总结与建议'><span>七、总结与建议</span></h2><h3 id='71-核心判断'><span>7.1 核心判断</span></h3><ol start='' ><li><p><strong><span>必要性成立</span></strong><span>：LLM 时代虚假信息问题的量和质都发生了根本性变化。传统的、反应式的辟谣模式已无法应对。需要建立信息化、系统化、技术驱动的公共信息质量基础设施。</span></p></li><li><p><strong><span>可行性成立</span></strong><span>：自动化事实核查技术已相对成熟（以 Full Fact 为代表），结合LLM 的文本理解能力与确定性规则引擎的精确判定，技术架构是明确的。重点难点不在技术，而在组织和数据协调。</span></p></li><li><p><strong><span>紧迫性成立</span></strong><span>：LLM 技术的发展速度远超制度和公共设施的建设速度。越晚起步，&quot;AI 污染信息生态&quot;的债务越重。</span></p></li></ol><h3 id='72-实施建议摘要'><span>7.2 实施建议摘要</span></h3><figure class='table-figure'><table><thead><tr><th><span>建议</span></th><th><span>优先级</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>政府主导建设信息质量公共平台</span></td><td><span>最高</span></td><td><span>商业和公益路径均有结构性缺陷</span></td></tr><tr><td><span>聚焦民生/科技领域</span></td><td><span>最高</span></td><td><span>政治领域核查不具可行性</span></td></tr><tr><td><span>LLM 辅助但不参与判定</span></td><td><span>最高</span></td><td><span>核查核心环节必须确定性驱动</span></td></tr><tr><td><span>试点先行——健康领域</span></td><td><span>高</span></td><td><span>需求大、数据源丰富、社会共识强</span></td></tr><tr><td><span>开放 API 而非自建流量入口</span></td><td><span>高</span></td><td><span>嵌入现有平台比独立应用更有价值</span></td></tr><tr><td><span>方法论透明 + 证据可追溯</span></td><td><span>高</span></td><td><span>公信力建设的基石</span></td></tr><tr><td><span>确定性分级而非真假二分</span></td><td><span>高</span></td><td><span>坦诚标注不确定性有助于建立长期信任</span></td></tr></tbody></table></figure><h3 id='73-成本估算考量'><span>7.3 成本估算考量</span></h3><p><span>一个涵盖健康/食品安全/金融/灾害/教育五大领域的成熟平台，大致需要：</span></p><ul><li><p><span>技术团队（NLP 工程师、后端/数据工程师、产品设计）</span></p></li><li><p><span>领域专家（各领域核查员、方法论指导）</span></p></li><li><p><span>数据运营（数据源管理、持续更新维护）</span></p></li><li><p><span>基础设施（服务器、模型部署、数据存储）</span></p></li></ul><p><span>年均运营成本可对标一个中等规模的技术型事业单位。相对于谣言造成的每年数以亿计的社会经济损失，投入产出比极高。</span></p><hr /><h2 id='附录国际事实核查机构参考'><span>附录：国际事实核查机构参考</span></h2><figure class='table-figure'><table><thead><tr><th><span>机构</span></th><th><span>国家</span></th><th><span>类型</span></th><th><span>特点</span></th></tr></thead><tbody><tr><td><span>Full Fact</span></td><td><span>英国</span></td><td><span>独立慈善机构</span></td><td><span>政治声明核查 + 自动化技术研发</span></td></tr><tr><td><span>PolitiFact</span></td><td><span>美国</span></td><td><span>媒体附属</span></td><td><span>政治声明的&quot;真实度计&quot;评级</span></td></tr><tr><td><span>FactCheck.org</span></td><td><span>美国</span></td><td><span>大学附属</span></td><td><span>宾夕法尼亚大学运营</span></td></tr><tr><td><span>AFP Fact Check</span></td><td><span>法国</span></td><td><span>通讯社附属</span></td><td><span>全球多语种核查网络</span></td></tr><tr><td><span>Chequeado</span></td><td><span>阿根廷</span></td><td><span>独立非营利</span></td><td><span>拉美区域标杆，开放数据可视化</span></td></tr></tbody></table></figure><hr /><h2 id='参考文献'><span>参考文献</span></h2><h3 id='一自动化事实核查automated-fact-checking'><span>一、自动化事实核查（Automated Fact-Checking）</span></h3><p><span>[1] Thorne, J., Vlachos, A., Christodoulopoulos, C., &amp; Mittal, A. (2018). </span><strong><span>FEVER: A Large-scale Dataset for Fact Extraction and VERification.</span></strong><span> In </span><em><span>Proceedings of NAACL-HLT 2018</span></em><span>, pp. 809–819.</span>
+<span>→ 提出 FEVER 数据集，定义了&quot;声明检测→证据检索→声明验证&quot;三段式框架，是该领域最广泛使用的基准之一。</span></p><p><span>[2] Guo, Z., Schlichtkrull, M., &amp; Vlachos, A. (2022). </span><strong><span>A Survey on Automated Fact-Checking.</span></strong><span> </span><em><span>Transactions of the Association for Computational Linguistics</span></em><span>, 10, 178–206.</span>
+<span>→ 自动化事实核查领域迄今最全面的综述，系统梳理了三阶段流水线及各阶段的主流方法。</span></p><p><span>[3] Thorne, J., &amp; Vlachos, A. (2018). </span><strong><span>Automated Fact Checking: Task Formulations, Methods and Future Directions.</span></strong><span> In </span><em><span>Proceedings of COLING 2018</span></em><span>, pp. 3346–3359.</span>
+<span>→ 较早对自动事实核查任务进行形式化定义的综述性工作。</span></p><p><span>[4] Nakov, P., et al. (2021). </span><strong><span>Automated Fact-Checking for Assisting Human Fact-Checkers.</span></strong><span> In </span><em><span>Proceedings of IJCAI 2021</span></em><span>, pp. 4551–4558.</span>
+<span>→ 聚焦人机协作的事实核查模式，强调自动化技术应为人工核查员赋能而非替代。</span></p><p><span>[5] Zeng, X., Abumansour, A. S., &amp; Zubiaga, A. (2021). </span><strong><span>Automated Fact-Checking: A Survey.</span></strong><span> </span><em><span>Language and Linguistics Compass</span></em><span>, 15(10), e12438.</span></p><p><span>[6] Augenstein, I., et al. (2019). </span><strong><span>MultiFC: A Real-World Multi-Domain Dataset for Evidence-Based Fact Checking of Claims.</span></strong><span> In </span><em><span>Proceedings of EMNLP-IJCNLP 2019</span></em><span>, pp. 4685–4697.</span>
+<span>→ 首个来自真实事实核查机构（包括 Full Fact）的多领域声明数据集。</span></p><p><span>[7] Augenstein, I. (2021). </span><strong><span>Towards Explainable Fact Checking.</span></strong><span> Dr. Scient. Thesis, University of Copenhagen. arXiv:2108.10267.</span>
+<span>→ 探讨可解释性在事实核查中的作用，强调透明度和可追溯性的重要性。</span></p><p><span>[8] Wadden, D., et al. (2020). </span><strong><span>Fact or Fiction: Verifying Scientific Claims.</span></strong><span> In </span><em><span>Proceedings of EMNLP 2020</span></em><span>, pp. 7534–7550.</span>
+<span>→ 提出 SCI-FACT 数据集，聚焦科学领域声明的自动验证，与本文提出的民生/健康领域定位高度相关。</span></p><h3 id='二大语言模型幻觉'><span>二、大语言模型幻觉</span></h3><p><span>[9] Huang, L., et al. (2025). </span><strong><span>A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions.</span></strong><span> </span><em><span>ACM Transactions on Information Systems</span></em><span>. (arXiv:2311.05232, 持续更新)</span>
+<span>→ LLM 幻觉领域最系统全面的综述，提出了幻觉的分类体系和产生机制分析。</span></p><p><span>[10] Ji, Z., et al. (2023). </span><strong><span>Survey of Hallucination in Natural Language Generation.</span></strong><span> </span><em><span>ACM Computing Surveys</span></em><span>, 55(12), 1–38.</span>
+<span>→ 涵盖 NLG 领域幻觉问题的综述，覆盖预训练模型时代之前的完整脉络。</span></p><p><span>[11] Zhang, Y., et al. (2023). </span><strong><span>Siren&#39;s Song in the AI Ocean: A Survey on Hallucination in Large Language Models.</span></strong><span> arXiv:2309.01219.</span>
+<span>→ 从幻觉的产生原因、检测方法到缓解策略的全面梳理。</span></p><p><span>[12] Bang, Y., et al. (2023). </span><strong><span>A Multitask, Multilingual, Multimodal Evaluation of ChatGPT on Reasoning, Hallucination, and Interactivity.</span></strong><span> In </span><em><span>Proceedings of IJCNLP-AACL 2023</span></em><span>.</span>
+<span>→ 系统评估 ChatGPT 等 LLM 在推理和幻觉表现上的多语言多任务基准测试。</span></p><p><span>[13] Rawte, V., et al. (2023). </span><strong><span>A Troubling Emergence of Hallucination in Large Language Models.</span></strong><span> In </span><em><span>Proceedings of EMNLP 2023</span></em><span>, pp. 4366–4384.</span>
+<span>→ 聚焦 LLM 幻觉的现实危害和挑战。</span></p><p><span>[14] Li, J., et al. (2024). </span><strong><span>The Dawn After the Dark: An Empirical Study on Factuality Hallucination in Large Language Models.</span></strong><span> In </span><em><span>Proceedings of ACL 2024</span></em><span>.</span>
+<span>→ 对 LLM 事实性幻觉的实证研究，对理解 LLM 在事实核查任务中的局限性有重要参考价值。</span></p><h3 id='三虚假信息传播与影响'><span>三、虚假信息传播与影响</span></h3><p><span>[15] Vosoughi, S., Roy, D., &amp; Aral, S. (2018). </span><strong><span>The Spread of True and False News Online.</span></strong><span> </span><em><span>Science</span></em><span>, 359(6380), 1146–1151.</span>
+<span>→ </span><strong><span>里程碑研究</span></strong><span>：基于 Twitter 十年数据分析证明虚假信息比真实信息传播更远、更快、更深、更广，尤其以恐惧、厌恶和惊讶情绪驱动。被引用超过 5000 次，为信息质量公共治理提供了核心实证基础。</span></p><p><span>[16] Lazer, D. M. J., et al. (2018). </span><strong><span>The Science of Fake News.</span></strong><span> </span><em><span>Science</span></em><span>, 359(6380), 1094–1096.</span>
+<span>→ 提出虚假信息的跨学科研究框架，呼吁从技术、社会、治理多维度应对。</span></p><p><span>[17] Guess, A. M., et al. (2020). </span><strong><span>A Digital Media Literacy Intervention Increases Discernment Between Mainstream and False News in the United States and India.</span></strong><span> </span><em><span>Proceedings of the National Academy of Sciences</span></em><span>, 117(27), 15536–15545.</span>
+<span>→ 实证研究表明数字媒体素养干预可以提升公众辨别真假信息的能力。</span></p><p><span>[18] Pennycook, G., &amp; Rand, D. G. (2021). </span><strong><span>The Psychology of Fake News.</span></strong><span> </span><em><span>Trends in Cognitive Sciences</span></em><span>, 25(5), 388–402.</span>
+<span>→ 从认知心理学角度分析人们为何相信和传播虚假信息。</span></p><p><span>[19] Lewandowsky, S., Ecker, U. K. H., &amp; Cook, J. (2017). </span><strong><span>Beyond Misinformation: Understanding and Coping with the &quot;Post-Truth&quot; Era.</span></strong><span> </span><em><span>Journal of Applied Research in Memory and Cognition</span></em><span>, 6(4), 353–369.</span>
+<span>→ 分析&quot;后真相&quot;时代虚假信息的认知基础和对策。</span></p><p><span>[20] Wardle, C., &amp; Derakhshan, H. (2017). </span><strong><span>Information Disorder: Toward an Interdisciplinary Framework for Research and Policymaking.</span></strong><span> Council of Europe Report DGI(2017)09.</span>
+<span>→ 提出&quot;信息混乱&quot;（Information Disorder）的三分类框架（misinformation/disinformation/malinformation），被事实核查机构和政策制定者广泛采纳。</span></p><h3 id='四事实核查实践与组织'><span>四、事实核查实践与组织</span></h3><p><span>[21] Graves, L. (2016). </span><strong><span>Deciding What&#39;s True: The Rise of Political Fact-Checking in American Journalism.</span></strong><span> Columbia University Press.</span>
+<span>→ 事实核查研究的经典著作，系统分析美国政治事实核查的兴起、方法论和影响。</span></p><p><span>[22] Graves, L., &amp; Cherubini, F. (2016). </span><strong><span>The Rise of Fact-Checking Sites in Europe.</span></strong><span> Reuters Institute for the Study of Journalism, University of Oxford.</span>
+<span>→ 对欧洲事实核查机构（包括 Full Fact）的全面调研报告。</span></p><p><span>[23] Full Fact. (2019). </span><strong><span>A Framework for Information Incidents.</span></strong><span> Full Fact, London. [Online]. Available: </span><a href='https://fullfact.org/about/policy/reports/information-incidents-framework/' target='_blank' class='url'>https://fullfact.org/about/policy/reports/information-incidents-framework/</a>
+<span>→ Full Fact 提出的信息事件分类与应对框架，为平台治理提供了实践参考。</span></p><p><span>[24] Full Fact. (2020). </span><strong><span>Report on the Facebook Third-Party Fact-Checking Programme.</span></strong><span> Full Fact, London.</span>
+<span>→ Full Fact 作为 Facebook 第三方事实核查合作伙伴的经验总结。</span></p><p><span>[25] Duke Reporters&#39; Lab. (2024). </span><strong><span>Fact-Checking Census: Global Fact-Checking Site Count.</span></strong><span> [Online]. Available: </span><a href='https://reporterslab.org/fact-checking/' target='_blank' class='url'>https://reporterslab.org/fact-checking/</a>
+<span>→ 杜克大学记者实验室对全球事实核查站点的年度普查，跟踪全球事实核查生态发展。</span></p><p><span>[26] Stencel, M., Luther, J., &amp; Ryan, E. (2022). </span><strong><span>Fact-Checking Census: Slow Growth in Fact-Checkers Continues.</span></strong><span> Duke Reporters&#39; Lab.</span></p><h3 id='五中国信息生态与辟谣实践'><span>五、中国信息生态与辟谣实践</span></h3><p><span>[27] 胡泳. (2020). </span><strong><span>事实核查在中国：兴起与挑战.</span></strong><span> 《新闻与写作》, 2020(6), 24–31.</span>
+<span>→ 系统梳理事实核查在中国的发展脉络和面临的特殊挑战。</span></p><p><span>[28] 张洪忠, 段泽宁, &amp; 韩秀. (2021). </span><strong><span>谣言检测与辟谣：技术路径与实践反思.</span></strong><span> 《新闻大学》, 2021(4), 55–66.</span>
+<span>→ 从技术和社会双重视角分析中国谣言治理的实践。</span></p><p><span>[29] 曾润喜, 杨喜喜. (2022). </span><strong><span>移动互联网时代的网络谣言治理：模式建构与路径选择.</span></strong><span> 《电子政务》, 2022(2), 12–22.</span></p><p><span>[30] 曾繁旭, 钱钢强. (2021). </span><strong><span>中国的信息疫情与公共健康传播.</span></strong><span> 《国际新闻界》, 43(7), 45–63.</span>
+<span>→ 分析 COVID-19 疫情期间中国信息传播的特征和健康谣言治理。</span></p><p><span>[31] 清华大学新媒体研究中心. (2023). </span><strong><span>AI 生成内容与信息可信度年度报告 2023.</span></strong>
+<span>→ 关注 AIGC 对信息可信度影响的实证研究。</span></p><p><span>[32] 中国互联网联合辟谣平台. (2024). </span><strong><span>年度辟谣工作报告.</span></strong><span> [Online]. Available: </span><a href='https://www.piyao.org.cn/' target='_blank' class='url'>https://www.piyao.org.cn/</a>
+<span>→ 中国官方辟谣平台的年度数据，反映国内谣言治理的整体态势。</span></p><h3 id='六自然语言推理与信息抽取'><span>六、自然语言推理与信息抽取</span></h3><p><span>[33] Bowman, S. R., Angeli, G., Potts, C., &amp; Manning, C. D. (2015). </span><strong><span>A Large Annotated Corpus for Learning Natural Language Inference.</span></strong><span> In </span><em><span>Proceedings of EMNLP 2015</span></em><span>, pp. 632–642.</span>
+<span>→ 提出 SNLI 数据集，定义了自然语言推理（NLI）的标准任务框架。</span></p><p><span>[34] Williams, A., Nangia, N., &amp; Bowman, S. R. (2018). </span><strong><span>A Broad-Coverage Challenge Corpus for Sentence Understanding through Inference.</span></strong><span> In </span><em><span>Proceedings of NAACL-HLT 2018</span></em><span>, pp. 1112–1122.</span>
+<span>→ MultiNLI 数据集，为跨领域的 NLI 评测提供基准。</span></p><p><span>[35] Nie, Y., et al. (2020). </span><strong><span>Adversarial NLI: A New Benchmark for Natural Language Understanding.</span></strong><span> In </span><em><span>Proceedings of ACL 2020</span></em><span>, pp. 4885–4901.</span>
+<span>→ 揭示了 NLI 模型的脆弱性——现有模型对对抗样本的泛化能力有限，侧面印证了本报告提出的&quot;用信息抽取替代 NLI 做判定&quot;的技术策略。</span></p><p><span>[36] Devlin, J., Chang, M.-W., Lee, K., &amp; Toutanova, K. (2019). </span><strong><span>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.</span></strong><span> In </span><em><span>Proceedings of NAACL-HLT 2019</span></em><span>, pp. 4171–4186.</span>
+<span>→ Transformer 预训练模型的奠基之作，当前自动事实核查系统的基础架构。</span></p><h3 id='七信息经济学与公共品理论'><span>七、信息经济学与公共品理论</span></h3><p><span>[37] Stiglitz, J. E. (2000). </span><strong><span>The Contributions of the Economics of Information to Twentieth Century Economics.</span></strong><span> </span><em><span>The Quarterly Journal of Economics</span></em><span>, 115(4), 1441–1478.</span>
+<span>→ 信息经济学经典文献，论证了信息不对称如何导致市场失灵，为将信息质量视为公共品提供了理论基础。</span></p><p><span>[38] Shapiro, C., &amp; Varian, H. R. (1999). </span><strong><span>Information Rules: A Strategic Guide to the Network Economy.</span></strong><span> Harvard Business School Press.</span>
+<span>→ 信息产品的经济学分析，探讨了信息商品定价和公共供给的经济学逻辑。</span></p><p><span>[39] Sunstein, C. R. (2021). </span><strong><span>Liars: Falsehoods and Free Speech in an Age of Deception.</span></strong><span> Oxford University Press.</span>
+<span>→ 从法律和公共政策角度分析虚假信息治理，探讨政府干预虚假信息的法理基础和边界。</span></p><p><span>[40] O&#39;Connor, C., &amp; Weatherall, J. O. (2019). </span><strong><span>The Misinformation Age: How False Beliefs Spread.</span></strong><span> Yale University Press.</span>
+<span>→ 用网络科学和认知科学方法分析信念在社交网络中的传播机制。</span></p><h3 id='八llm-与信息生态的交叉研究'><span>八、LLM 与信息生态的交叉研究</span></h3><p><span>[41] Chen, C., &amp; Shu, K. (2024). </span><strong><span>Combating Misinformation in the Age of LLMs: Opportunities and Challenges.</span></strong><span> </span><em><span>AI Magazine</span></em><span>, 45(3), 354–369.</span>
+<span>→ 系统分析 LLM 时代虚假信息治理的新机遇与新挑战。</span></p><p><span>[42] Pan, Y., et al. (2023). </span><strong><span>On the Risk of Misinformation Pollution with Large Language Models.</span></strong><span> In </span><em><span>Findings of EMNLP 2023</span></em><span>, pp. 1389–1407.</span>
+<span>→ 实证研究 LLM 可能对信息生态造成的污染风险。</span></p><p><span>[43] Augenstein, I., et al. (2024). </span><strong><span>Factuality Challenges in the Era of Large Language Models.</span></strong><span> In </span><em><span>Proceedings of the 4th Multilingual Representation Learning Workshop</span></em><span>.</span>
+<span>→ 全面讨论 LLM 时代事实性面临的挑战及其对事实核查研究的影响。</span></p><p><span>[44] Kreps, S., McCain, R. M., &amp; Brundage, M. (2022). </span><strong><span>All the News That&#39;s Fit to Fabricate: AI-Generated Text as a Tool of Media Misinformation.</span></strong><span> </span><em><span>Journal of Experimental Political Science</span></em><span>, 9(1), 104–117.</span>
+<span>→ 实验研究表明 AI 生成文本在可信度上与人类写作难以区分，验证了 LLM 时代虚假信息风险的实证研究。</span></p><hr /><p><em><span>本研究基于公开资料与国际实践经验分析撰写。</span></em>
+<em><span>分析日期：2026年6月</span></em></p></div></div>
+</body>
+</html>
