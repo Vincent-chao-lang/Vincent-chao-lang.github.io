@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent-chao-lang - Top 5 仓库汇总</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --lang-python: #3572A5;
+            --lang-javascript: #f1e05a;
+            --lang-html: #e34c26;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 48px;
+        }
+
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .subtitle a {
+            color: var(--accent);
+        }
+
+        .repo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .repo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            transition: border-color 0.2s;
+        }
+
+        .repo-card:hover {
+            border-color: var(--accent);
+        }
+
+        .repo-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .repo-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .repo-card h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .repo-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+
+        .website-link:hover { color: var(--accent); }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .lang-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: -1px;
+        }
+
+        .lang-dot.python  { background: var(--lang-python); }
+        .lang-dot.javascript { background: var(--lang-javascript); }
+        .lang-dot.html   { background: var(--lang-html); }
+
+        .star-icon { color: #e3b341; }
+
+        .updated {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #1f6feb22;
+            color: var(--accent);
+            border: 1px solid #1f6feb44;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img class="avatar"
+                 src="https://avatars.githubusercontent.com/u/131456092?v=4"
+                 alt="Vincent-chao-lang"
+                 onerror="this.style.display='none'">
+            <h1>Vincent-chao-lang</h1>
+            <p class="subtitle">
+                最近更新的 Top 5 公开仓库 &middot;
+                <a href="https://github.com/Vincent-chao-lang?tab=repositories" target="_blank" rel="noopener">
+                    查看全部 &rarr;
+                </a>
+            </p>
+        </header>
+
+        <div class="repo-list" id="repo-list">
+            <!-- JS 动态渲染 -->
+        </div>
+
+        <footer>
+            数据来自 <a href="https://github.com/Vincent-chao-lang" target="_blank" rel="noopener">GitHub</a>
+            &middot; 页面静态部署，数据通过 GitHub API 实时获取
+        </footer>
+    </div>
+
+    <script>
+        // 仓库数据 —— 可直接更新内容，页面无需其他依赖
+        const repos = [
+            {
+                name: "open_nexus",
+                description: "定位：面向老旧 Python 项目的安全自动化重构框架。通过异构多 Agent 协同（Claude/DeepSeek/GPT-4o 分别承担 Planner/Executor/Reviewer）和\"地图→扫描→重构\"三步流程，让开发者安全、可控地完成遗留代码的现代化改造。不靠蛮力生成，靠工程纪律。",
+                html_url: "https://github.com/Vincent-chao-lang/open_nexus",
+                homepage: "https://chaos.dabuside.top/open_nexus/",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-06-08",
+                topics: ["AI", "重构", "Multi-Agent"]
+            },
+            {
+                name: "ai-trust-shield",
+                description: "家庭AI卫士 - AI内容可信度实时验证浏览器扩展，支持ChatGPT、Claude、豆包、Kimi等20+主流AI平台",
+                html_url: "https://github.com/Vincent-chao-lang/ai-trust-shield",
+                homepage: "https://chaos.dabuside.top/ai-trust-shield/",
+                language: "JavaScript",
+                stargazers_count: 0,
+                updated_at: "2026-06-08",
+                topics: ["浏览器扩展", "AI安全", "内容验证"]
+            },
+            {
+                name: "context-engineering-kit",
+                description: "A project context management toolkit for AI-assisted programming. Built for Claude Code, with core concepts portable to any AI coding tool.",
+                html_url: "https://github.com/Vincent-chao-lang/context-engineering-kit",
+                homepage: "https://chaos.dabuside.top/context-engineering-kit/",
+                language: "HTML",
+                stargazers_count: 2,
+                updated_at: "2026-06-07",
+                topics: ["Claude Code", "Context Engineering", "AI编程"]
+            },
+            {
+                name: "AISecretary",
+                description: "AISecretary 是 CEO 的 24 小时 AI 秘书。理解自然语言指令，自动拆解任务，跨系统（邮件/飞书/企微）执行，跟踪闭环——像真人秘书一样为老板分担管理负担。",
+                html_url: "https://github.com/Vincent-chao-lang/AISecretary",
+                homepage: "https://aisecretary.dabuside.top/",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-06-07",
+                topics: ["AI秘书", "自动化", "Multi-Agent"]
+            },
+            {
+                name: "AIHub",
+                description: "AI Memory Hub 是一个企业级 AI 知识资产管理平台。它自动采集、整理、关联员工与 AI（ChatGPT、Claude、DeepSeek 等）的所有高质量对话，将其转化为可检索、可关联、可复用的结构化知识资产，实现\"人走，知识留下，价值继续\"。",
+                html_url: "https://github.com/Vincent-chao-lang/AIHub",
+                homepage: "https://aihub.dabuside.top/",
+                language: "Python",
+                stargazers_count: 7,
+                updated_at: "2026-06-03",
+                topics: ["知识管理", "AI", "企业级"]
+            }
+        ];
+
+        function timeAgo(dateStr) {
+            const now = new Date();
+            const then = new Date(dateStr);
+            const diffMs = now - then;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) return "今天";
+            if (diffDays === 1) return "昨天";
+            if (diffDays < 30) return `${diffDays} 天前`;
+            const diffMonths = Math.floor(diffDays / 30);
+            if (diffMonths < 12) return `${diffMonths} 个月前`;
+            return `${Math.floor(diffMonths / 12)} 年前`;
+        }
+
+        function langClass(lang) {
+            if (!lang) return "";
+            return lang.toLowerCase();
+        }
+
+        function render() {
+            const list = document.getElementById("repo-list");
+            list.innerHTML = repos.map((repo, i) => `
+                <div class="repo-card">
+                    <span class="rank-badge">#${i + 1}</span>
+                    <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
+                    <p class="repo-desc" title="${repo.description}">${repo.description || "暂无描述"}</p>
+                    ${repo.homepage ? `<a class="website-link" href="${repo.homepage}" target="_blank" rel="noopener">&#127760; ${repo.homepage}</a>` : ""}
+                    <div class="repo-meta">
+                        <span>
+                            <span class="lang-dot ${langClass(repo.language)}"></span>
+                            ${repo.language || "N/A"}
+                        </span>
+                        <span class="star-icon">&#9733;</span> ${repo.stargazers_count}
+                        ${repo.topics.length ? repo.topics.map(t =>
+                            `<span style="background:#1f6feb22;color:#58a6ff;padding:1px 6px;border-radius:8px;font-size:11px;">${t}</span>`
+                        ).join(" ") : ""}
+                        <span>更新于 ${timeAgo(repo.updated_at)}</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        render();
+    </script>
+</body>
+</html>
