@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vincent-chao-lang - Top 5 仓库汇总</title>
+    <title>Vincent-chao-lang - 个人项目汇总</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -15,6 +15,7 @@
             --lang-python: #3572A5;
             --lang-javascript: #f1e05a;
             --lang-html: #e34c26;
+            --shadow: 0 1px 3px rgba(0,0,0,.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,21 +25,13 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 30px;
-            align-items: start;
-        }
-
-        header {
+        /* ===== 全局页头 ===== */
+        header.site-header {
             text-align: center;
-            padding: 40px 0 48px;
+            padding: 48px 20px 32px;
         }
 
         .avatar {
@@ -47,27 +40,113 @@
             border-radius: 50%;
             border: 3px solid var(--border);
             margin-bottom: 16px;
+            transition: border-color .3s;
         }
 
-        h1 {
-            font-size: 26px;
+        .avatar:hover { border-color: var(--accent); }
+
+        header.site-header h1 {
+            font-size: 28px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .subtitle {
+        header.site-header .subtitle {
             color: var(--text-muted);
             font-size: 15px;
         }
 
-        .subtitle a {
+        header.site-header .subtitle a {
             color: var(--accent);
+            text-decoration: none;
         }
 
+        header.site-header .subtitle a:hover { text-decoration: underline; }
+
+        /* ===== 统计概览 ===== */
+        .stats-bar {
+            min-width: 1280px;
+            margin: 0 auto 32px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            text-align: center;
+            transition: border-color .25s;
+        }
+
+        .stat-card:hover { border-color: var(--accent); }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* ===== 主布局 ===== */
+        .container {
+            min-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .main-content { min-width: 0; }
+
+        /* ===== 骨架屏 ===== */
+        .skeleton { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; }
+
+        .skeleton-line {
+            height: 14px;
+            border-radius: 7px;
+            background: linear-gradient(90deg, var(--border) 25%, #30363d88 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-line:last-child { margin-bottom: 0; }
+        .skeleton-line.w60 { width: 60%; }
+        .skeleton-line.w40 { width: 40%; }
+        .skeleton-line.w80 { width: 80%; margin-top: 14px; }
+        .skeleton-line.h20 { height: 20px; }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ===== 仓库列表 ===== */
         .repo-list {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .4s, transform .4s;
+        }
+
+        .repo-list.loaded {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .repo-card {
@@ -75,11 +154,28 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 20px 24px;
-            transition: border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .25s, transform .25s, box-shadow .25s;
         }
+
+        .repo-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .repo-card.lang-python::before     { background: var(--lang-python); }
+        .repo-card.lang-javascript::before  { background: var(--lang-javascript); }
+        .repo-card.lang-html::before        { background: var(--lang-html); }
 
         .repo-card:hover {
             border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,.3);
         }
 
         .repo-card h3 {
@@ -93,19 +189,13 @@
             text-decoration: none;
         }
 
-        .repo-card h3 a:hover {
-            text-decoration: underline;
-        }
+        .repo-card h3 a:hover { text-decoration: underline; }
 
         .repo-desc {
             color: var(--text-muted);
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
         .website-link {
@@ -116,7 +206,7 @@
             color: var(--text-muted);
             text-decoration: none;
             margin-bottom: 10px;
-            transition: color 0.2s;
+            transition: color .2s;
         }
 
         .website-link:hover { color: var(--accent); }
@@ -124,10 +214,25 @@
         .repo-meta {
             display: flex;
             align-items: center;
-            gap: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
             font-size: 12px;
             color: var(--text-muted);
         }
+
+        .topic-pill {
+            display: inline-block;
+            background: #1f6feb22;
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            border: 1px solid #1f6feb33;
+            transition: background .2s;
+        }
+
+        .topic-pill:hover { background: #1f6feb44; }
 
         .lang-dot {
             display: inline-block;
@@ -144,31 +249,11 @@
 
         .star-icon { color: #e3b341; }
 
-        .updated {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .rank-badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 12px;
-            background: #1f6feb22;
-            color: var(--accent);
-            border: 1px solid #1f6feb44;
-            margin-bottom: 8px;
-        }
-
-        .main-content {
-            min-width: 0;
-        }
-
-        .sidebar {
+        /* ===== 侧边栏 ===== */
+        .sidebar,
+        .sidebar-right {
             position: sticky;
-            top: 40px;
+            top: 24px;
         }
 
         .sidebar-card {
@@ -190,7 +275,7 @@
         .blog-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .blog-item {
@@ -199,120 +284,320 @@
             background: rgba(48, 54, 61, 0.3);
             border-radius: 6px;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: background .2s, transform .2s;
         }
 
         .blog-item:hover {
             background: rgba(88, 166, 255, 0.1);
-            transform: translateX(2px);
+            transform: translateX(3px);
         }
 
         .blog-item-title {
             font-size: 13px;
             font-weight: 500;
             color: var(--text);
-            margin-bottom: 4px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 3px;
         }
 
-        .blog-item-path {
+        .blog-item-date {
             font-size: 11px;
             color: var(--text-muted);
         }
 
+        .sidebar-card .github-link {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+            padding: 10px 0;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background .2s, border-color .2s;
+        }
+
+        .sidebar-card .github-link:hover {
+            background: rgba(88, 166, 255, 0.08);
+            border-color: var(--accent);
+        }
+
+        /* ===== 回到顶部 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 44px;
+            height: 44px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity .3s, visibility .3s, transform .3s, border-color .2s, background .2s;
+            z-index: 100;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            border-color: var(--accent);
+            background: #1f6feb22;
+            color: var(--accent);
+        }
+
+        /* ===== 页脚 ===== */
+        footer.site-footer {
+            text-align: center;
+            padding: 0 20px 40px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        footer.site-footer a { color: var(--accent); }
+
+        /* ===== 响应式 ===== */
         @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
             }
 
-            .sidebar {
+            .sidebar,
+            .sidebar-right {
                 position: static;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        footer {
-            text-align: center;
-            padding: 40px 0 20px;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
+        @media (max-width: 600px) {
+            header.site-header {
+                padding: 32px 16px 24px;
+            }
 
-        footer a { color: var(--accent); }
+            header.site-header h1 {
+                font-size: 22px;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 0 16px;
+            }
+
+            .stat-card {
+                padding: 12px 14px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .container {
+                padding: 0 16px 32px;
+            }
+
+            .repo-card {
+                padding: 16px 18px;
+            }
+
+            .repo-meta {
+                gap: 8px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="main-content">
-            <header>
-                <img class="avatar"
-                     src="https://avatars.githubusercontent.com/u/131456092?v=4"
-                     alt="Vincent-chao-lang"
-                     onerror="this.style.display='none'">
-                <h1>Vincent-chao-lang</h1>
-                <p class="subtitle">
-                    最近更新的 Top 5 公开仓库 &middot;
-                    <a href="https://github.com/Vincent-chao-lang?tab=repositories" target="_blank" rel="noopener">
-                        查看全部 &rarr;
-                    </a>
-                </p>
-            </header>
 
-            <div class="repo-list" id="repo-list">
-                <!-- JS 动态渲染 -->
-            </div>
+    <!-- ===== 全局页头 ===== -->
+    <header class="site-header">
+        <img class="avatar"
+             src="https://avatars.githubusercontent.com/u/131456092?v=4"
+             alt="Vincent-chao-lang 头像"
+             width="96" height="96"
+             onerror="this.style.display='none'">
+        <h1>Chaos AI 研究室</h1>
+        <p class="subtitle">
+            AI &amp; 大模型实验场
+            &middot;
+            <a href="https://github.com/Vincent-chao-lang?tab=repositories" target="_blank" rel="noopener">
+                GitHub 主页 &rarr;
+            </a>
+        </p>
+    </header>
 
-            <footer>
-                数据来自 <a href="https://github.com/Vincent-chao-lang" target="_blank" rel="noopener">GitHub</a>
-                &middot; 页面静态部署，数据通过 GitHub API 实时获取
-            </footer>
+    <!-- ===== 统计概览 ===== -->
+    <div class="stats-bar" id="stats-bar" style="display:none">
+        <div class="stat-card">
+            <div class="stat-value" id="stat-repos">0</div>
+            <div class="stat-label">公开仓库</div>
         </div>
+        <div class="stat-card" style="display:none">
+            <div class="stat-value" id="stat-stars">0</div>
+            <div class="stat-label">总 Star 数</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-lang">-</div>
+            <div class="stat-label">主要语言</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-blogs">0</div>
+            <div class="stat-label">技术文章</div>
+        </div>
+    </div>
 
-        <aside class="sidebar">
+    <!-- ===== 主布局 ===== -->
+    <div class="container">
+        <aside class="sidebar" aria-label="侧边栏">
             <div class="sidebar-card">
-                <h3 class="sidebar-title">📝 最近文章</h3>
+                <h3 class="sidebar-title">外部链接</h3>
                 <div class="blog-list">
-                    <a href="Iblog/docs/blog/multi-agent-philosophy.html" class="blog-item" target="_blank">
+                    <a href="https://aihub.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">AIHub 知识平台</div>
+                        <div class="blog-item-date">aihub.dabuside.top</div>
+                    </a>
+                    <a href="https://chaos.dabuside.top/context-engineering-kit/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">上下文工程Context Engineering Kit</div>
+                        <div class="blog-item-date">chaos.dabuside.top</div>
+                    </a>
+                    <a href="https://aisecretary.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">AI 秘书</div>
+                        <div class="blog-item-date">aisecretary.dabuside.top</div>
+                    </a>
+                    <a href="https://report.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">站点健康监控</div>
+                        <div class="blog-item-date">report.dabuside.top</div>
+                    </a>
+                    <a href="https://dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">文件格式站换工具箱</div>
+                        <div class="blog-item-date">dabuside.top</div>
+                    </a>
+                    <a href="https://formula.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">Latex Formula</div>
+                        <div class="blog-item-date">formula.dabuside.top</div>
+                    </a>
+                    <a href="https://masking.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">PDF 脱敏</div>
+                        <div class="blog-item-date">masking.dabuside.top</div>
+                    </a>
+                    <a href="https://gaodingai.dabuside.top/editor" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">学术/试卷AI 编辑器</div>
+                        <div class="blog-item-date">gaodingai.dabuside.top</div>
+                    </a>
+                    <a href="https://opc.dabuside.top/" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">OPC 运营中心</div>
+                        <div class="blog-item-date">opc.dabuside.top</div>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content" aria-label="仓库列表">
+            <div class="repo-list" id="repo-list" aria-label="仓库列表">
+                <!-- 骨架屏 -->
+                <div class="skeleton" aria-hidden="true">
+                    <div class="skeleton-line h20 w60"></div>
+                    <div class="skeleton-line w80"></div>
+                    <div class="skeleton-line w40"></div>
+                </div>
+                <div class="skeleton" aria-hidden="true">
+                    <div class="skeleton-line h20 w60"></div>
+                    <div class="skeleton-line w80"></div>
+                    <div class="skeleton-line w40"></div>
+                </div>
+                <div class="skeleton" aria-hidden="true">
+                    <div class="skeleton-line h20 w60"></div>
+                    <div class="skeleton-line w80"></div>
+                    <div class="skeleton-line w40"></div>
+                </div>
+                <div class="skeleton" aria-hidden="true">
+                    <div class="skeleton-line h20 w60"></div>
+                    <div class="skeleton-line w80"></div>
+                    <div class="skeleton-line w40"></div>
+                </div>
+                <div class="skeleton" aria-hidden="true">
+                    <div class="skeleton-line h20 w60"></div>
+                    <div class="skeleton-line w80"></div>
+                    <div class="skeleton-line w40"></div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar-right" aria-label="右侧边栏">
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">关于</h3>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">
+                    AI 应用开发者，专注于 Multi-Agent 系统、Context Engineering 和 AI 安全领域。
+                </p>
+                <a href="https://github.com/Vincent-chao-lang" class="github-link" target="_blank" rel="noopener">
+                    访问 GitHub 主页 &rarr;
+                </a>
+            </div>
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">最近文章</h3>
+                <div class="blog-list">
+                    <a href="Iblog/docs/blog/multi-agent-philosophy.html" class="blog-item" target="_blank" rel="noopener">
                         <div class="blog-item-title">Multi-Agent 实践和思考</div>
-                        <div class="blog-item-path">multi-agent-philosophy.html</div>
+                        <div class="blog-item-date">2026-06</div>
                     </a>
-                    <a href="Iblog/docs/blog/skill-philosophy.html" class="blog-item" target="_blank">
-                        <div class="blog-item-title">Skills本质</div>
-                        <div class="blog-item-path">skill-philosophy.html</div>
+                    <a href="Iblog/docs/blog/skill-philosophy.html" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">Skills 本质</div>
+                        <div class="blog-item-date">2026-06</div>
                     </a>
-                    <a href="Iblog/docs/blog/skill-monetization.html" class="blog-item" target="_blank">
-                        <div class="blog-item-title">Skills变现</div>
-                        <div class="blog-item-path">skill-monetization.html</div>
+                    <a href="Iblog/docs/blog/skill-monetization.html" class="blog-item" target="_blank" rel="noopener">
+                        <div class="blog-item-title">Skills 变现</div>
+                        <div class="blog-item-date">2026-06</div>
                     </a>
-                    <a href="Iblog/docs/blog/context-engineering-guide.html" class="blog-item" target="_blank">
+                    <a href="Iblog/docs/blog/context-engineering-guide.html" class="blog-item" target="_blank" rel="noopener">
                         <div class="blog-item-title">Context Engineering 指南</div>
-                        <div class="blog-item-path">context-engineering-guide.html</div>
+                        <div class="blog-item-date">2026-06</div>
                     </a>
-                    <a href="Iblog/docs/blog/信息质量公共平台研究建议报告.html" class="blog-item" target="_blank">
+                    <a href="Iblog/docs/blog/信息质量公共平台研究建议报告.html" class="blog-item" target="_blank" rel="noopener">
                         <div class="blog-item-title">信息质量公共平台研究建议报告</div>
-                        <div class="blog-item-path">信息质量公共平台研究建议报告.html</div>
+                        <div class="blog-item-date">2026-06</div>
                     </a>
                 </div>
             </div>
         </aside>
     </div>
 
+    <footer class="site-footer">
+        数据来自 <a href="https://github.com/Vincent-chao-lang" target="_blank" rel="noopener">GitHub</a>
+        &middot; 页面静态部署 &middot; 数据通过 GitHub API 实时获取
+    </footer>
+
+    <!-- ===== 回到顶部 ===== -->
+    <button class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部">
+        &uarr;
+    </button>
+
     <script>
-        // 仓库数据 —— 可直接更新内容，页面无需其他依赖
-        const repos = [
-            {
-                name: "open_nexus",
-                description: "定位：面向老旧 Python 项目的安全自动化重构框架。通过异构多 Agent 协同（Claude/DeepSeek/GPT-4o 分别承担 Planner/Executor/Reviewer）和\"地图→扫描→重构\"三步流程，让开发者安全、可控地完成遗留代码的现代化改造。不靠蛮力生成，靠工程纪律。",
-                html_url: "https://github.com/Vincent-chao-lang/open_nexus",
-                homepage: "https://chaos.dabuside.top/open_nexus/",
-                language: "Python",
-                stargazers_count: 1,
-                updated_at: "2026-06-08",
-                topics: ["AI", "重构", "Multi-Agent"]
-            },
-            {
+    (function() {
+        // ===== 数据（由 update_repos.py 自动生成） =====
+        var repos = [
+          {
                 name: "ai-trust-shield",
                 description: "家庭AI卫士 - AI内容可信度实时验证浏览器扩展，支持ChatGPT、Claude、豆包、Kimi等20+主流AI平台",
                 html_url: "https://github.com/Vincent-chao-lang/ai-trust-shield",
@@ -320,7 +605,27 @@
                 language: "JavaScript",
                 stargazers_count: 0,
                 updated_at: "2026-06-08",
-                topics: ["浏览器扩展", "AI安全", "内容验证"]
+                topics: []
+            },
+            {
+                name: "AISecretary",
+                description: "AISecretary 是 CEO 的 24 小时 AI 秘书。理解自然语言指令，自动拆解任务，跨系统（邮件/飞书/企微）执行，跟踪闭环——像真人秘书一样为老板分担管理负担。",
+                html_url: "https://github.com/Vincent-chao-lang/AISecretary",
+                homepage: "https://aisecretary.dabuside.top/",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-06-02",
+                topics: []
+            },
+            {
+                name: "open_nexus",
+                description: "定位：面向老旧 Python 项目的安全自动化重构框架。  通过异构多 Agent 协同（Claude/DeepSeek/GPT-4o 分别承担 Planner/Executor/Reviewer）和\"地图→扫描→重构\"三步流程，让开发者安全、可控地完成遗留代码的现代化改造。不靠蛮力生成，靠工程纪律。",
+                html_url: "https://github.com/Vincent-chao-lang/open_nexus",
+                homepage: "https://chaos.dabuside.top/open_nexus/",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-06-08",
+                topics: []
             },
             {
                 name: "context-engineering-kit",
@@ -330,73 +635,302 @@
                 language: "HTML",
                 stargazers_count: 2,
                 updated_at: "2026-06-07",
-                topics: ["Claude Code", "Context Engineering", "AI编程"]
+                topics: []
             },
             {
-                name: "AISecretary",
-                description: "AISecretary 是 CEO 的 24 小时 AI 秘书。理解自然语言指令，自动拆解任务，跨系统（邮件/飞书/企微）执行，跟踪闭环——像真人秘书一样为老板分担管理负担。",
-                html_url: "https://github.com/Vincent-chao-lang/AISecretary",
-                homepage: "https://aisecretary.dabuside.top/",
-                language: "Python",
+                name: "repotool",
+                description: "一个基于 Flask 的 Web 应用，提供可视化的 GitHub 仓库批量管理功能。支持在浏览器中方便地管理多个仓库，包括批量设置可见性、删除仓库等操作。",
+                html_url: "https://github.com/Vincent-chao-lang/repotool",
+                homepage: "",
+                language: "JavaScript",
                 stargazers_count: 1,
-                updated_at: "2026-06-07",
-                topics: ["AI秘书", "自动化", "Multi-Agent"]
+                updated_at: "2026-05-29",
+                topics: []
             },
             {
                 name: "AIHub",
-                description: "AI Memory Hub 是一个企业级 AI 知识资产管理平台。它自动采集、整理、关联员工与 AI（ChatGPT、Claude、DeepSeek 等）的所有高质量对话，将其转化为可检索、可关联、可复用的结构化知识资产，实现\"人走，知识留下，价值继续\"。",
+                description: "AI Memory Hub 是一个企业级 AI 知识资产管理平台。它自动采集、整理、关联员工与 AI（ChatGPT、Claude、DeepSeek 等）的所有高质量对话，将其转化为可检索、可关联、可复用的结构化知识资产，实现 \"人走，知识留下，价值继续\"。",
                 html_url: "https://github.com/Vincent-chao-lang/AIHub",
                 homepage: "https://aihub.dabuside.top/",
                 language: "Python",
                 stargazers_count: 7,
-                updated_at: "2026-06-03",
-                topics: ["知识管理", "AI", "企业级"]
+                updated_at: "2026-05-30",
+                topics: []
+            },
+            {
+                name: "ppe_core",
+                description: "PPE 提示词增强工程 框架",
+                html_url: "https://github.com/Vincent-chao-lang/ppe_core",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2025-08-01",
+                topics: []
+            },
+            {
+                name: "lite_rag",
+                description: "Lite RAG是一个轻量级的RAG (Retrieval-Augmented Generation) 服务，专为与AI Gateway集成设计。它提供了简单易用的文档管理和向量检索功能。  核心特性 ✅ 多格式文档支持: TXT, Markdown, PDF, DOCX ✅ 轻量级嵌入模型: 使用Sentence Transformer，无需GPU ✅ 向量存储: ChromaDB持久化存储 ✅ ACL感知检索: 支持权限控制的检索 ✅ Gateway集成: 完全兼容AI Gateway的RAG接口 ✅ 易于部署: 单个Docker容器即可运行",
+                html_url: "https://github.com/Vincent-chao-lang/lite_rag",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-02-27",
+                topics: []
+            },
+            {
+                name: "myagent",
+                description: "PyAgent 是一个 Python 专家，同时兼具 \"全栈独立开发者 + 资深顾问\" 的混合体。不仅精通代码实现，更关注产品架构、业务价值、技术选型及工程化落地。",
+                html_url: "https://github.com/Vincent-chao-lang/myagent",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-03-16",
+                topics: []
+            },
+            {
+                name: "meeting",
+                description: "大型会议管理系统 一个基于 NestJS 的会议管理平台，支持会议创建、AI 任务分解、招商工作台、文件附件管理和进度跟踪",
+                html_url: "https://github.com/Vincent-chao-lang/meeting",
+                homepage: "",
+                language: "TypeScript",
+                stargazers_count: 0,
+                updated_at: "2026-03-24",
+                topics: []
+            },
+            {
+                name: "markdown_illustrator",
+                description: "Markdown Illustrator - 自动配图系统  为 Markdown 文章自动生成并插入配图的完整解决方案，支持多种 AI 文生图服务。",
+                html_url: "https://github.com/Vincent-chao-lang/markdown_illustrator",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-02-05",
+                topics: []
+            },
+            {
+                name: "ai-gateway-full-engineering",
+                description: "AI Gateway 是一个生产级轻量企业AI平台网关框架，提供统一的AI服务接入层。它不包含具体的LLM模型实现，而是作为一个中间代理层，连接你的业务系统和各种AI模型提供商。  核心特点 统一接入: 一个接口接入多个AI模型提供商 策略路由: 基于场景自动选择最优模型 安全防护: 内置多层安全守卫，保护敏感数据 工具集成: 支持Function Calling和外部工具调用 RAG集成: 内置检索增强生成能力 审计追踪: 完整的请求/响应日志记录 配置驱动: YAML配置文件控制所有行为",
+                html_url: "https://github.com/Vincent-chao-lang/ai-gateway-full-engineering",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-02-27",
+                topics: []
+            },
+            {
+                name: "ai-governance-platform-v2_1",
+                description: "一个治理优先的 AI 平台，为企业级 AI 模型使用提供全面控制，同时保持对多种 Provider 和工具的灵活性。  AI 治理平台 V2.1 是一个基于 Python 的 FastAPI 应用程序，为 AI 模型交互提供全面的治理和控制",
+                html_url: "https://github.com/Vincent-chao-lang/ai-governance-platform-v2_1",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-03-05",
+                topics: []
+            },
+            {
+                name: "mini_shop",
+                description: "一个支持线上下单,线下支付的线上线下贯通的商城",
+                html_url: "https://github.com/Vincent-chao-lang/mini_shop",
+                homepage: "",
+                language: "HTML",
+                stargazers_count: 0,
+                updated_at: "2026-02-05",
+                topics: []
+            },
+            {
+                name: "shuqianApp",
+                description: "基于AI的书签应用包含Ios app+ python后端",
+                html_url: "https://github.com/Vincent-chao-lang/shuqianApp",
+                homepage: "",
+                language: "Swift",
+                stargazers_count: 0,
+                updated_at: "2026-02-05",
+                topics: []
+            },
+            {
+                name: "smallE",
+                description: "smallE - 小微企业财务管理系统 一套完全免费的小微企业财务管理解决方案，帮助降低财务和纳税成本。",
+                html_url: "https://github.com/Vincent-chao-lang/smallE",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 0,
+                updated_at: "2026-03-24",
+                topics: []
+            },
+            {
+                name: "ai-dev-team",
+                description: "智能研发团队，包含产品经理、架构师、开发工程师、测试工程师四个 AI 角色，用户输入需求后各 角色自动协作完成软件开发任务 ",
+                html_url: "https://github.com/Vincent-chao-lang/ai-dev-team",
+                homepage: "",
+                language: "TypeScript",
+                stargazers_count: 0,
+                updated_at: "2026-03-25",
+                topics: []
+            },
+            {
+                name: "quant_llm_pub",
+                description: "A股股票智能分析系统 一个基于Python的A股量化分析系统，结合传统技术指标和LLM人工智能，为股票投资提供全面的量化分析报告",
+                html_url: "https://github.com/Vincent-chao-lang/quant_llm_pub",
+                homepage: "",
+                language: "",
+                stargazers_count: 0,
+                updated_at: "2026-02-05",
+                topics: []
+            },
+            {
+                name: "btc_etf_monitor_pub",
+                description: "本系统旨在监控ETF（Exchange Traded Fund）的各项数据，包括：  溢价/折价率 资金流向 市场指标 持仓占比 系统从多个数据源（CoinDesk、Yahoo Finance）收集实时数据并存储到InfluxDB时序数据库中，基于市场条件生成自动化警报和交易信号。",
+                html_url: "https://github.com/Vincent-chao-lang/btc_etf_monitor_pub",
+                homepage: "",
+                language: "",
+                stargazers_count: 0,
+                updated_at: "2026-02-05",
+                topics: []
+            },
+            {
+                name: "learnQuant",
+                description: "一个完整的量化分析流水线：数据获取 → 量化分析 → 报告生成 → 邮件发送",
+                html_url: "https://github.com/Vincent-chao-lang/learnQuant",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-02-03",
+                topics: []
+            },
+            {
+                name: "agent-dev-dashboard-route3-githubpr",
+                description: "基于 SOP 驱动的多 Agent 协作开发工作台  📦 GitHub 仓库: https://github.com/Vincent-chao-lang/agent-dev-dashboard-route3-githubpr  一个集成了智谱 GLM-4.7 大模型的多 Agent 协作开发平台，通过标准化流程、产物约束、质量门禁和完整审计，将大模型 Agent 的风险降到可控范围。",
+                html_url: "https://github.com/Vincent-chao-lang/agent-dev-dashboard-route3-githubpr",
+                homepage: "",
+                language: "Python",
+                stargazers_count: 1,
+                updated_at: "2026-01-29",
+                topics: []
             }
         ];
 
-        function timeAgo(dateStr) {
-            const now = new Date();
-            const then = new Date(dateStr);
-            const diffMs = now - then;
-            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
+        var blogCount = 5;
+
+        // ===== 工具函数 =====
+        function timeAgo(dateStr) {
+            var now = new Date();
+            var then = new Date(dateStr);
+            var diffDays = Math.floor((now - then) / 86400000);
             if (diffDays === 0) return "今天";
             if (diffDays === 1) return "昨天";
-            if (diffDays < 30) return `${diffDays} 天前`;
-            const diffMonths = Math.floor(diffDays / 30);
-            if (diffMonths < 12) return `${diffMonths} 个月前`;
-            return `${Math.floor(diffMonths / 12)} 年前`;
+            if (diffDays < 30) return diffDays + " 天前";
+            var diffMonths = Math.floor(diffDays / 30);
+            if (diffMonths < 12) return diffMonths + " 个月前";
+            return Math.floor(diffMonths / 12) + " 年前";
         }
 
         function langClass(lang) {
-            if (!lang) return "";
-            return lang.toLowerCase();
+            return lang ? lang.toLowerCase() : "";
         }
 
-        function render() {
-            const list = document.getElementById("repo-list");
-            list.innerHTML = repos.map((repo, i) => `
-                <div class="repo-card">
-                    <span class="rank-badge">#${i + 1}</span>
-                    <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
-                    <p class="repo-desc" title="${repo.description}">${repo.description || "暂无描述"}</p>
-                    ${repo.homepage ? `<a class="website-link" href="${repo.homepage}" target="_blank" rel="noopener">&#127760; ${repo.homepage}</a>` : ""}
-                    <div class="repo-meta">
-                        <span>
-                            <span class="lang-dot ${langClass(repo.language)}"></span>
-                            ${repo.language || "N/A"}
-                        </span>
-                        <span class="star-icon">&#9733;</span> ${repo.stargazers_count}
-                        ${repo.topics.length ? repo.topics.map(t =>
-                            `<span style="background:#1f6feb22;color:#58a6ff;padding:1px 6px;border-radius:8px;font-size:11px;">${t}</span>`
-                        ).join(" ") : ""}
-                        <span>更新于 ${timeAgo(repo.updated_at)}</span>
-                    </div>
-                </div>
-            `).join("");
+        function escapeHTML(str) {
+            var div = document.createElement("div");
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
         }
 
-        render();
+        // ===== 渲染统计 =====
+        function renderStats() {
+            var totalStars = repos.reduce(function(s, r) { return s + r.stargazers_count; }, 0);
+            var langCounts = {};
+            repos.forEach(function(r) {
+                if (r.language) {
+                    langCounts[r.language] = (langCounts[r.language] || 0) + 1;
+                }
+            });
+            var topLang = Object.keys(langCounts).sort(function(a, b) {
+                return langCounts[b] - langCounts[a];
+            })[0] || "-";
+
+            document.getElementById("stat-repos").textContent = repos.length;
+            document.getElementById("stat-stars").textContent = totalStars;
+            document.getElementById("stat-lang").textContent = topLang;
+            document.getElementById("stat-blogs").textContent = blogCount;
+        }
+
+        // ===== 渲染仓库列表 =====
+        function renderRepoList() {
+            var list = document.getElementById("repo-list");
+            var html = "";
+            for (var i = 0; i < repos.length; i++) {
+                var repo = repos[i];
+                var desc = repo.description || "暂无描述";
+                var topicsHTML = "";
+                if (repo.topics.length) {
+                    for (var j = 0; j < repo.topics.length; j++) {
+                        topicsHTML += '<span class="topic-pill">' + escapeHTML(repo.topics[j]) + '</span>';
+                    }
+                }
+                var homepageHTML = repo.homepage
+                    ? '<a class="website-link" href="' + repo.homepage + '" target="_blank" rel="noopener">&#127760; ' + escapeHTML(repo.homepage) + '</a>'
+                    : "";
+
+                html +=
+                    '<article class="repo-card lang-' + langClass(repo.language) + '">' +
+                        '<h3><a href="' + repo.html_url + '" target="_blank" rel="noopener">' + escapeHTML(repo.name) + '</a></h3>' +
+                        '<p class="repo-desc">' + escapeHTML(desc) + '</p>' +
+                        homepageHTML +
+                        '<div class="repo-meta">' +
+                            '<span>' +
+                                '<span class="lang-dot ' + langClass(repo.language) + '"></span>' +
+                                escapeHTML(repo.language || "N/A") +
+                            '</span>' +
+                            '<span><span class="star-icon">&#9733;</span> ' + repo.stargazers_count + '</span>' +
+                            topicsHTML +
+                            '<span>更新于 ' + timeAgo(repo.updated_at) + '</span>' +
+                        '</div>' +
+                    '</article>';
+            }
+            list.innerHTML = html;
+            list.classList.add("loaded");
+        }
+
+        // ===== 回到顶部 =====
+        function initBackToTop() {
+            var btn = document.getElementById("back-to-top");
+            var ticking = false;
+
+            function update() {
+                if (window.scrollY > 400) {
+                    btn.classList.add("visible");
+                } else {
+                    btn.classList.remove("visible");
+                }
+                ticking = false;
+            }
+
+            window.addEventListener("scroll", function() {
+                if (!ticking) {
+                    requestAnimationFrame(update);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            btn.addEventListener("click", function() {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
+        // ===== 启动 =====
+        function init() {
+            renderStats();
+            renderRepoList();
+            initBackToTop();
+        }
+
+        // 页面就绪后渲染（骨架屏先展示）
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+        } else {
+            init();
+        }
+    })();
     </script>
 </body>
 </html>
