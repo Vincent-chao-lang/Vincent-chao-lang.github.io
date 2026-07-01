@@ -28,6 +28,34 @@
             line-height: 1.6;
         }
 
+        /* ===== 顶部导航栏 ===== */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 12px 20px;
+            z-index: 1000;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .top-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 16px;
+            transition: color .2s;
+        }
+
+        .top-nav a:hover {
+            color: var(--accent);
+        }
+
+        .top-nav a.active {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
         /* ===== 全局页头 ===== */
         header.site-header {
             text-align: center;
@@ -431,6 +459,12 @@
 </head>
 <body>
 
+    <!-- ===== 顶部导航栏 ===== -->
+    <nav class="top-nav">
+        <a href="index.html" class="active">首页</a>
+        <a href="TEA.html">可控可信企业智能体白皮书</a>
+    </nav>
+
     <!-- ===== 全局页头 ===== -->
     <header class="site-header">
         <img class="avatar"
@@ -535,7 +569,7 @@
             <!-- 下载卡片 -->
             <div class="repo-card" style="margin-bottom: 16px; background: linear-gradient(135deg, rgba(88, 166, 255, 0.1) 0%, rgba(48, 54, 61, 0.3) 100%);">
                 <h3>
-                    <a href="可控可信企业智能体白皮书.pdf" download="可控可信企业智能体白皮书.pdf" style="color: var(--accent); text-decoration: none;">
+                    <a href="可控可信企业智能体白皮书V2.pdf" download="可控可信企业智能体白皮书.pdf" style="color: var(--accent); text-decoration: none;">
                         📥 可控可信企业智能体白皮书
                     </a>
                 </h3>
