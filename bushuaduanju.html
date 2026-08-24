@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>不刷短剧共修社 · 一群人互相看着</title>
+<style>
+  :root{
+    --cream:#fdf6ec;
+    --cream-2:#fbeede;
+    --night:#2f3b52;
+    --night-2:#3a4a66;
+    --amber:#e0974a;
+    --amber-deep:#cf8032;
+    --ink:#2b2b2b;
+    --muted:#6b6256;
+    --line:#ead9c2;
+    --ok:#3f8f6b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 20px 56px;}
+
+  /* Hero */
+  .hero{
+    background:linear-gradient(160deg,var(--night) 0%,var(--night-2) 55%,#4a5a78 100%);
+    color:#fff;border-radius:0 0 28px 28px;padding:30px 20px 26px;text-align:center;
+  }
+  .hero .badge{display:inline-block;font-size:12px;letter-spacing:2px;color:#ffe7c4;background:rgba(255,255,255,.12);padding:5px 12px;border-radius:999px;margin-bottom:14px;}
+  .hero h1{font-size:27px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
+  .hero p{font-size:15px;color:#e9e3d7;opacity:.92;}
+  .hero img{width:100%;max-width:340px;margin:20px auto 4px;display:block;border-radius:18px;box-shadow:0 14px 34px rgba(0,0,0,.32);}
+
+  /* Rule card */
+  .rule{
+    background:#fff;border:1.5px solid var(--line);border-radius:18px;
+    padding:22px 20px;margin:-22px 0 0;position:relative;box-shadow:0 10px 26px rgba(120,90,40,.10);
+  }
+  .rule .label{font-size:12px;color:var(--amber-deep);font-weight:700;letter-spacing:1px;margin-bottom:10px;}
+  .rule .big{font-size:19px;font-weight:800;line-height:1.6;}
+  .rule .sub{margin-top:12px;font-size:15px;color:var(--muted);}
+  .rule .eg{margin-top:14px;background:var(--cream-2);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--night-2);}
+  .rule .eg b{color:var(--amber-deep);}
+
+  /* Sections */
+  section{margin-top:34px;}
+  h2{font-size:19px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  h2::before{content:"";width:6px;height:18px;background:var(--amber);border-radius:3px;display:inline-block;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px;margin-bottom:12px;}
+  .card h3{font-size:15.5px;font-weight:700;margin-bottom:4px;}
+  .card p{font-size:14px;color:var(--muted);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:380px){.grid{grid-template-columns:1fr;}}
+
+  .step{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;}
+  .step .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--amber);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .step .t{font-size:14.5px;}
+  .step .t b{display:block;font-size:15px;margin-bottom:2px;}
+
+  .no{background:#fff7ee;border:1px dashed var(--amber);border-radius:14px;padding:16px;font-size:14px;color:var(--night-2);text-align:center;}
+  .no b{color:var(--amber-deep);}
+
+  /* Join */
+  .join{background:linear-gradient(160deg,var(--night),var(--night-2));border-radius:20px;padding:24px 18px;color:#fff;text-align:center;}
+  .join h2{color:#fff;justify-content:center;}
+  .join h2::before{display:none;}
+  .qr{display:flex;justify-content:center;margin:18px 0 6px;}
+  .qr .box{background:#fff;border-radius:14px;padding:12px;}
+  .qr .box .ph{aspect-ratio:1/1;background:repeating-linear-gradient(45deg,#f1ece2,#f1ece2 10px,#e9e1d2 10px,#e9e1d2 20px);border:1.5px dashed var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12.5px;text-align:center;padding:8px;}
+  .qr .box .cap{font-size:12.5px;color:var(--night);margin-top:8px;font-weight:700;}
+  .join .cta{display:inline-block;margin-top:16px;background:var(--amber);color:#fff;font-weight:800;font-size:16px;padding:13px 30px;border-radius:999px;text-decoration:none;box-shadow:0 8px 20px rgba(224,151,74,.4);}
+  .join .note{font-size:12.5px;color:#e9e3d7;opacity:.85;margin-top:12px;}
+
+  footer{text-align:center;margin-top:36px;font-size:13px;color:var(--muted);}
+  footer .slogan{font-weight:800;color:var(--night-2);font-size:15px;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <span class="badge">自律 · 共修 · 互相看着</span>
+    <h1>不刷短剧共修社</h1>
+    <p>一群人，把"今天没刷"这件事，每天记下来。</p>
+    <img src="theme.png" alt="夜晚共修场景：手机倒扣，众人安静做替代事" />
+  </header>
+
+  <div class="wrap">
+
+    <div class="rule">
+      <div class="label">唯一规则</div>
+      <div class="big">每天睡前，在群里报一句：<br>今天刷了没？<br>没刷的话，做了啥替代的事。</div>
+      <div class="sub">刷了也照实说。诚实记录，比假装没刷有用。</div>
+      <div class="eg">
+        示例：<br>
+        <b>Day 3｜没刷</b>｜读了 20 分钟书<br>
+        <b>Day 5｜刷了</b>｜明天继续<br>
+        <b>Day 12｜没刷</b>｜散步 40 分钟，脑子清了
+      </div>
+    </div>
+
+    <section>
+      <h2>不是禁，是自律</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>靠自己，不靠监视</h3>
+          <p>不读你的手机用量，不弹窗拦截。每天睡前清一笔，习惯是自己长出来的。</p>
+        </div>
+        <div class="card">
+          <h3>一群人互相看着</h3>
+          <p>群里每天互见那一句。社会监督比意志力靠谱——你不是一个人在扛。</p>
+        </div>
+        <div class="card">
+          <h3>不收费 · 不卖课</h3>
+          <p>没有会员，没有付费课。进来只做一件事：每天报那一句。</p>
+        </div>
+        <div class="card">
+          <h3>没有 AI 教练</h3>
+          <p>不整提醒话术、不整打卡率报表。人看着人，不是机器看着你。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>为什么是现在</h2>
+      <div class="card">
+        <h3>你不是一个人停不下来</h3>
+        <p>微短剧用户已近 <b>7 亿</b>，人均每天刷 <b>2 小时</b>。平台靠留客吃饭，不会替你克制——能托住你的，是一群想戒的人彼此看着。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>怎么加入</h2>
+      <div class="step"><div class="n">1</div><div class="t"><b>立一句 flag</b>进群发一句：你为啥想少刷短剧。</div></div>
+      <div class="step"><div class="n">2</div><div class="t"><b>进企微群</b>扫码进群，那句 flag 就是入伙礼。</div></div>
+      <div class="step"><div class="n">3</div><div class="t"><b>每晚睡前报一句</b>今天刷了没 + 替代事。</div></div>
+      <div class="step"><div class="n">4</div><div class="t"><b>小打卡圈看连续天数</b>累计 streak 在圈里留着。</div></div>
+      <div class="no">就这么一条规则，<b>不多加任何东西</b>。排行榜、周报、AI 提醒——全砍。</div>
+    </section>
+
+    <section class="join">
+      <h2>今天就开始 Day 1</h2>
+      <div class="qr">
+        <div class="box">
+          <div class="ph">企微群<br>二维码占位</div>
+        </div>
+      </div>
+      <a class="cta" href="#">扫码进群</a>
+      <div class="note">把你的企微群二维码和小打卡圈子二维码，替换进上面两个占位框即可上线。</div>
+    </section>
+
+    <footer>
+      <div class="slogan">自律是孤军，共修是一群人。</div>
+      不刷短剧共修社 · 不收费 · 不卖课 · 没有 AI 教练
+    </footer>
+
+  </div>
+</body>
+</html>
