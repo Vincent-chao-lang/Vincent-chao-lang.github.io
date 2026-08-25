@@ -351,6 +351,39 @@
             border-color: var(--accent);
         }
 
+        /* ===== 公众号二维码 ===== */
+        .qr-corner {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            z-index: 999;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            transition: border-color .25s, box-shadow .25s;
+        }
+
+        .qr-corner:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,.3);
+        }
+
+        .qr-corner img {
+            display: block;
+            width: 96px;
+            height: 96px;
+            border-radius: 4px;
+        }
+
+        .qr-corner .qr-label {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
         /* ===== 回到顶部 ===== */
         .back-to-top {
             position: fixed;
@@ -454,6 +487,17 @@
                 width: 40px;
                 height: 40px;
             }
+
+            .qr-corner {
+                top: 52px;
+                right: 12px;
+                padding: 8px;
+            }
+
+            .qr-corner img {
+                width: 72px;
+                height: 72px;
+            }
         }
     </style>
 </head>
@@ -464,6 +508,12 @@
         <a href="index.html" class="active">首页</a>
         <a href="TEA.html">可控可信企业智能体白皮书</a>
     </nav>
+
+    <!-- ===== 公众号二维码 ===== -->
+    <div class="qr-corner" title="关注公众号">
+        <img src="qrcode_for_gh_aaf42e03e210_258.jpg" alt="微信公众号二维码" width="96" height="96">
+        <span class="qr-label">关注公众号</span>
+    </div>
 
     <!-- ===== 全局页头 ===== -->
     <header class="site-header">
